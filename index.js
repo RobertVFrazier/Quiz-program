@@ -24,7 +24,7 @@ const STORE = {
   currentScore: 0,
   radioButtonClicked: false,
   apiKey: '',
-  jsonAmount: 2,
+  jsonAmount: 5,
   jsonCategory: 10,
   jsonDifficulty: 'medium',
   jsonType: 'multiple'
@@ -147,7 +147,7 @@ function renderPage() {
   // console.log(`145 Question is: ${STORE.currentQuestion}; View is: ${STORE.currentView}.`);
 
   if (STORE.currentQuestion===0) {
-    $('#js-userButton').text('START');
+    $('#js-userButton').html('START');
     $('div.js-pageView0HTML').show();
     $('div.js-pageView1HTML').hide();
     $('div.js-pageView2HTML').hide();
@@ -156,10 +156,10 @@ function renderPage() {
 
   if (STORE.currentQuestion>=1 && STORE.currentQuestion<=QUESTIONS.length && STORE.currentView===1){  
     // console.log(`Current Question is: ${STORE.currentQuestion}; current View is: ${STORE.currentView}.`);
-    $('#js-userButton').text('ENTER');
-    $('.js-currentScore').text(STORE.currentScore);
-    $('.js-currentQuestion').text(STORE.currentQuestion);
-    $('.js-totalQuestions').text(STORE.jsonAmount);
+    $('#js-userButton').html('ENTER');
+    $('.js-currentScore').html(STORE.currentScore);
+    $('.js-currentQuestion').html(STORE.currentQuestion);
+    $('.js-totalQuestions').html(STORE.jsonAmount);
     renderQuestions();
     // console.log('Back in the renderPage() function.');  
     // console.log('Current Question in the STORE is: '+STORE.currentQuestion);
@@ -170,8 +170,8 @@ function renderPage() {
   }
 
   if (STORE.currentQuestion>=1 && STORE.currentQuestion<=QUESTIONS.length && STORE.currentView===2){
-    $('#js-userButton').text('CONTINUE');
-    $('.js-correctAnswer').text(QUESTIONS[STORE.currentQuestion-1]['answer'+QUESTIONS[STORE.currentQuestion-1].correct]);
+    $('#js-userButton').html('CONTINUE');
+    $('.js-correctAnswer').html(QUESTIONS[STORE.currentQuestion-1]['answer'+QUESTIONS[STORE.currentQuestion-1].correct]);
     $('.js-userAnswer').html('YOUR ANSWER:<br/>'+QUESTIONS[STORE.currentQuestion-1]['answer'+QUESTIONS[STORE.currentQuestion-1].userChoice]);
     if(QUESTIONS[STORE.currentQuestion-1].userChoice+'' === QUESTIONS[STORE.currentQuestion-1].correct+''){
       STORE.currentScore++;
@@ -183,9 +183,9 @@ function renderPage() {
       $('.js-feedBackImageWrong').show();
       $('.js-userAnswer').show();     
     }
-    $('.js-currentScore').text(STORE.currentScore);
-    $('.js-totalQuestions').text(STORE.jsonAmount);
-    $('.js-currentQuestion').text(STORE.currentQuestion);
+    $('.js-currentScore').html(STORE.currentScore);
+    $('.js-totalQuestions').html(STORE.jsonAmount);
+    $('.js-currentQuestion').html(STORE.currentQuestion);
     $('div.js-pageView0HTML').hide();
     $('div.js-pageView1HTML').hide();
     $('div.js-pageView2HTML').show();
@@ -197,11 +197,11 @@ function renderPage() {
     listHTML+=`<li>${QUESTIONS[i].question}<br/>Answer: ${QUESTIONS[i]['answer'+QUESTIONS[i].correct]}<br/><span class='js-yours'>Yours: ${QUESTIONS[i]['answer'+QUESTIONS[i].userChoice]}</span></li>`;
   }
   if(STORE.currentQuestion === QUESTIONS.length && STORE.currentView === 3) {
-    $('#js-userButton').text('PLAY AGAIN?');
-    $('.js-currentScore').text(STORE.currentScore);
-    $('.js-totalQuestions').text(STORE.jsonAmount);
-    $('.js-currentQuestion').text(STORE.currentQuestion);
-    $('.js-scorePercent').text((STORE.currentScore/STORE.currentQuestion)*100 + '%');
+    $('#js-userButton').html('PLAY AGAIN?');
+    $('.js-currentScore').html(STORE.currentScore);
+    $('.js-totalQuestions').html(STORE.jsonAmount);
+    $('.js-currentQuestion').html(STORE.currentQuestion);
+    $('.js-scorePercent').html((STORE.currentScore/STORE.currentQuestion)*100 + '%');
     $('.js-evalList').html(listHTML);
     $('div.js-pageView0HTML').hide();
     $('div.js-pageView1HTML').hide();
