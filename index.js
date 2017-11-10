@@ -24,8 +24,8 @@ const STORE = {
   currentScore: 0,
   radioButtonClicked: false,
   apiKey: '',
-  jsonAmount: 0,
-  jsonCategory: 0,
+  jsonAmount: 2,
+  jsonCategory: 10,
   jsonDifficulty: 'easy',
   jsonType: 'multiple'
 };
@@ -141,8 +141,9 @@ function pickNum(min, max){
 
 
 function renderPage() {
-  // console.log('In the renderPage() function.');
-  // console.log(`106 Question is: ${STORE.currentQuestion}; View is: ${STORE.currentView}.`);
+  console.log('In the renderPage() function.');
+  console.log(`145 Question is: ${STORE.currentQuestion}; View is: ${STORE.currentView}.`);
+
   if (STORE.currentQuestion===0) {
     $('#js-userButton').text('START');
     $('div.js-pageView0HTML').show();
@@ -156,6 +157,7 @@ function renderPage() {
     $('#js-userButton').text('ENTER');
     $('.js-currentScore').text(STORE.currentScore);
     $('.js-currentQuestion').text(STORE.currentQuestion);
+    $('.js-totalQuestions').text(STORE.jsonAmount);
     renderQuestions();
     // console.log('Back in the renderPage() function.');  
     // console.log('Current Question in the STORE is: '+STORE.currentQuestion);
@@ -180,6 +182,7 @@ function renderPage() {
       $('.js-userAnswer').show();     
     }
     $('.js-currentScore').text(STORE.currentScore);
+    $('.js-totalQuestions').text(STORE.jsonAmount);
     $('.js-currentQuestion').text(STORE.currentQuestion);
     $('div.js-pageView0HTML').hide();
     $('div.js-pageView1HTML').hide();
@@ -194,6 +197,7 @@ function renderPage() {
   if(STORE.currentQuestion === QUESTIONS.length && STORE.currentView === 3) {
     $('#js-userButton').text('PLAY AGAIN?');
     $('.js-currentScore').text(STORE.currentScore);
+    $('.js-totalQuestions').text(STORE.jsonAmount);
     $('.js-currentQuestion').text(STORE.currentQuestion);
     $('.js-scorePercent').text((STORE.currentScore/STORE.currentQuestion)*100 + '%');
     $('.js-evalList').html(listHTML);
@@ -213,7 +217,6 @@ function renderQuestions() {
   $('#js-choice2').text(QUESTIONS[STORE.currentQuestion-1].answer2);
   $('#js-choice3').text(QUESTIONS[STORE.currentQuestion-1].answer3);
   $('#js-choice4').text(QUESTIONS[STORE.currentQuestion-1].answer4);
-  $('#js-choice5').text(QUESTIONS[STORE.currentQuestion-1].answer5);
   $('div.js-pageView1HTML').show();
 }
 
@@ -231,8 +234,8 @@ function generateHTML() {
   // Set up Page 1, then hide it.
 
   let quizQuestionsHTML = `
-    <div id='js-scoreBox'>Score: <span class='js-currentScore'></span> of ${QUESTIONS.length}</div>
-    <h3>Question <span class='js-currentQuestion'></span> of ${QUESTIONS.length}:</h3>
+    <div id='js-scoreBox'>Score: <span class='js-currentScore'></span> of <span class='js-totalQuestions'></span></div>
+    <h3>Question <span class='js-currentQuestion'></span> of <span class='js-totalQuestions'></span>:</h3>
       <div class='js-screenQuestion'></div>
       <div class='js-radioButton' name='js-radioButton'>
        <input type='radio' name='choices' value=1>
@@ -246,9 +249,6 @@ function generateHTML() {
         
         <input type='radio' name='choices' value=4>
         <label for='choice1' id='js-choice4'></label><br/>
-        
-        <input type='radio' name='choices' value=5>
-        <label for='choice1' id='js-choice5'></label><br/>
       </div>
     <br/>
     <br/>
@@ -261,8 +261,8 @@ function generateHTML() {
   // Set up Page 2, then hide it.
 
   let quizFeedbackHTML = `
-    <div id='js-scoreBox'>Score: <span class='js-currentScore'></span> of ${QUESTIONS.length}</div>
-    <h3>Question <span class='js-currentQuestion'></span> of ${QUESTIONS.length}:</h3>
+    <div id='js-scoreBox'>Score: <span class='js-currentScore'></span> of <span class='js-totalQuestions'></span></div>
+    <h3>Question <span class='js-currentQuestion'></span> of <span class='js-totalQuestions'></span>:</h3>
     <img src="Right.jpg" class="js-feedBackImageRight" alt="Big green check mark"></div>
     <img src="Wrong.jpg" class="js-feedBackImageWrong" alt="Big red X"></div>
     <div class='js-screenQuestion'></div><br/>
@@ -278,8 +278,8 @@ function generateHTML() {
   // Set up Page 3, then hide it.
 
   let quizWrapup = `
-    <div id='js-scoreBox'>Score: <span class='js-currentScore'></span> of ${QUESTIONS.length}</div>
-    <h3>Question <span class='js-currentQuestion'></span> of ${QUESTIONS.length}:</h3>
+    <div id='js-scoreBox'>Score: <span class='js-currentScore'></span> of <span class='js-totalQuestions'></span></div>
+    <h3>Question <span class='js-currentQuestion'></span> of <span class='js-totalQuestions'></span>:</h3>
     <h2>Here's how you did:</h2>
     <h3 class='js-scorePercent'></h3>
     <ol class='js-evalList'></ol>
@@ -340,9 +340,8 @@ function nextView() {
     STORE.currentView = 0;
     STORE.currentScore = 0;
     STORE.radioButtonClicked = false;
-    for(let i=0; i<QUESTIONS.length; i++) {
-      QUESTIONS.userChoice = 0;
-    }
+    QUESTIONS = [];
+    getJsonQuestions();
   }
   // console.log(`Current Question is: ${STORE.currentQuestion}; current View is: ${STORE.currentView}.`);
 }
@@ -368,90 +367,3 @@ $(()=>{
 });
 
 // Render -> User Input (Event Listener) -> State Changes (Update the STORE) -> Re-Render
-
-
-
-
-// We won't be using this array any more. Time to generate fresh ones from the API!
-
-// const QUESTIONS = [
-//   {question: 'On which NBA team did Michael spend the majority of his career?', 
-//     answer1: 'Chicago Bulls', //map can loop through and randomize
-//     answer2: 'Washington Wizards', 
-//     answer3: 'Boston Celtics', 
-//     answer4: 'Phoenix Suns', 
-//     answer5: 'Los Angeles Lakers', 
-//     correct: 1, 
-//     userChoice: 0},
-//   {question: 'What position did he play?', 
-//     answer1: 'Point guard', 
-//     answer2: 'Center', 
-//     answer3: 'Power Forward', 
-//     answer4: 'Shooting guard', 
-//     answer5: 'Small Forward', 
-//     correct: 4 , 
-//     userChoice: 0},
-//   {question: 'Michael made a comeback in 2001. Which NBA team did he play for?', 
-//     answer1: 'Chicago Bulls', 
-//     answer2: 'Washington Wizards', 
-//     answer3: 'Boston Celtics', 
-//     answer4: 'Phoenix Suns', 
-//     answer5: 'Los Angeles Lakers', 
-//     correct: 2, 
-//     userChoice: 0},
-//   {question: 'Which college team did Michael play for?', 
-//     answer1: 'Duke', 
-//     answer2: 'USC', 
-//     answer3: 'University of North Carolina at Chapel Hill', 
-//     answer4: 'University of Maryland', 
-//     answer5: 'Memphis', 
-//     correct: 3 , 
-//     userChoice: 0},
-//   {question: 'How tall is Michael?', 
-//     answer1: '6’1’’', 
-//     answer2: '6’10’’', 
-//     answer3: '6’6’’', 
-//     answer4: '6’3’’', 
-//     answer5: '6’11’’', 
-//     correct: 3 , 
-//     userChoice: 0},
-//   {question: 'In the TV cartoon "ProStars", who co-starred with Michael?', 
-//     answer1: 'Ken Griffey Jr. & Barry Sanders', 
-//     answer2: 'Penny Hardaway & Shaquille O\'Neal', 
-//     answer3: 'Andre Agassi & Terrell Davis', 
-//     answer4: 'Bo Jackson & Wayne Gretzky', 
-//     answer5: 'Emmitt Smith & Hulk Hogan', 
-//     correct: 4, 
-//     userChoice: 0},  
-//   {question: 'In 2010, Michael became majority owner of which NBA team?', 
-//     answer1: 'Oklahoma City Thunder', 
-//     answer2: 'Houston Rockets', 
-//     answer3: 'Philadelphia 76ers', 
-//     answer4: 'Charlotte Bobcats', 
-//     answer5: 'Chicago Bulls', 
-//     correct: 4, 
-//     userChoice: 0},
-//   {question: 'Which of the following NBA players did NOT appear in the film Space Jam?', 
-//     answer1: 'Larry Bird', 
-//     answer2: 'Shawn Bradley', 
-//     answer3: 'Charles Barkley', 
-//     answer4: 'Muggsy Bogues', 
-//     answer5: 'Kobe Bryant', 
-//     correct: 5, 
-//     userChoice: 0},
-//   {question: 'What is Michael\'s career playoff scoring average?', 
-//     answer1: '30.12', 
-//     answer2: '29.57', 
-//     answer3: '33.45', 
-//     answer4: '35.05', 
-//     answer5: '29.93', 
-//     correct: 3, 
-//     userChoice: 0},
-//   {question: 'How many NBA Championships did Michael have?', 
-//     answer1: '6', 
-//     answer2: '10', 
-//     answer3: '4', 
-//     answer4: '8', 
-//     answer5: '3', 
-//     correct: 1, 
-//     userChoice: 0}];
