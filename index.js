@@ -24,9 +24,9 @@ const STORE = {
   currentScore: 0,
   radioButtonClicked: false,
   apiKey: '',
-  jsonAmount: 2,
+  jsonAmount: 5,
   jsonCategory: 10,
-  jsonDifficulty: 'easy',
+  jsonDifficulty: 'medium',
   jsonType: 'multiple'
 };
 
@@ -212,11 +212,11 @@ function renderPage() {
 function renderQuestions() {
   // console.log('In the renderQuestions() function.');
   //only if the STORE is on pages that show questions
-  $('.js-screenQuestion').text(QUESTIONS[STORE.currentQuestion-1].question);
-  $('#js-choice1').text(QUESTIONS[STORE.currentQuestion-1].answer1);
-  $('#js-choice2').text(QUESTIONS[STORE.currentQuestion-1].answer2);
-  $('#js-choice3').text(QUESTIONS[STORE.currentQuestion-1].answer3);
-  $('#js-choice4').text(QUESTIONS[STORE.currentQuestion-1].answer4);
+  $('.js-screenQuestion').html(QUESTIONS[STORE.currentQuestion-1].question);
+  $('#js-choice1').html(QUESTIONS[STORE.currentQuestion-1].answer1);
+  $('#js-choice2').html(QUESTIONS[STORE.currentQuestion-1].answer2);
+  $('#js-choice3').html(QUESTIONS[STORE.currentQuestion-1].answer3);
+  $('#js-choice4').html(QUESTIONS[STORE.currentQuestion-1].answer4);
   $('div.js-pageView1HTML').show();
 }
 
