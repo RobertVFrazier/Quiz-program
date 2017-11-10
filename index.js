@@ -1,91 +1,18 @@
-﻿/* global $ */
+/* global $ */
 'use strict';
 
 /******************************************************** 
  Questions and answers data 
 ********************************************************/
 
-const QUESTIONS = [
-  {question: 'On which NBA team did Michael spend the majority of his career?', 
-    answer1: 'Chicago Bulls', //map can loop through and randomize
-    answer2: 'Washington Wizards', 
-    answer3: 'Boston Celtics', 
-    answer4: 'Phoenix Suns', 
-    answer5: 'Los Angeles Lakers', 
-    correct: 1, 
-    userChoice: 0},
-  {question: 'What position did he play?', 
-    answer1: 'Point guard', 
-    answer2: 'Center', 
-    answer3: 'Power Forward', 
-    answer4: 'Shooting guard', 
-    answer5: 'Small Forward', 
-    correct: 4 , 
-    userChoice: 0},
-  {question: 'Michael made a comeback in 2001. Which NBA team did he play for?', 
-    answer1: 'Chicago Bulls', 
-    answer2: 'Washington Wizards', 
-    answer3: 'Boston Celtics', 
-    answer4: 'Phoenix Suns', 
-    answer5: 'Los Angeles Lakers', 
-    correct: 2, 
-    userChoice: 0},
-  {question: 'Which college team did Michael play for?', 
-    answer1: 'Duke', 
-    answer2: 'USC', 
-    answer3: 'University of North Carolina at Chapel Hill', 
-    answer4: 'University of Maryland', 
-    answer5: 'Memphis', 
-    correct: 3 , 
-    userChoice: 0},
-  {question: 'How tall is Michael?', 
-    answer1: '6’1’’', 
-    answer2: '6’10’’', 
-    answer3: '6’6’’', 
-    answer4: '6’3’’', 
-    answer5: '6’11’’', 
-    correct: 3 , 
-    userChoice: 0},
-  {question: 'In the TV cartoon "ProStars", who co-starred with Michael?', 
-    answer1: 'Ken Griffey Jr. & Barry Sanders', 
-    answer2: 'Penny Hardaway & Shaquille O\'Neal', 
-    answer3: 'Andre Agassi & Terrell Davis', 
-    answer4: 'Bo Jackson & Wayne Gretzky', 
-    answer5: 'Emmitt Smith & Hulk Hogan', 
-    correct: 4, 
-    userChoice: 0},  
-  {question: 'In 2010, Michael became majority owner of which NBA team?', 
-    answer1: 'Oklahoma City Thunder', 
-    answer2: 'Houston Rockets', 
-    answer3: 'Philadelphia 76ers', 
-    answer4: 'Charlotte Bobcats', 
-    answer5: 'Chicago Bulls', 
-    correct: 4, 
-    userChoice: 0},
-  {question: 'Which of the following NBA players did NOT appear in the film Space Jam?', 
-    answer1: 'Larry Bird', 
-    answer2: 'Shawn Bradley', 
-    answer3: 'Charles Barkley', 
-    answer4: 'Muggsy Bogues', 
-    answer5: 'Kobe Bryant', 
-    correct: 5, 
-    userChoice: 0},
-  {question: 'What is Michael\'s career playoff scoring average?', 
-    answer1: '30.12', 
-    answer2: '29.57', 
-    answer3: '33.45', 
-    answer4: '35.05', 
-    answer5: '29.93', 
-    correct: 3, 
-    userChoice: 0},
-  {question: 'How many NBA Championships did Michael have?', 
-    answer1: '6', 
-    answer2: '10', 
-    answer3: '4', 
-    answer4: '8', 
-    answer5: '3', 
-    correct: 1, 
-    userChoice: 0}];
+let QUESTIONS = [];
+let jsonQuestions = [];
+
+/******************************************************** 
+ All global constants here. 
+********************************************************/
+
+const endpoint = 'https://opentdb.com/';
 
 /******************************************************** 
  All global variables here. 
@@ -95,12 +22,123 @@ const STORE = {
   currentQuestion: 0,
   currentView: 0,
   currentScore: 0,
-  radioButtonClicked: false
+  radioButtonClicked: false,
+  apiKey: '',
+  jsonAmount: 0,
+  jsonCategory: 0,
+  jsonDifficulty: 'easy',
+  jsonType: 'multiple'
 };
 
 /******************************************************** 
 Step 1: Render the DOM. 
 ********************************************************/
+
+function setup(){
+  getKey();
+  getJsonQuestions();
+}
+
+function getKey(){
+  //console.log('In getKey() function');
+  $.getJSON(`${endpoint}api_token.php?command=request`, function(json){
+    //console.log(json.token);
+    STORE.apiKey=json.token;
+  });
+}
+
+function getJsonQuestions(){
+  console.log('In getJsonQuestions() function');
+  let rndAnsArr=[];
+  let tempObj={
+    amount: STORE.jsonAmount===0  ? 'amount=10' : `amount=${STORE.jsonAmount}`,
+    category: STORE.jsonCategory===0  ? '' : `&category=${STORE.jsonCategory}`,
+    difficulty: STORE.jsonDifficulty===0  ? '' : `&difficulty=${STORE.jsonDifficulty}`,
+    type: STORE.jsonType===0  ? '' : `&type=${STORE.jsonType}`,
+    token: STORE.apiKey==='' ? '' : `&token=${STORE.apiKey}`
+  };
+  $.getJSON(`${endpoint}api.php?${tempObj.amount}${tempObj.category}${tempObj.difficulty}${tempObj.type}${tempObj.token}`, function(json){
+    let tempArr=[];
+    for(let i=0; i<STORE.jsonAmount; i++){
+      if(json.results[i].type==='multiple'){
+        tempArr.push(json.results[i].question, json.results[i].correct_answer, json.results[i].incorrect_answers[0], json.results[i].incorrect_answers[1], json.results[i].incorrect_answers[2]);
+        jsonQuestions.push([tempArr]);
+        tempArr=[];
+      } else {
+        tempArr.push(json.results[i].question, json.results[i].correct_answer, json.results[i].incorrect_answers[0]);
+        jsonQuestions.push([tempArr]);
+        tempArr=[];
+      }
+      // End of loop through getting questions.
+    }
+    console.log(jsonQuestions);
+    
+    for (let i=0; i<STORE.jsonAmount; i++){
+      QUESTIONS.push({
+        question: jsonQuestions[i][0][0],
+        answer1: '',
+        answer2: '',
+        answer3: '',
+        answer4: '',
+        correct: 0,
+        userChoice: 0,
+      });
+      let jsonRight=jsonQuestions[i][0][1];
+      let jsonOthers=[];
+      jsonOthers.push('');
+      jsonOthers.push(jsonQuestions[i][0][2]);
+      jsonOthers.push(jsonQuestions[i][0][3]);
+      jsonOthers.push(jsonQuestions[i][0][4]);
+      let seqArr=[1,2,3,4];
+      let rndPos=0;
+      let rndArr=[];
+      let tmpArr=[];
+      for(let j=4; j>0; j--){
+        rndPos=pickNum(1,j);
+        tmpArr.push(seqArr.splice(rndPos-1,1)+'');
+        rndArr.push(tmpArr[0]+'');
+        // console.log(rndArr);
+        tmpArr=[];
+      }
+      console.log(rndArr, jsonOthers);
+      let newAnsers=[];
+      let pos=0;
+      for(let j=0; j<4; j++){
+        pos = rndArr[j];
+        newAnsers.push(jsonOthers[pos-1]);   
+      }
+      console.log(newAnsers);
+      QUESTIONS[i].answer1=newAnsers[0];
+      if(QUESTIONS[i].answer1===''){
+        QUESTIONS[i].answer1=jsonRight;
+        QUESTIONS[i].correct=1;
+      }
+      QUESTIONS[i].answer2=newAnsers[1];
+      if(QUESTIONS[i].answer2===''){
+        QUESTIONS[i].answer2=jsonRight;
+        QUESTIONS[i].correct=2;
+      }
+      QUESTIONS[i].answer3=newAnsers[2];
+      if(QUESTIONS[i].answer3===''){
+        QUESTIONS[i].answer3=jsonRight;
+        QUESTIONS[i].correct=3;
+      }
+      QUESTIONS[i].answer4=newAnsers[3];
+      if(QUESTIONS[i].answer4===''){
+        QUESTIONS[i].answer4=jsonRight;
+        QUESTIONS[i].correct=4;
+      }
+      console.log(QUESTIONS[i]);
+    }
+  });
+}
+
+function pickNum(min, max){
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 
 function renderPage() {
   // console.log('In the renderPage() function.');
@@ -185,7 +223,7 @@ function generateHTML() {
   // Set up Page 0, then hide it.
   // <h1>Welcome to our Michael Jordan quiz!
   let quizHeader = `
-  <img src="QuizTime.jpg" class="js-splash-page" alt="Time to get Thinkful because it's Quiz Time! Cartoon person in a thinking pose next to a huge question mark.">
+  <img src="QuizTime.jpg" class="js-splash-page" alt="Let's get Thinkful, because it's Quiz Time! Cartoon person in a thinking pose next to a huge red question mark.">
   <br/>`;
   $('div.js-pageView0HTML').html(quizHeader);
   $('div.js-pageView0HTML').hide();
@@ -321,7 +359,8 @@ function nextView() {
  ********************************************************/
 
 $(()=>{
-  // console.log('Begin the Quiz program.');
+  console.log('Begin the Quiz program.');
+  setup();
   generateHTML();
   renderPage();
   handleUserButton();
@@ -329,3 +368,90 @@ $(()=>{
 });
 
 // Render -> User Input (Event Listener) -> State Changes (Update the STORE) -> Re-Render
+
+
+
+
+// We won't be using this array any more. Time to generate fresh ones from the API!
+
+// const QUESTIONS = [
+//   {question: 'On which NBA team did Michael spend the majority of his career?', 
+//     answer1: 'Chicago Bulls', //map can loop through and randomize
+//     answer2: 'Washington Wizards', 
+//     answer3: 'Boston Celtics', 
+//     answer4: 'Phoenix Suns', 
+//     answer5: 'Los Angeles Lakers', 
+//     correct: 1, 
+//     userChoice: 0},
+//   {question: 'What position did he play?', 
+//     answer1: 'Point guard', 
+//     answer2: 'Center', 
+//     answer3: 'Power Forward', 
+//     answer4: 'Shooting guard', 
+//     answer5: 'Small Forward', 
+//     correct: 4 , 
+//     userChoice: 0},
+//   {question: 'Michael made a comeback in 2001. Which NBA team did he play for?', 
+//     answer1: 'Chicago Bulls', 
+//     answer2: 'Washington Wizards', 
+//     answer3: 'Boston Celtics', 
+//     answer4: 'Phoenix Suns', 
+//     answer5: 'Los Angeles Lakers', 
+//     correct: 2, 
+//     userChoice: 0},
+//   {question: 'Which college team did Michael play for?', 
+//     answer1: 'Duke', 
+//     answer2: 'USC', 
+//     answer3: 'University of North Carolina at Chapel Hill', 
+//     answer4: 'University of Maryland', 
+//     answer5: 'Memphis', 
+//     correct: 3 , 
+//     userChoice: 0},
+//   {question: 'How tall is Michael?', 
+//     answer1: '6’1’’', 
+//     answer2: '6’10’’', 
+//     answer3: '6’6’’', 
+//     answer4: '6’3’’', 
+//     answer5: '6’11’’', 
+//     correct: 3 , 
+//     userChoice: 0},
+//   {question: 'In the TV cartoon "ProStars", who co-starred with Michael?', 
+//     answer1: 'Ken Griffey Jr. & Barry Sanders', 
+//     answer2: 'Penny Hardaway & Shaquille O\'Neal', 
+//     answer3: 'Andre Agassi & Terrell Davis', 
+//     answer4: 'Bo Jackson & Wayne Gretzky', 
+//     answer5: 'Emmitt Smith & Hulk Hogan', 
+//     correct: 4, 
+//     userChoice: 0},  
+//   {question: 'In 2010, Michael became majority owner of which NBA team?', 
+//     answer1: 'Oklahoma City Thunder', 
+//     answer2: 'Houston Rockets', 
+//     answer3: 'Philadelphia 76ers', 
+//     answer4: 'Charlotte Bobcats', 
+//     answer5: 'Chicago Bulls', 
+//     correct: 4, 
+//     userChoice: 0},
+//   {question: 'Which of the following NBA players did NOT appear in the film Space Jam?', 
+//     answer1: 'Larry Bird', 
+//     answer2: 'Shawn Bradley', 
+//     answer3: 'Charles Barkley', 
+//     answer4: 'Muggsy Bogues', 
+//     answer5: 'Kobe Bryant', 
+//     correct: 5, 
+//     userChoice: 0},
+//   {question: 'What is Michael\'s career playoff scoring average?', 
+//     answer1: '30.12', 
+//     answer2: '29.57', 
+//     answer3: '33.45', 
+//     answer4: '35.05', 
+//     answer5: '29.93', 
+//     correct: 3, 
+//     userChoice: 0},
+//   {question: 'How many NBA Championships did Michael have?', 
+//     answer1: '6', 
+//     answer2: '10', 
+//     answer3: '4', 
+//     answer4: '8', 
+//     answer5: '3', 
+//     correct: 1, 
+//     userChoice: 0}];
