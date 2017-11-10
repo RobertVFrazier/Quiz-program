@@ -24,7 +24,7 @@ const STORE = {
   currentScore: 0,
   radioButtonClicked: false,
   apiKey: '',
-  jsonAmount: 5,
+  jsonAmount: 2,
   jsonCategory: 10,
   jsonDifficulty: 'medium',
   jsonType: 'multiple'
@@ -40,7 +40,7 @@ function setup(){
 }
 
 function getKey(){
-  //console.log('In getKey() function');
+  console.log('In getKey() function');
   $.getJSON(`${endpoint}api_token.php?command=request`, function(json){
     //console.log(json.token);
     STORE.apiKey=json.token;
@@ -58,6 +58,7 @@ function getJsonQuestions(){
     token: STORE.apiKey==='' ? '' : `&token=${STORE.apiKey}`
   };
   $.getJSON(`${endpoint}api.php?${tempObj.amount}${tempObj.category}${tempObj.difficulty}${tempObj.type}${tempObj.token}`, function(json){
+    console.log(json);
     let tempArr=[];
     for(let i=0; i<STORE.jsonAmount; i++){
       if(json.results[i].type==='multiple'){
@@ -100,14 +101,14 @@ function getJsonQuestions(){
         // console.log(rndArr);
         tmpArr=[];
       }
-      console.log(rndArr, jsonOthers);
+      // console.log(rndArr, jsonOthers);
       let newAnsers=[];
       let pos=0;
       for(let j=0; j<4; j++){
         pos = rndArr[j];
         newAnsers.push(jsonOthers[pos-1]);   
       }
-      console.log(newAnsers);
+      // console.log(newAnsers);
       QUESTIONS[i].answer1=newAnsers[0];
       if(QUESTIONS[i].answer1===''){
         QUESTIONS[i].answer1=jsonRight;
@@ -128,12 +129,13 @@ function getJsonQuestions(){
         QUESTIONS[i].answer4=jsonRight;
         QUESTIONS[i].correct=4;
       }
-      console.log(QUESTIONS[i]);
+      // console.log(QUESTIONS[i]);
     }
   });
 }
 
 function pickNum(min, max){
+  console.log('In the pickNum() function.');
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -142,7 +144,7 @@ function pickNum(min, max){
 
 function renderPage() {
   console.log('In the renderPage() function.');
-  console.log(`145 Question is: ${STORE.currentQuestion}; View is: ${STORE.currentView}.`);
+  // console.log(`145 Question is: ${STORE.currentQuestion}; View is: ${STORE.currentView}.`);
 
   if (STORE.currentQuestion===0) {
     $('#js-userButton').text('START');
@@ -210,7 +212,7 @@ function renderPage() {
 }
 
 function renderQuestions() {
-  // console.log('In the renderQuestions() function.');
+  console.log('In the renderQuestions() function.');
   //only if the STORE is on pages that show questions
   $('.js-screenQuestion').html(QUESTIONS[STORE.currentQuestion-1].question);
   $('#js-choice1').html(QUESTIONS[STORE.currentQuestion-1].answer1);
@@ -294,7 +296,7 @@ function generateHTML() {
  ********************************************************/
 
 function handleUserButton() {
-  // console.log('In the handleUserButton() function.');
+  console.log('In the handleUserButton() function.');
   $('#js-userButton').on('click', function() {
     $('input[name=choices]').prop('checked', false);
     if(!(STORE.currentView===1 && STORE.radioButtonClicked===false)){
@@ -307,13 +309,13 @@ function handleUserButton() {
 }
 
 function handleRadioButtonClicked() {
-  // console.log('In the handleRadioButtonClicked() function.');
+  console.log('In the handleRadioButtonClicked() function.');
   $('.js-radioButton').on('change',  function() {
     let selectedOption = $('input[name=choices]:checked', '.js-radioButton').val();
     if(selectedOption>0) {STORE.radioButtonClicked=true;}
     QUESTIONS[STORE.currentQuestion-1].userChoice = selectedOption;
-    console.log(`Selected option is ${selectedOption}, ${QUESTIONS[STORE.currentQuestion-1]['answer'+selectedOption]}`);  
-    console.log(`Current Question is: ${STORE.currentQuestion}; current View is: ${STORE.currentView}.`);
+    // console.log(`Selected option is ${selectedOption}, ${QUESTIONS[STORE.currentQuestion-1]['answer'+selectedOption]}`);  
+    // console.log(`Current Question is: ${STORE.currentQuestion}; current View is: ${STORE.currentView}.`);
     //STORE.currentRadioButtonChoice = selectedOption;
     //console.log(STORE);
   });
@@ -324,6 +326,7 @@ function handleRadioButtonClicked() {
  ********************************************************/
 
 function nextView() {
+  console.log('In the nextView() function.');
   if(STORE.currentView===0) {
     STORE.currentView=1;
     STORE.currentQuestion=1;
@@ -341,6 +344,8 @@ function nextView() {
     STORE.currentScore = 0;
     STORE.radioButtonClicked = false;
     QUESTIONS = [];
+    jsonQuestions = [];
+    console.log(QUESTIONS);
     getJsonQuestions();
   }
   // console.log(`Current Question is: ${STORE.currentQuestion}; current View is: ${STORE.currentView}.`);
