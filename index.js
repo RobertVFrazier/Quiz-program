@@ -2,176 +2,233 @@
 'use strict';
 
 /******************************************************** 
- Questions and answers data 
+ Main arrays
 ********************************************************/
 
-let QUESTIONS = [];
-let jsonQuestions = [];
+let QUESTIONS = [];  // Nothing to see here until the data is fetched from the Open Trivia Database (https://opentdb.com/)
 
 /******************************************************** 
- All global constants here. 
+ json data packet variables 
 ********************************************************/
 
-const endpoint = 'https://opentdb.com/';
+const JSON = {  // All the variables connected to the json packet go here.
+  endpoint: 'https://opentdb.com/',
+  apiKey: '',
+  amount: 10,
+  category: 9,
+  type: '',
+  questionsArray: []
+};
 
 /******************************************************** 
  All global variables here. 
 ********************************************************/
 
-const STORE = {
+const STORE = {  // All the variables connected with the state of the DOM go here.
   currentQuestion: 0,
-  currentView: 0,
+  currentView: 'splash',
   currentScore: 0,
-  radioButtonClicked: false,
-  apiKey: '',
-  jsonAmount: 5,
-  jsonCategory: 10,
-  jsonDifficulty: 'medium',
-  jsonType: 'multiple'
+  radioButtonClicked: false
 };
 
 /******************************************************** 
 Step 1: Render the DOM. 
 ********************************************************/
 
-function setup(){
-  getKey();
-  getJsonQuestions();
-}
-
-function getKey(){
-  console.log('In getKey() function');
-  $.getJSON(`${endpoint}api_token.php?command=request`, function(json){
-    //console.log(json.token);
-    STORE.apiKey=json.token;
-  });
-}
-
-function getJsonQuestions(){
-  console.log('In getJsonQuestions() function');
-  let rndAnsArr=[];
-  let tempObj={
-    amount: STORE.jsonAmount===0  ? 'amount=10' : `amount=${STORE.jsonAmount}`,
-    category: STORE.jsonCategory===0  ? '' : `&category=${STORE.jsonCategory}`,
-    difficulty: STORE.jsonDifficulty===0  ? '' : `&difficulty=${STORE.jsonDifficulty}`,
-    type: STORE.jsonType===0  ? '' : `&type=${STORE.jsonType}`,
-    token: STORE.apiKey==='' ? '' : `&token=${STORE.apiKey}`
-  };
-  $.getJSON(`${endpoint}api.php?${tempObj.amount}${tempObj.category}${tempObj.difficulty}${tempObj.type}${tempObj.token}`, function(json){
-    console.log(json);
-    let tempArr=[];
-    for(let i=0; i<STORE.jsonAmount; i++){
-      if(json.results[i].type==='multiple'){
-        tempArr.push(json.results[i].question, json.results[i].correct_answer, json.results[i].incorrect_answers[0], json.results[i].incorrect_answers[1], json.results[i].incorrect_answers[2]);
-        jsonQuestions.push([tempArr]);
-        tempArr=[];
-      } else {
-        tempArr.push(json.results[i].question, json.results[i].correct_answer, json.results[i].incorrect_answers[0]);
-        jsonQuestions.push([tempArr]);
-        tempArr=[];
+const GetAPIPacket = {  // Gets questions data from the Open Trivia Database (https://opentdb.com/).
+  getJsonKey: function(){
+    console.log('In the getKey method');
+    $.getJSON(`${JSON.endpoint}api_token.php?command=request`, function(json){
+      //console.log(json.token);
+      if(json.token!==''){
+        JSON.apiKey=json.token;
       }
-      // End of loop through getting questions.
+    });
+    this.getJsonQuestions();
+  },
+
+  getJsonQuestions: function(){
+    console.log('In the getJsonQuestions method');
+    let tempObj={
+      category: JSON.category===0  ? '' : `&category=${JSON.category}`,
+      type: JSON.type===''  ? '' : `&type=${JSON.type}`,
+      token: JSON.apiKey==='' ? '' : `&token=${JSON.apiKey}`
+    };
+    if(JSON.amount===0){
+      JSON.amount=5;
     }
-    console.log(jsonQuestions);
-    
-    for (let i=0; i<STORE.jsonAmount; i++){
+    $.getJSON(`${JSON.endpoint}api.php?amount=${JSON.amount}${tempObj.category}${tempObj.type}${tempObj.token}`, function(json){
+      console.log('In the json callback function');
+      console.log(`${JSON.endpoint}api.php?amount=${JSON.amount}${tempObj.category}${tempObj.type}${tempObj.token}`);
+      JSON.questionsArray=[];
+      QUESTIONS=[];
+      console.log(JSON.questionsArray);    
+      JSON.questionsArray=json.results;
+      GetAPIPacket.pushToQUESTIONS();
+    }).fail(function() {
+      console.log( 'error' );
+    });
+  },
+
+  pushToQUESTIONS: function(){
+    let newQuestion='';
+    let newChoice1='';
+    let newChoice2='';
+    let newChoice3='';
+    let newChoice4='';
+    let newChoiceCount=0;
+    for(let i=0; i<JSON.amount; i++){
+      newQuestion=JSON.questionsArray[i].question;
+      newChoice1=JSON.questionsArray[i].correct_answer;
+      newChoice2=JSON.questionsArray[i].incorrect_answers[0];
+      if(JSON.questionsArray[i].type==='multiple'){
+        console.log('Adding a multiple question');
+        newChoiceCount=4;
+        newChoice3=JSON.questionsArray[i].incorrect_answers[1];
+        newChoice4=JSON.questionsArray[i].incorrect_answers[2];        
+      } else {
+        console.log('Adding a boolean question');
+        newChoiceCount=2;
+        newChoice3='';
+        newChoice4='';
+      }
       QUESTIONS.push({
-        question: jsonQuestions[i][0][0],
-        answer1: '',
-        answer2: '',
-        answer3: '',
-        answer4: '',
+        question: newQuestion,
+        answer1: newChoice1,
+        answer2: newChoice2,
+        answer3: newChoice3,
+        answer4: newChoice4,
         correct: 0,
         userChoice: 0,
+        choiceCount: newChoiceCount,
       });
-      let jsonRight=jsonQuestions[i][0][1];
-      let jsonOthers=[];
-      jsonOthers.push('');
-      jsonOthers.push(jsonQuestions[i][0][2]);
-      jsonOthers.push(jsonQuestions[i][0][3]);
-      jsonOthers.push(jsonQuestions[i][0][4]);
-      let seqArr=[1,2,3,4];
+    }
+    scrambleChoices.doScrambling();
+  }  
+};
+
+const scrambleChoices = {  // First answer is always right. Scramble the choices so that's not so.
+  doScrambling: function(){
+    console.log('In the doScrambling method');
+    for(let i=0; i<QUESTIONS.length; i++){
+      let rightChoice=QUESTIONS[i].answer1;
+      let wrongChoices=[];
+      wrongChoices.push('');
+      wrongChoices.push(QUESTIONS[i].answer2);
+      if(QUESTIONS[i].choiceCount===4){
+        wrongChoices.push(QUESTIONS[i].answer3);
+        wrongChoices.push(QUESTIONS[i].answer4);      
+      }
+      let seqArr=[];
+      if(QUESTIONS[i].choiceCount===4){
+        seqArr=[1,2,3,4];     
+      } else {
+        seqArr=[1,2];
+      }
       let rndPos=0;
       let rndArr=[];
-      let tmpArr=[];
-      for(let j=4; j>0; j--){
-        rndPos=pickNum(1,j);
-        tmpArr.push(seqArr.splice(rndPos-1,1)+'');
-        rndArr.push(tmpArr[0]+'');
-        // console.log(rndArr);
-        tmpArr=[];
+      for(let j=QUESTIONS[i].choiceCount; j>1; j--){
+        rndPos=this.pickNum(1,j);
+        rndArr.push(seqArr.splice(rndPos-1,1));
       }
-      // console.log(rndArr, jsonOthers);
-      let newAnsers=[];
+      rndArr.push(seqArr.splice(0,1));
+      // rndArr.push(seqArr[0]);
+      let newAnswers=[];
       let pos=0;
-      for(let j=0; j<4; j++){
+      for(let j=0; j<QUESTIONS[i].choiceCount; j++){
         pos = rndArr[j];
-        newAnsers.push(jsonOthers[pos-1]);   
+        newAnswers.push(wrongChoices[pos-1]);   
       }
-      // console.log(newAnsers);
-      QUESTIONS[i].answer1=newAnsers[0];
-      if(QUESTIONS[i].answer1===''){
-        QUESTIONS[i].answer1=jsonRight;
-        QUESTIONS[i].correct=1;
+      for(let j=1; j<=QUESTIONS[i].choiceCount; j++){
+        QUESTIONS[i]['answer'+j]=newAnswers[j-1];
+        if(QUESTIONS[i]['answer'+j]===''){
+          QUESTIONS[i]['answer'+j]=rightChoice;
+          QUESTIONS[i].correct=j;
+        }
       }
-      QUESTIONS[i].answer2=newAnsers[1];
-      if(QUESTIONS[i].answer2===''){
-        QUESTIONS[i].answer2=jsonRight;
-        QUESTIONS[i].correct=2;
-      }
-      QUESTIONS[i].answer3=newAnsers[2];
-      if(QUESTIONS[i].answer3===''){
-        QUESTIONS[i].answer3=jsonRight;
-        QUESTIONS[i].correct=3;
-      }
-      QUESTIONS[i].answer4=newAnsers[3];
-      if(QUESTIONS[i].answer4===''){
-        QUESTIONS[i].answer4=jsonRight;
-        QUESTIONS[i].correct=4;
-      }
-      // console.log(QUESTIONS[i]);
     }
-  });
-}
+    if(STORE.currentView==='settings'){
+      STORE.currentScore = 0;
+      STORE.radioButtonClicked = false;
+      FlipPages.nextView();
+      RenderPage.doShowPages();
+    }
+  },
 
-function pickNum(min, max){
-  console.log('In the pickNum() function.');
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-
-function renderPage() {
-  console.log('In the renderPage() function.');
-  // console.log(`145 Question is: ${STORE.currentQuestion}; View is: ${STORE.currentView}.`);
-
-  if (STORE.currentQuestion===0) {
-    $('#js-userButton').html('START');
-    $('div.js-pageView0HTML').show();
-    $('div.js-pageView1HTML').hide();
-    $('div.js-pageView2HTML').hide();
-    $('div.js-pageView3HTML').hide();
+  pickNum: function(min, max){
+    console.log('In the pickNum method');
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
+};
 
-  if (STORE.currentQuestion>=1 && STORE.currentQuestion<=QUESTIONS.length && STORE.currentView===1){  
-    // console.log(`Current Question is: ${STORE.currentQuestion}; current View is: ${STORE.currentView}.`);
-    $('#js-userButton').html('ENTER');
-    $('.js-currentScore').html(STORE.currentScore);
-    $('.js-currentQuestion').html(STORE.currentQuestion);
-    $('.js-totalQuestions').html(STORE.jsonAmount);
-    renderQuestions();
-    // console.log('Back in the renderPage() function.');  
-    // console.log('Current Question in the STORE is: '+STORE.currentQuestion);
-    $('div.js-pageView0HTML').hide();
-    $('div.js-pageView1HTML').show();
-    $('div.js-pageView2HTML').hide();
-    $('div.js-pageView3HTML').hide();
-  }
+const RenderPage = {  // Determines what HTML to display based on the current state.
+  doShowPages: function(){
+    console.log('In the doShowPages method.');
+    if (STORE.currentQuestion===0 && STORE.currentView==='splash'){
+      this.splashPage();
+    }
+    if (STORE.currentQuestion===0 && STORE.currentView==='settings'){
+      this.settingsPage();
+    }
+    if (STORE.currentQuestion>=1 && STORE.currentQuestion<=QUESTIONS.length && STORE.currentView==='question'){
+      this.questionsPage();
+    }
+    if (STORE.currentQuestion>=1 && STORE.currentQuestion<=QUESTIONS.length && STORE.currentView==='feedback'){
+      this.feedBackPage();
+    }
+    if(STORE.currentQuestion === QUESTIONS.length && STORE.currentView === 'wrap'){
+      this.wrapPage();
+    }
+  },
 
-  if (STORE.currentQuestion>=1 && STORE.currentQuestion<=QUESTIONS.length && STORE.currentView===2){
-    $('#js-userButton').html('CONTINUE');
-    $('.js-correctAnswer').html(QUESTIONS[STORE.currentQuestion-1]['answer'+QUESTIONS[STORE.currentQuestion-1].correct]);
+  splashPage: function(){
+    console.log('In the splashPage method.');
+    $('#js-userButton').text('START');
+    $('div.js-pageViewSplashHTML').show();
+    $('div.js-pageViewSettingsHTML').hide();
+    $('div.js-pageViewQuestionHTML').hide();
+    $('div.js-pageViewFeedBackHTML').hide();
+    $('div.js-pageViewWrapHTML').hide();
+  },
+
+  settingsPage: function(){
+    console.log('In the settingsPage method.');
+    $('#js-userButton').text('ONWARD!');
+    $('div.js-pageViewSplashHTML').hide();
+    $('div.js-pageViewSettingsHTML').show();
+    $('div.js-pageViewQuestionHTML').hide();
+    $('div.js-pageViewFeedBackHTML').hide();
+    $('div.js-pageViewWrapHTML').hide();
+  },
+
+  questionsPage: function(){
+    console.log('In the questionsPage method.');
+    $('#js-userButton').text('ENTER');
+    $('.js-scoreBox').html(`Score: ${STORE.currentScore} of ${QUESTIONS.length}`);
+    $('.js-questionCounter').html(`Question: ${STORE.currentQuestion} of ${QUESTIONS.length}`);
+    this.renderQuestions();
+    if(QUESTIONS[STORE.currentQuestion-1].answer3===''){  // true-false question
+      $('.js-twoMore').hide();
+      document.getElementById('js-radioButtonBox').setAttribute('class','js-twoQuestionBox');
+    } else {
+      $('.js-twoMore').show();
+      document.getElementById('js-radioButtonBox').setAttribute('class','js-fourQuestionBox');
+    }
+    document.getElementById('js-userButton').setAttribute('class','js-userbutton disabled');
+    $('div.js-pageViewSplashHTML').hide();
+    $('div.js-pageViewSettingsHTML').hide();
+    $('div.js-pageViewQuestionHTML').show();
+    $('div.js-pageViewFeedBackHTML').hide();
+    $('div.js-pageViewWrapHTML').hide();
+  },
+
+  feedBackPage: function(){
+    console.log('In the feedbackPage method.');
+    $('#js-userButton').text('CONTINUE');
+    $('.js-feedbackQuestion').html(QUESTIONS[STORE.currentQuestion-1].question);
+    $('.js-correctAnswer').html('THE ANSWER IS:<br/>'+QUESTIONS[STORE.currentQuestion-1]['answer'+QUESTIONS[STORE.currentQuestion-1].correct]);
     $('.js-userAnswer').html('YOUR ANSWER:<br/>'+QUESTIONS[STORE.currentQuestion-1]['answer'+QUESTIONS[STORE.currentQuestion-1].userChoice]);
     if(QUESTIONS[STORE.currentQuestion-1].userChoice+'' === QUESTIONS[STORE.currentQuestion-1].correct+''){
       STORE.currentScore++;
@@ -183,192 +240,290 @@ function renderPage() {
       $('.js-feedBackImageWrong').show();
       $('.js-userAnswer').show();     
     }
-    $('.js-currentScore').html(STORE.currentScore);
-    $('.js-totalQuestions').html(STORE.jsonAmount);
-    $('.js-currentQuestion').html(STORE.currentQuestion);
-    $('div.js-pageView0HTML').hide();
-    $('div.js-pageView1HTML').hide();
-    $('div.js-pageView2HTML').show();
-    $('div.js-pageView3HTML').hide();
-  }
+    $('.js-scoreBox').html(`Score: ${STORE.currentScore} of ${QUESTIONS.length}`);
+    $('.js-questionCounter').html(`Question: ${STORE.currentQuestion} of ${QUESTIONS.length}`);
+    $('div.js-pageViewSplashHTML').hide();
+    $('div.js-pageViewSettingsHTML').hide();
+    $('div.js-pageViewQuestionHTML').hide();
+    $('div.js-pageViewFeedBackHTML').show();
+    $('div.js-pageViewWrapHTML').hide();
+  },
 
-  let listHTML='';
-  for(let i=0; i<QUESTIONS.length; i++) {
-    listHTML+=`<li>${QUESTIONS[i].question}<br/>Answer: ${QUESTIONS[i]['answer'+QUESTIONS[i].correct]}<br/><span class='js-yours'>Yours: ${QUESTIONS[i]['answer'+QUESTIONS[i].userChoice]}</span></li>`;
-  }
-  if(STORE.currentQuestion === QUESTIONS.length && STORE.currentView === 3) {
-    $('#js-userButton').html('PLAY AGAIN?');
-    $('.js-currentScore').html(STORE.currentScore);
-    $('.js-totalQuestions').html(STORE.jsonAmount);
-    $('.js-currentQuestion').html(STORE.currentQuestion);
-    $('.js-scorePercent').html((STORE.currentScore/STORE.currentQuestion)*100 + '%');
+  wrapPage: function(){
+    console.log('In the wrapPage method.');
+    let listHTML='';
+    for(let i=0; i<QUESTIONS.length; i++) {
+      if((QUESTIONS[i].correct+''!==QUESTIONS[i].userChoice+'') && QUESTIONS[i].choiceCount+''==='4'){
+        listHTML+=`<li>${QUESTIONS[i].question}<br/>Answer: <span class='js-correct'>${QUESTIONS[i]['answer'+QUESTIONS[i].correct]}</span><br/>Yours: <span class='js-incorrect'>${QUESTIONS[i]['answer'+QUESTIONS[i].userChoice]}  X</span></li>`;
+      } else if((QUESTIONS[i].correct+''!==QUESTIONS[i].userChoice+'') && QUESTIONS[i].choiceCount+''==='2'){
+        listHTML+=`<li>${QUESTIONS[i].question}<br/>Yours: <span class='js-incorrect'>${QUESTIONS[i]['answer'+QUESTIONS[i].userChoice]}  X</span></li>`;
+      } else {
+        listHTML+=`<li>${QUESTIONS[i].question}<br/>Yours: <span class='js-correct'>${QUESTIONS[i]['answer'+QUESTIONS[i].userChoice]}  ✔</span></li>`;
+      }
+    }
+    $('#js-userButton').text('PLAY AGAIN?');
+    $('.js-scoreBox').html(`Score: ${STORE.currentScore} of ${QUESTIONS.length}`);
+    let newPercent=(STORE.currentScore/STORE.currentQuestion)*100;
+    $('.js-scorePercent').html(Math.round((newPercent + 0.00001) * 100) / 100 + '%');
     $('.js-evalList').html(listHTML);
-    $('div.js-pageView0HTML').hide();
-    $('div.js-pageView1HTML').hide();
-    $('div.js-pageView2HTML').hide();
-    $('div.js-pageView3HTML').show();
+    $('div.js-pageViewSplashHTML').hide();
+    $('div.js-pageViewSettingsHTML').hide();
+    $('div.js-pageViewQuestionHTML').hide();
+    $('div.js-pageViewFeedBackHTML').hide();
+    $('div.js-pageViewWrapHTML').show();
+  },
 
+  renderQuestions: function(){
+    console.log('In the renderQuestions method.');
+    //only if the STORE is on pages that show questions
+    $('.js-screenQuestion').html(QUESTIONS[STORE.currentQuestion-1].question);
+    $('#js-choice1').html(QUESTIONS[STORE.currentQuestion-1].answer1);
+    $('#js-choice2').html(QUESTIONS[STORE.currentQuestion-1].answer2);
+    $('#js-choice3').html(QUESTIONS[STORE.currentQuestion-1].answer3);
+    $('#js-choice4').html(QUESTIONS[STORE.currentQuestion-1].answer4);
+    $('div.js-pageViewQuestionHTML').show();
   }
-}
+};
 
-function renderQuestions() {
-  console.log('In the renderQuestions() function.');
-  //only if the STORE is on pages that show questions
-  $('.js-screenQuestion').html(QUESTIONS[STORE.currentQuestion-1].question);
-  $('#js-choice1').html(QUESTIONS[STORE.currentQuestion-1].answer1);
-  $('#js-choice2').html(QUESTIONS[STORE.currentQuestion-1].answer2);
-  $('#js-choice3').html(QUESTIONS[STORE.currentQuestion-1].answer3);
-  $('#js-choice4').html(QUESTIONS[STORE.currentQuestion-1].answer4);
-  $('div.js-pageView1HTML').show();
-}
+const GenerateHTML = {  // Here's where the extra HTML comes from.
+  doHtmlPages: function(){
+    console.log('In the doHtmlPages method.');
+    this.splashHtml();
+    this.settingsHtml();
+    this.questionHtml();
+    this.feedBackHtml();
+    this.wrapHtml();
+  },
 
-function generateHTML() {
-  console.log('In the generateHTML() function.');
+  splashHtml: function(){
+    console.log('In the splashHtml method.');
+    // Set up splash page, then hide it.
 
-  // Set up Page 0, then hide it.
-  // <h1>Welcome to our Michael Jordan quiz!
-  let quizHeader = `
-  <img src="QuizTime.jpg" class="js-splash-page" alt="Let's get Thinkful, because it's Quiz Time! Cartoon person in a thinking pose next to a huge red question mark.">
-  <br/>`;
-  $('div.js-pageView0HTML').html(quizHeader);
-  $('div.js-pageView0HTML').hide();
+    let quizSplashHTML = `
+      <div class='js-splashPage'>
+        <h1><span class='smallText' role='title'>Let's get Thinkful, because it's</span><br>Quiz Time!</h1>
+        <button type = 'button' id='js-settingsButton' class='none' tabindex '2'>Settings</button>
+      </div>`;
 
-  // Set up Page 1, then hide it.
+    $('div.js-pageViewSplashHTML').html(quizSplashHTML);
+    $('div.js-pageViewSplashHTML').hide();
+  },
 
-  let quizQuestionsHTML = `
-    <div id='js-scoreBox'>Score: <span class='js-currentScore'></span> of <span class='js-totalQuestions'></span></div>
-    <h3>Question <span class='js-currentQuestion'></span> of <span class='js-totalQuestions'></span>:</h3>
-      <div class='js-screenQuestion'></div>
-      <div class='js-radioButton' name='js-radioButton'>
-       <input type='radio' name='choices' value=1>
-        <label for='choice1' id='js-choice1'></label><br/>
-        
-        <input type='radio' name='choices' value=2>
-        <label for='choice1' id='js-choice2'></label><br/>
-        
-        <input type='radio' name='choices' value=3>
-        <label for='choice1' id='js-choice3'></label><br/>
-        
-        <input type='radio' name='choices' value=4>
-        <label for='choice1' id='js-choice4'></label><br/>
+  settingsHtml: function(){
+    console.log('In the settingsHtml method.');
+    // Set up splash page, then hide it.
+
+    let quizSettingsHTML = `
+      <div class='js-settingsPage'>
+        <img src="settings.jpg" class="js-settingsImage" alt="Settings screen: picture of machinery and gauges.">
       </div>
-    <br/>
-    <br/>
-    <br/>
-  `;
-  // NOTE: The question and the five choices will be inserted in the correct places above, in renderQuestions().
-  $('div.js-pageView1HTML').html(quizQuestionsHTML);
-  $('div.js-pageView1HTML').hide();
 
-  // Set up Page 2, then hide it.
+      <form action='/userSettings' method='post' class='js-settingsForm'>
+        <span class='js-1stWidget'>
+          <label for='js-questionsToDo' class='js-questionsPickerLabel'>How many questions?</label>
+          <select id='js-questionsToDo' onchange='Listeners.handleQuestionsToDo()'>
+            <option value='10'>10 questions</option>
+            <option value='20'>20 questions</option>
+            <option value='30'>30 questions</option>
+            <option value='40'>40 questions</option>
+            <option value='50'>50 questions</option>
+          </select>
+        </span>
 
-  let quizFeedbackHTML = `
-    <div id='js-scoreBox'>Score: <span class='js-currentScore'></span> of <span class='js-totalQuestions'></span></div>
-    <h3>Question <span class='js-currentQuestion'></span> of <span class='js-totalQuestions'></span>:</h3>
-    <img src="Right.jpg" class="js-feedBackImageRight" alt="Big green check mark"></div>
-    <img src="Wrong.jpg" class="js-feedBackImageWrong" alt="Big red X"></div>
-    <div class='js-screenQuestion'></div><br/>
-    <div class='js-correctAnswer'></div><br/>
-    <div class='js-userAnswer'><br/></div>
-    <br/>
-    <br/>
-    <br/>
-  `;
-  $('div.js-pageView2HTML').html(quizFeedbackHTML);
-  $('div.js-pageView2HTML').hide();
+        <span class='js-2ndWidget'>
+          <label for='js-category' class='js-categoryPickerLabel'>Which category?</label>
+          <select id='js-category' onchange='Listeners.handleCategory()'>
+            <option value='9'>General Knowledge</option>
+            <option value='21'>Sports</option>
+            <option value='20'>Mythology</option>
+            <option value='23'>History</option>
+            <option value='12'>Music</option>
+          </select>
+        </span>
+      </form>`;
 
-  // Set up Page 3, then hide it.
+    $('div.js-pageViewSettingsHTML').html(quizSettingsHTML);
+    $('div.js-pageViewSettingsHTML').hide();
+  },
 
-  let quizWrapup = `
-    <div id='js-scoreBox'>Score: <span class='js-currentScore'></span> of <span class='js-totalQuestions'></span></div>
-    <h3>Question <span class='js-currentQuestion'></span> of <span class='js-totalQuestions'></span>:</h3>
-    <h2>Here's how you did:</h2>
-    <h3 class='js-scorePercent'></h3>
-    <ol class='js-evalList'></ol>
-    <br/>
-  `;
-  $('div.js-pageView3HTML').html(quizWrapup);
-  $('div.js-pageView3HTML').hide();
-}
+  questionHtml: function(){
+    console.log('In the questionHtml method.');
+    // Set up question page, then hide it.
+
+    let quizQuestionsHTML = `
+      <div class='js-settingsPage'>
+        <img src='questions.jpg' class='js-questionsImage' alt='Question screen: picture of a person walking out of fog.'>
+      </div>
+      <span class='js-scoreBox'></span>
+      <span class='js-questionCounter'></span>
+        <span class='js-screenQuestion'></span>
+        <span id='js-radioButtonBox' class='none'>
+          <span class='js-radioButton' name='js-radioButton'>
+            <input type='radio' name='choices' value=1>
+            <label for='choice1' id='js-choice1'></label><br/>            
+            <input type='radio' name='choices' value=2>
+            <label for='choice1' id='js-choice2'></label><br/>            
+            <span class='js-twoMore'><input type='radio' name='choices' value=3>
+            <label for='choice1' id='js-choice3'></label><br/>            
+            <input type='radio' name='choices' value=4>
+            <label for='choice1' id='js-choice4'></label><br/></span>
+          </span>
+        </span>
+    `;
+    // NOTE: The question and the five choices will be inserted in the correct places above, in renderQuestions().
+    $('div.js-pageViewQuestionHTML').html(quizQuestionsHTML);
+    $('div.js-pageViewQuestionHTML').hide();
+  },
+
+  feedBackHtml: function(){
+    console.log('In the feedBackHtml method.');
+    // Set up feedback page, then hide it.
+
+    let quizFeedbackHTML = `
+      <div class='js-settingsPage'>
+        <img src='feedback.jpg' class='js-feedbackImage' alt='Feedback screen: picture of mountains in the mist.'>
+      </div>
+      <span class='js-scoreBox'></span>
+      <span class='js-questionCounter'></span>
+      <img src="yes.png" class="js-feedBackImageRight" alt="Yes"></span>
+      <img src="no.png" class="js-feedBackImageWrong" alt="No"></span>
+      <span class='js-feedbackQuestion'></span><br/>
+      <span class='js-correctAnswer'></span><br/>
+      <span class='js-userAnswer'><br/></span>
+      <br/>
+      <br/>
+      <br/>
+    `;
+    $('div.js-pageViewFeedBackHTML').html(quizFeedbackHTML);
+    $('div.js-pageViewFeedBackHTML').hide();
+  },
+
+  wrapHtml: function(){
+    console.log('In the wrapHtml method.');
+    // Set up wrap page, then hide it.
+
+    let quizWrapHTML = `
+      <div class='js-settingsPage'>
+        <img src='wrap.jpg' class='js-wrapImage' alt='Wrap-up of quiz screen: picture of a sunset.'>
+      </div>
+      <span class='js-scoreBox'></span>
+      <span class='js-wrapScore'>Here's how you did:<br/>
+        <span class='js-scorePercent'></span>
+      </span>
+      <ol class='js-evalList'></ol>
+      <br/>
+    `;
+    $('div.js-pageViewWrapHTML').html(quizWrapHTML);
+    $('div.js-pageViewWrapHTML').hide();
+  }
+};
 
 /******************************************************** 
  * Step 2: Listen for user interactions.
  ********************************************************/
 
-function handleUserButton() {
-  console.log('In the handleUserButton() function.');
-  $('#js-userButton').on('click', function() {
-    $('input[name=choices]').prop('checked', false);
-    if(!(STORE.currentView===1 && STORE.radioButtonClicked===false)){
-      nextView();
-      renderPage();
-    }
-  });
-  //updates the STORE 
-  //call respondToUserButton(){}
-}
+const Listeners = {  // All listener methods. More to come here.
+  listen: function(){
+    console.log('In the listen method');
+    this.handleUserButton();
+    this.handleRadioButtonClicked();
+    this.handleSettingsButton();
+  },
 
-function handleRadioButtonClicked() {
-  console.log('In the handleRadioButtonClicked() function.');
-  $('.js-radioButton').on('change',  function() {
-    let selectedOption = $('input[name=choices]:checked', '.js-radioButton').val();
-    if(selectedOption>0) {STORE.radioButtonClicked=true;}
-    QUESTIONS[STORE.currentQuestion-1].userChoice = selectedOption;
-    // console.log(`Selected option is ${selectedOption}, ${QUESTIONS[STORE.currentQuestion-1]['answer'+selectedOption]}`);  
-    // console.log(`Current Question is: ${STORE.currentQuestion}; current View is: ${STORE.currentView}.`);
-    //STORE.currentRadioButtonChoice = selectedOption;
-    //console.log(STORE);
-  });
-}
+  handleUserButton: function(){
+    console.log('In the handleUserButton method');
+    $('#js-userButton').on('click', function() {
+      $('input[name=choices]').prop('checked', false);
+      console.log('Main button clicked.');
+      if(STORE.currentView==='settings'){
+        GetAPIPacket.getJsonKey();
+        // STORE.currentScore = 0;
+        // STORE.radioButtonClicked = false;
+        // FlipPages.nextView();
+        // RenderPage.doShowPages();
+      } else if(!(STORE.currentView==='question' && STORE.radioButtonClicked===false)){
+        FlipPages.nextView();
+        RenderPage.doShowPages();
+      }
+    });
+  },
+
+  handleRadioButtonClicked: function(){
+    console.log('In the handleRadioButtonClicked method');
+    $('.js-radioButton').on('change',  function() {
+      let selectedOption = $('input[name=choices]:checked', '.js-radioButton').val();
+      if(selectedOption>0) {
+        STORE.radioButtonClicked=true;
+        document.getElementById('js-userButton').setAttribute('class','js-userbutton');
+      }
+      QUESTIONS[STORE.currentQuestion-1].userChoice = selectedOption;
+    });
+  },
+
+  handleSettingsButton: function(){
+    console.log('In the handleSettingsButton method');
+    $('#js-settingsButton').on('click', function() {
+      STORE.currentView='settings';
+      RenderPage.doShowPages();
+    });
+  },
+
+  handleQuestionsToDo: function(){
+    console.log('In the handleQuestionsToDo method');
+    let myDropdown = document.getElementById('js-questionsToDo');
+    JSON.amount=myDropdown.value;
+  },
+
+  handleCategory: function(){    
+    console.log('In the handleCategory method');
+    let myDropdown = document.getElementById('js-category');
+    JSON.category=myDropdown.value;
+  }
+};
 
 /******************************************************** 
  * Step 3: Change the state of the STORE. 
  ********************************************************/
 
-function nextView() {
-  console.log('In the nextView() function.');
-  if(STORE.currentView===0) {
-    STORE.currentView=1;
-    STORE.currentQuestion=1;
-  } else if(STORE.currentView===1 && STORE.currentQuestion<=QUESTIONS.length) {
-    STORE.currentView=2;
-  } else if(STORE.currentView===2 && STORE.currentQuestion<QUESTIONS.length) {
-    STORE.currentView=1;
-    STORE.radioButtonClicked = false;
-    STORE.currentQuestion++;
-  } else if(STORE.currentView===2 && STORE.currentQuestion===QUESTIONS.length) {
-    STORE.currentView=3;
-  } else if(STORE.currentView===3 && STORE.currentQuestion===QUESTIONS.length) {
-    STORE.currentQuestion = 0;
-    STORE.currentView = 0;
-    STORE.currentScore = 0;
-    STORE.radioButtonClicked = false;
-    QUESTIONS = [];
-    jsonQuestions = [];
-    console.log(QUESTIONS);
-    getJsonQuestions();
+const FlipPages = {  // Update the DOM by changing the STORE variables on clicking the user button.
+  nextView: function(){
+    console.log('In the nextView method.');
+    if(STORE.currentView==='splash' && STORE.currentQuestion===0){
+      STORE.currentView='question';
+      STORE.currentQuestion=1;
+    } else if(STORE.currentView==='settings'){
+      STORE.currentView='question';
+      STORE.currentQuestion=1;
+    } else if(STORE.currentView==='question' && STORE.currentQuestion<=QUESTIONS.length){
+      STORE.currentView='feedback';
+    } else if(STORE.currentView==='feedback' && STORE.currentQuestion<QUESTIONS.length){
+      STORE.currentView='question';
+      STORE.radioButtonClicked = false;
+      STORE.currentQuestion++;
+    } else if(STORE.currentView==='feedback' && STORE.currentQuestion===QUESTIONS.length){
+      STORE.currentView='wrap';
+    } else if(STORE.currentView==='wrap' && STORE.currentQuestion===QUESTIONS.length){
+      STORE.currentQuestion = 0;
+      STORE.currentView = 'splash';
+      STORE.currentScore = 0;
+      STORE.radioButtonClicked = false;
+      QUESTIONS = [];
+      GetAPIPacket.getJsonQuestions();
+    }
   }
-  // console.log(`Current Question is: ${STORE.currentQuestion}; current View is: ${STORE.currentView}.`);
-}
-
-
-/******************************************************** 
- * Step 4: Re-render based on the new state of the STORE. 
- ********************************************************/
-
-// No other functions needed to make this happen.
+};
 
 /******************************************************** 
  * Step 0: Wait for page to load, then begin. Once only.
  ********************************************************/
 
-$(()=>{
+$(()=>{  // Get the API data, add HTML, render pages, attach listeners.
   console.log('Begin the Quiz program.');
-  setup();
-  generateHTML();
-  renderPage();
-  handleUserButton();
-  handleRadioButtonClicked();
+  GetAPIPacket.getJsonKey();
+  GenerateHTML.doHtmlPages();
+  RenderPage.doShowPages();
+  Listeners.listen();
 });
+
 
 // Render -> User Input (Event Listener) -> State Changes (Update the STORE) -> Re-Render
