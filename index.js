@@ -240,7 +240,7 @@ const RenderPage = {  // Determines what HTML to display based on the current st
       $('.js-feedBackImageWrong').show();
       $('.js-userAnswer').show();     
     }
-    $('.js-scoreBox').html(`Score: ${STORE.currentScore} of ${QUESTIONS.length}`);
+    $('.js-scoreBox').html(`Score: ${STORE.currentScore} correct, ${STORE.currentQuestion - STORE.currentScore} incorrect.`);
     $('.js-questionCounter').html(`Question: ${STORE.currentQuestion} of ${QUESTIONS.length}`);
     $('div.js-pageViewSplashHTML').hide();
     $('div.js-pageViewSettingsHTML').hide();
@@ -262,7 +262,7 @@ const RenderPage = {  // Determines what HTML to display based on the current st
       }
     }
     $('#js-userButton').text('PLAY AGAIN?');
-    $('.js-scoreBox').html(`Score: ${STORE.currentScore} of ${QUESTIONS.length}`);
+    $('.js-scoreBox').html(`Score: ${STORE.currentScore} correct, ${STORE.currentQuestion - STORE.currentScore} incorrect.`);
     let newPercent=(STORE.currentScore/STORE.currentQuestion)*100;
     $('.js-scorePercent').html(Math.round((newPercent + 0.00001) * 100) / 100 + '%');
     $('.js-evalList').html(listHTML);
