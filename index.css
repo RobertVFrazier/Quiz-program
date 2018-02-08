@@ -1,185 +1,128 @@
-@media only screen and (orientation:portrait){
+.title{
+    text-align: center;
+    font-family: 'Permanent Marker', cursive;
+    font-weight: 200;
+    width: 100%;
+    color: red;
+}
 
-    .title{
-        text-align: center;
-        font-family: 'Permanent Marker', cursive;
-        font-weight: 200;
-        width: 100%;
-    }
+.container{
+    background-image:  url("thinker_question.png"),
+        url("beach_square.jpg");
+    background-repeat: no-repeat,
+        no-repeat;
+    background-position: center,
+        center;
+    background-size: 90%,
+        cover;
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+}
+
+.buttonForm{
+    position: absolute;
+    width: 100%;
+}
+
+.js-button{
+    display: block;
+    margin: 0 auto;
+    z-index: 50;
+    font-weight: 700;
+}
+
+.js-userbutton {
+    border-color: yellow;
+    background-color: gold;
+    color: purple;
+}
+
+.js-settingsbutton {
+    border-color: #a25840;
+    background-color: #c2846b;
+    color: black;
+}
+
+.js-userbutton.disabled{
+    background-color: lightgrey;
+    border-color: grey;
+    color: darkgrey;
+    opacity: 0.75;
+    cursor: not-allowed;
+}
+
+@media only screen and (orientation: portrait){
 
     .smallTitle{
         padding-top: 1em;
-        font-size: 3.5em;
-        color: red;
+        font-size: 3vh;
     }
 
     .bigTitle {
-        font-size: 10em;
+        font-size: 9vh;
         color: black;
     }
 
     .container{
-        background-image:  url("thinker_question.png"),
-            url("beach_square.jpg");
-        background-repeat: no-repeat,
-            no-repeat;
-        background-position: center,
-            center;
-        background-size: 90%,
-            cover;
-        position: relative;
-        display: block;
-        margin: 0 auto;
-        border 2px solid red;
-        width: 100%;
-        height: 100%;
+        background-size: 90%, cover;
     }
 
     .buttonForm{
-        position: absolute;
-        width: 100%;
-        bottom: 25px;
+        bottom: 20px;
     }
     
     .buttonBox{
+        display: block;
+        margin: 0 auto;
         padding-top: 10px;
         padding-bottom: 10px;
+        fit-content = min(max-content fill-available);
+        max-width: 32%;
     }
 
     .js-button{
-        display: block;
-        margin: 0 auto;
-        z-index: 50;
-        width: 320px;
-        height: 80px;
+        width: 100%;
+        height: 100%;
         border-radius: 40px;
-        font-size: 3em;
-        font-weight: 700;
+        font-size: 3vh;
     }
-
-    .js-userbutton {
-        border-color: yellow;
-        background-color: gold;
-        color: purple;
-    }
-
-    .js-settingsbutton {
-        border-color: #a25840;
-        background-color: #c2846b;
-        color: black;
-    }
-    
-    /* .js-userbutton:focus{
-        border-color: yellow;    
-        background-color: gold;
-        color: purple;
-    } */
-    
-    .js-userbutton.disabled{
-        background-color: lightgrey;
-        border-color: grey;
-        color: darkgrey;
-        opacity: 0.75;
-        cursor: not-allowed;
-    }
-    
-    /* .js-settingsbutton:focus{
-        border-color: #a25840;
-        background-color: #c2846b;
-        color: black;
-    } */
 }
 
-@media only screen and (orientation: landscape) {
-
-    .title{
-        text-align: center;
-        font-family: 'Permanent Marker', cursive;
-        font-weight: 200;
-        width: 100%;
-    }
+@media only screen and (orientation: landscape){
 
     .smallTitle{
         padding-top: 0.2em;
-        font-size: 2em;
-        color: red;
+        font-size: 6vh;
     }
 
     .bigTitle {
-        font-size: 5.3em;
+        font-size: 12vh;
         color: black;
     }
 
     .container{
-        background-image:  url("thinker_question.png"),
-            url("beach_square.jpg");
-        background-repeat: no-repeat,
-            no-repeat;
-        background-position: center,
-            center;
-        background-size: 45%,
-            cover;
-        position: relative;
-        display: block;
-        margin: 0 auto;
-        border 2px solid red;
-        width: 100%;
-        height: 100%;
+        background-size: 45%, cover;
     }
 
     .buttonForm{
-        position: absolute;
-        width: 100%;
         bottom: 6px;
     }
     
     .buttonBox{
         padding-top: 4px;
         padding-bottom: 4px;
+        height: 5%;
     }
 
     .js-button{
-        display: block;
-        margin: 0 auto;
-        z-index: 50;
         width: 180px;
-        height: 50px;
+        height: 100%;
         border-radius: 24px;
         font-size: 1.8em;
-        font-weight: 700;
     }
-
-    .js-userbutton {
-        border-color: yellow;
-        background-color: gold;
-        color: purple;
-    }
-
-    .js-settingsbutton {
-        border-color: #a25840;
-        background-color: #c2846b;
-        color: black;
-    }
-    
-    /* .js-userbutton:focus{
-        border-color: yellow;    
-        background-color: gold;
-        color: purple;
-    } */
-    
-    .js-userbutton.disabled{
-        background-color: lightgrey;
-        border-color: grey;
-        color: darkgrey;
-        opacity: 0.75;
-        cursor: not-allowed;
-    }
-    
-    /* .js-settingsbutton:focus{
-        border-color: #a25840;
-        background-color: #c2846b;
-        color: black;
-    } */
 }
 
 .js-splashImage{
