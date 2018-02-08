@@ -67,66 +67,123 @@ html {
   /* END OF CSS RESET. ACTUAL CSS STARTS BELOW. */
   /**********************************************/
   
-h1 {    
-    text-align: center;
-    font-family: 'Permanent Marker', cursive;
-    font-weight: 200;
-    font-size: 5em;
-    color: black;
+@media only screen and (orientation:portrait){
+
+    .title{
+        text-align: center;
+        font-family: 'Permanent Marker', cursive;
+        font-weight: 200;
+        width: 100%;
+    }
+
+    .smallTitle{
+        padding-top: 1em;
+        font-size: 3.5em;
+        color: red;
+    }
+
+    .bigTitle {
+        font-size: 10em;
+        color: black;
+    }
+
+    .container{
+        background-image:  url("thinker_question.png"),
+            url("beach_square.jpg");
+        background-repeat: no-repeat,
+            no-repeat;
+        background-position: center,
+            center;
+        background-size: 90%,
+            cover;
+        position: relative;
+        display: block;
+        margin: 0 auto;
+        border 2px solid red;
+        width: 100%;
+        height: 100%;
+    }
+
+    .js-userbutton {
+        display: block;
+        margin: 0 auto;
+        z-index: 50;
+        width: 320px;
+        height: 80px;
+        border-radius: 40px;
+        font-size: 3em;
+        font-weight: 700;
+        border-color: yellow;
+        background-color: gold;
+        color: purple;
+    }
+
+    .js-settingsbutton {
+        display: block;
+        margin: 0 auto;
+        z-index: 50;
+        width: 320px;
+        height: 80px;
+        border-radius: 40px;
+        font-size: 3em;
+        font-weight: 700;
+        border-color: #a25840;
+        background-color: #c2846b;
+        color: black;
+    }
 }
 
-h1 .smallText{
-    font-size: 0.3em;
-    color: red;
-}
+/* @media only screen and (orientation: portrait) {
 
-.js-startPage{
-    position: relative;
-    background-color: yellow;
-    height: 100%;
-}
+    h1 {    
+        text-align: center;
+        font-family: 'Permanent Marker', cursive;
+        font-weight: 200;
+        font-size: 5.5rem;
+        color: black;
+    }
+    
+    h1 .smallText{
+        font-size: 1.8rem;
+        color: red;
+    }
 
-.container{
-    background-image:  url("thinker_question.png"),
-        url("beach_square.jpg");
-    background-repeat: no-repeat,
-        no-repeat;
-    background-position: center,
-        center;
-    background-size: 60%,
-        cover;
-    position: relative;
-    display: block;
-    margin: 0 auto;
-    border 2px solid red;
-    width: 100%;
-    height: 100%;
-}
+    .container{
+        background-image:  url("thinker_question.png"),
+            url("beach_square.jpg");
+        background-repeat: no-repeat,
+            no-repeat;
+        background-position: center,
+            center;
+        background-size: 85%,
+            cover;
+        position: relative;
+        display: block;
+        margin: 0 auto;
+        border 2px solid red;
+        width: 100%;
+        height: 100%;
+    }
+} */
 
-#js-userbutton {    
+.buttonForm{
     position: absolute;
-    bottom: 5px;
-    left: 126px;
-    z-index: 50;
-    width: 160px;
-    height: 40px;
-    border-radius: 20px;
-    font-size: 20px;
-    font-weight: 700;
-    margin-left: auto;
-    margin-right: auto;
-    border-color: grey;
-    background-color: black;
-    color: white;
+    width: 100%;
+    bottom: 25px;
 }
 
-#js-userbutton:focus{
+.buttonBox{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* .js-userbutton:focus{
     border-color: yellow;    
     background-color: gold;
     color: purple;
-}
+} */
 
-#js-userbutton.disabled{
+.js-userbutton.disabled{
     background-color: lightgrey;
     border-color: grey;
     color: darkgrey;
@@ -134,28 +191,11 @@ h1 .smallText{
     cursor: not-allowed;
 }
 
-#js-settingsbutton {
-    position: absolute;
-    bottom: 55px;
-    left: 126px;
-    z-index: 50;
-    width: 160px;
-    height: 40px;
-    border-radius: 20px;
-    font-size: 20px;
-    font-weight: 700;
-    margin-left: auto;
-    margin-right: auto;
-    border-color: grey;
-    background-color: black;
-    color: white;
-}
-
-#js-settingsbutton:focus{
+/* .js-settingsbutton:focus{
     border-color: #a25840;
     background-color: #c2846b;
     color: black;
-}
+} */
 
 .js-splashImage{
     display: block;
@@ -413,4 +453,3 @@ h1 .smallText{
     border: 1px solid #454545;
     border-radius: 5px;
 }
-

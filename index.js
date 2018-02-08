@@ -185,7 +185,7 @@ const RenderPage = {  // Determines what HTML to display based on the current st
 
   splashPage: function(){
     console.log('In the splashPage method.');
-    $('#js-userButton').text('START');
+    $('#js-userButton').text('START').focus();
     $('div.js-pageViewSplashHTML').show();
     $('div.js-pageViewSettingsHTML').hide();
     $('div.js-pageViewQuestionHTML').hide();
@@ -301,8 +301,8 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
 
     let quizSplashHTML = `
       <div class='js-splashPage'>
-        <h1><span class='smallText' role='title'>Let's get Thinkful, because it's</span><br>Quiz Time!</h1>
-        <button type = 'button' id='js-settingsButton' class='none' tabindex '2'>Settings</button>
+        <p class='title smallTitle' role='title'>Let's get Thinkful, because it's</p>
+        <p class='title bigTitle' role='title'>Quiz Time!</p>
       </div>`;
 
     $('div.js-pageViewSplashHTML').html(quizSplashHTML);

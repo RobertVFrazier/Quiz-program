@@ -6,12 +6,15 @@
   </head>
   <body>
     <main class = "container" role="container">
-      <div class = "js-pageViewSplashHTML"></div>
-      <div class = "js-pageViewSettingsHTML"></div>
-      <div class = "js-pageViewQuestionHTML"></div>
-      <div class = "js-pageViewFeedBackHTML"></div>
-      <div class = "js-pageViewWrapHTML"></div>
-      <button type = "button" id="js-userButton" class="none" tabindex "1")></button>
+      <div class = "js-pageViewSplashHTML" role = "page"></div>
+      <div class = "js-pageViewSettingsHTML" role = "page"></div>
+      <div class = "js-pageViewQuestionHTML" role = "page"></div>
+      <div class = "js-pageViewFeedBackHTML" role = "page"></div>
+      <div class = "js-pageViewWrapHTML" role = "page"></div>
+      <form class = "buttonForm" role="form">
+        <div class = "buttonBox"><button type = 'button' id='js-settingsButton' class='js-settingsButton' tabindex '2'>Settings</button></div>
+        <div class = "buttonBox"><button type = "button" id="js-userButton" class="js-userButton" tabindex "1")></button></div>
+      </form>
     </main>
     <script src="https://code.jquery.com/jquery-3.2.1.js"></script>
     <script type="text/javascript" src="index.js"></script>
