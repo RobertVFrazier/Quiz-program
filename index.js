@@ -185,8 +185,9 @@ const RenderPage = {  // Determines what HTML to display based on the current st
 
   splashPage: function(){
     console.log('In the splashPage method.');
+    $('#js-settingsButton').show();
     $('#js-userButton').text('START').focus();
-    $('div.js-pageViewSplashHTML').show();
+    $('div.js-pageViewSplashHtml').show();
     $('div.js-pageViewSettingsHTML').hide();
     $('div.js-pageViewQuestionHTML').hide();
     $('div.js-pageViewFeedBackHTML').hide();
@@ -195,8 +196,9 @@ const RenderPage = {  // Determines what HTML to display based on the current st
 
   settingsPage: function(){
     console.log('In the settingsPage method.');
+    $('#js-settingsButton').hide();
     $('#js-userButton').text('ONWARD!');
-    $('div.js-pageViewSplashHTML').hide();
+    $('div.js-pageViewSplashHtml').hide();
     $('div.js-pageViewSettingsHTML').show();
     $('div.js-pageViewQuestionHTML').hide();
     $('div.js-pageViewFeedBackHTML').hide();
@@ -205,8 +207,9 @@ const RenderPage = {  // Determines what HTML to display based on the current st
 
   questionsPage: function(){
     console.log('In the questionsPage method.');
+    $('#js-settingsButton').hide();
     $('#js-userButton').text('ENTER');
-    $('.js-scoreBox').html(`Score: ${STORE.currentScore} correct, ${STORE.currentQuestion - STORE.currentScore} incorrect.`);
+    $('.js-scoreBox').html(`Score: ${STORE.currentScore} correct, ${(STORE.currentQuestion - STORE.currentScore)-1} incorrect.`);
     $('.js-questionCounter').html(`Question: ${STORE.currentQuestion} of ${QUESTIONS.length}`);
     this.renderQuestions();
     if(QUESTIONS[STORE.currentQuestion-1].answer3===''){  // true-false question
@@ -216,8 +219,8 @@ const RenderPage = {  // Determines what HTML to display based on the current st
       $('.js-twoMore').show();
       document.getElementById('js-radioButtonBox').setAttribute('class','js-fourQuestionBox');
     }
-    document.getElementById('js-userButton').setAttribute('class','js-userbutton disabled');
-    $('div.js-pageViewSplashHTML').hide();
+    document.getElementById('js-userButton').setAttribute('class','js-button js-userbutton disabled');
+    $('div.js-pageViewSplashHtml').hide();
     $('div.js-pageViewSettingsHTML').hide();
     $('div.js-pageViewQuestionHTML').show();
     $('div.js-pageViewFeedBackHTML').hide();
@@ -242,7 +245,7 @@ const RenderPage = {  // Determines what HTML to display based on the current st
     }
     $('.js-scoreBox').html(`Score: ${STORE.currentScore} correct, ${STORE.currentQuestion - STORE.currentScore} incorrect.`);
     $('.js-questionCounter').html(`Question: ${STORE.currentQuestion} of ${QUESTIONS.length}`);
-    $('div.js-pageViewSplashHTML').hide();
+    $('div.js-pageViewSplashHtml').hide();
     $('div.js-pageViewSettingsHTML').hide();
     $('div.js-pageViewQuestionHTML').hide();
     $('div.js-pageViewFeedBackHTML').show();
@@ -266,7 +269,7 @@ const RenderPage = {  // Determines what HTML to display based on the current st
     let newPercent=(STORE.currentScore/STORE.currentQuestion)*100;
     $('.js-scorePercent').html(Math.round((newPercent + 0.00001) * 100) / 100 + '%');
     $('.js-evalList').html(listHTML);
-    $('div.js-pageViewSplashHTML').hide();
+    $('div.js-pageViewSplashHtml').hide();
     $('div.js-pageViewSettingsHTML').hide();
     $('div.js-pageViewQuestionHTML').hide();
     $('div.js-pageViewFeedBackHTML').hide();
@@ -305,8 +308,8 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
         <p class='title bigTitle' role='title'>Quiz Time!</p>
       </div>`;
 
-    $('div.js-pageViewSplashHTML').html(quizSplashHTML);
-    $('div.js-pageViewSplashHTML').hide();
+    $('div.js-pageViewSplashHtml').html(quizSplashHTML);
+    $('div.js-pageViewSplashHtml').hide();
   },
 
   settingsHtml: function(){
@@ -314,19 +317,15 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
     // Set up splash page, then hide it.
 
     let quizSettingsHTML = `
-      <div class='js-settingsPage'>
-        <img src="settings.jpg" class="js-settingsImage" alt="Settings screen: picture of machinery and gauges.">
-      </div>
-
       <form action='/userSettings' method='post' class='js-settingsForm'>
         <span class='js-1stWidget'>
           <label for='js-questionsToDo' class='js-questionsPickerLabel'>How many questions?</label>
           <select id='js-questionsToDo' onchange='Listeners.handleQuestionsToDo()'>
             <option value='10'>10 questions</option>
+            <option value='1'>1 question</option>
+            <option value='5'>5 questions</option>
+            <option value='15'>15 questions</option>
             <option value='20'>20 questions</option>
-            <option value='30'>30 questions</option>
-            <option value='40'>40 questions</option>
-            <option value='50'>50 questions</option>
           </select>
         </span>
 
@@ -352,7 +351,6 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
 
     let quizQuestionsHTML = `
       <div class='js-settingsPage'>
-        <img src='questions.jpg' class='js-questionsImage' alt='Question screen: picture of a person walking out of fog.'>
       </div>
       <span class='js-scoreBox'></span>
       <span class='js-questionCounter'></span>
@@ -380,9 +378,6 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
     // Set up feedback page, then hide it.
 
     let quizFeedbackHTML = `
-      <div class='js-settingsPage'>
-        <img src='feedback.jpg' class='js-feedbackImage' alt='Feedback screen: picture of mountains in the mist.'>
-      </div>
       <span class='js-scoreBox'></span>
       <span class='js-questionCounter'></span>
       <img src="yes.png" class="js-feedBackImageRight" alt="Yes"></span>
@@ -403,9 +398,6 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
     // Set up wrap page, then hide it.
 
     let quizWrapHTML = `
-      <div class='js-settingsPage'>
-        <img src='wrap.jpg' class='js-wrapImage' alt='Wrap-up of quiz screen: picture of a sunset.'>
-      </div>
       <span class='js-scoreBox'></span>
       <span class='js-wrapScore'>Here's how you did:<br/>
         <span class='js-scorePercent'></span>
@@ -437,10 +429,6 @@ const Listeners = {  // All listener methods. More to come here.
       console.log('Main button clicked.');
       if(STORE.currentView==='settings'){
         GetAPIPacket.getJsonKey();
-        // STORE.currentScore = 0;
-        // STORE.radioButtonClicked = false;
-        // FlipPages.nextView();
-        // RenderPage.doShowPages();
       } else if(!(STORE.currentView==='question' && STORE.radioButtonClicked===false)){
         FlipPages.nextView();
         RenderPage.doShowPages();
@@ -454,7 +442,7 @@ const Listeners = {  // All listener methods. More to come here.
       let selectedOption = $('input[name=choices]:checked', '.js-radioButton').val();
       if(selectedOption>0) {
         STORE.radioButtonClicked=true;
-        document.getElementById('js-userButton').setAttribute('class','js-userbutton');
+        document.getElementById('js-userButton').setAttribute('class','js-button js-userbutton');
       }
       QUESTIONS[STORE.currentQuestion-1].userChoice = selectedOption;
     });
@@ -462,7 +450,7 @@ const Listeners = {  // All listener methods. More to come here.
 
   handleSettingsButton: function(){
     console.log('In the handleSettingsButton method');
-    $('#js-settingsButton').on('click', function() {
+    $('.js-settingsButton').on('click', function() {
       STORE.currentView='settings';
       RenderPage.doShowPages();
     });

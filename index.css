@@ -6,14 +6,12 @@
     color: red;
 }
 
-.container{
-    background-image:  url("thinker_question.png"),
-        url("beach_square.jpg");
+.js-backGround{
     background-repeat: no-repeat,
         no-repeat;
     background-position: center,
         center;
-    background-size: 90%,
+    background-size: 65vh,
         cover;
     position: relative;
     display: block;
@@ -66,8 +64,32 @@
         color: black;
     }
 
-    .container{
+    .js-pageViewSplashHtml{
+        background-image: url("thinker_question.png"),
+            url("beach_square.jpg");
         background-size: 90%, cover;
+    }
+
+    .js-pageViewSettingsHTML{
+        background-image: url("settings_plaque.png"),
+            url("machinery.png"),
+            url("grunge_square.jpg");
+        background-size: 20%, 40%, cover;
+    }
+
+    .js-pageViewQuestionHTML{
+        background-image: url("fog_square.jpg");
+        background-size: cover;
+    }
+    
+    .js-pageViewFeedbackHTML{
+        background-image: url("mountains_square.jpg");
+        background-size: cover;
+    }
+    
+    .js-pageViewWrapHTML{
+        background-image: url("sunset_square.jpg");
+        background-size: cover;
     }
 
     .buttonForm{
@@ -103,8 +125,32 @@
         color: black;
     }
 
-    .container{
+    .js-pageViewSplashHtml{
+        background-image: url("thinker_question.png"),
+            url("beach_square.jpg");
         background-size: 45%, cover;
+    }
+
+    .js-pageViewSettingsHTML{
+        background-image: url("settings_plaque.png"),
+            url("machinery.png"),
+            url("grunge_square.jpg");
+        background-size: 10%, 20%, cover;
+    }
+
+    .js-pageViewQuestionHTML{
+        background-image: url("fog_square.jpg");
+        background-size: cover;
+    }
+
+    .js-pageViewFeedbackHTML{
+        background-image: url("mountains_square.jpg");
+        background-size: cover;
+    }
+
+    .js-pageViewWrapHTML{
+        background-image: url("sunset_square.jpg");
+        background-size: cover;
     }
 
     .buttonForm{
