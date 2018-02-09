@@ -314,7 +314,7 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
 
   settingsHtml: function(){
     console.log('In the settingsHtml method.');
-    // Set up splash page, then hide it.
+    // Set up settings page, then hide it.
 
     let quizSettingsHTML = `
       <form action='/userSettings' method='post' class='js-settingsForm'>

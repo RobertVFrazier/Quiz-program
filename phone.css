@@ -1,6 +1,6 @@
 body{
     font-family: 'Arial Black', Gadget, sans-serif;
-    font-size: 1em;
+    font-size: 2em;
     font-weight: 700;
 }
 
@@ -28,6 +28,7 @@ body{
 
 .buttonForm{
     position: absolute;
+    bottom: 0;
     width: 100%;
 }
 
@@ -128,19 +129,19 @@ body{
 @media only screen and (orientation: portrait){
 
     .smallTitle{
-        padding-top: 1em;
-        font-size: 3vh;
+        padding-top: 0.2em;
+        font-size: 3em;
     }
 
     .bigTitle {
-        font-size: 9vh;
+        font-size: 5.3em;
         color: black;
     }
 
     .js-pageViewSplashHtml{
         background-image: url("thinker_question.png"),
             url("beach_square.jpg");
-        background-size: 90%, cover;
+        background-size: 100%, cover;
     }
 
     .js-pageViewSettingsHTML{
@@ -164,23 +165,23 @@ body{
     }
 
     .buttonForm{
-        bottom: 20px;
+        border: 2px solid green;
+        margin-bottom: 20px;
     }
     
     .buttonBox{
+        border: 2px solid purple;
         display: block;
         margin: 0 auto;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        fit-content: min(max-content fill-available);
-        max-width: 35%;
+        padding-bottom: 40px;
+        width: 600px;
     }
 
     .js-button{
         width: 100%;
         height: 100%;
-        border-radius: 40px;
-        font-size: 3vh;
+        border-radius: 60px;
+        font-size: 3em;
     }
 }
 
