@@ -1,3 +1,9 @@
+body{
+    font-family: 'Arial Black', Gadget, sans-serif;
+    font-size: 1em;
+    font-weight: 700;
+}
+
 .title{
     text-align: center;
     font-family: 'Permanent Marker', cursive;
@@ -52,65 +58,16 @@
     cursor: not-allowed;
 }
 
-@media only screen and (orientation: portrait){
+.js-feedBackImageRight{
+    display: block;
+    margin: 0 auto;
+    padding-top: 50px;
+}
 
-    .smallTitle{
-        padding-top: 1em;
-        font-size: 3vh;
-    }
-
-    .bigTitle {
-        font-size: 9vh;
-        color: black;
-    }
-
-    .js-pageViewSplashHtml{
-        background-image: url("thinker_question.png"),
-            url("beach_square.jpg");
-        background-size: 90%, cover;
-    }
-
-    .js-pageViewSettingsHTML{
-        background-image: url("settings_plaque.png"),
-            url("machinery.png"),
-            url("grunge_square.jpg");
-        background-size: 20%, 40%, cover;
-    }
-
-    .js-pageViewQuestionHTML{
-        background-image: url("fog_square.jpg");
-        background-size: cover;
-    }
-    
-    .js-pageViewFeedbackHTML{
-        background-image: url("mountains_square.jpg");
-        background-size: cover;
-    }
-    
-    .js-pageViewWrapHTML{
-        background-image: url("sunset_square.jpg");
-        background-size: cover;
-    }
-
-    .buttonForm{
-        bottom: 20px;
-    }
-    
-    .buttonBox{
-        display: block;
-        margin: 0 auto;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        fit-content = min(max-content fill-available);
-        max-width: 32%;
-    }
-
-    .js-button{
-        width: 100%;
-        height: 100%;
-        border-radius: 40px;
-        font-size: 3vh;
-    }
+.js-feedBackImageWrong{
+    display: block;
+    margin: 0 auto;
+    padding-top: 50px;
 }
 
 @media only screen and (orientation: landscape){
@@ -132,10 +89,8 @@
     }
 
     .js-pageViewSettingsHTML{
-        background-image: url("settings_plaque.png"),
-            url("machinery.png"),
-            url("grunge_square.jpg");
-        background-size: 10%, 20%, cover;
+        background-image: url("grunge_square.jpg");
+        background-size: cover;
     }
 
     .js-pageViewQuestionHTML{
@@ -171,34 +126,63 @@
     }
 }
 
-.js-splashImage{
-    display: block;
-    margin: 0 auto;
-    height: 100%;
-}
+@media only screen and (orientation: portrait){
 
-.js-settingsImage{
-    display: block;
-    margin: 0 auto;
-    height: 100%;
-}
+    .smallTitle{
+        padding-top: 1em;
+        font-size: 3vh;
+    }
 
-.js-questionsImage{
-    display: block;
-    margin: 0 auto;
-    height: 100%;
-}
+    .bigTitle {
+        font-size: 9vh;
+        color: black;
+    }
 
-.js-feedbackImage{
-    display: block;
-    margin: 0 auto;
-    height: 100%;
-}
+    .js-pageViewSplashHtml{
+        background-image: url("thinker_question.png"),
+            url("beach_square.jpg");
+        background-size: 90%, cover;
+    }
 
-.js-wrapImage{
-    display: block;
-    margin: 0 auto;
-    height: 100%;
+    .js-pageViewSettingsHTML{
+        background-image: url("grunge_square.jpg");
+        background-size: cover;
+    }
+
+    .js-pageViewQuestionHTML{
+        background-image: url("fog_square.jpg");
+        background-size: cover;
+    }
+    
+    .js-pageViewFeedbackHTML{
+        background-image: url("mountains_square.jpg");
+        background-size: cover;
+    }
+    
+    .js-pageViewWrapHTML{
+        background-image: url("sunset_square.jpg");
+        background-size: cover;
+    }
+
+    .buttonForm{
+        bottom: 20px;
+    }
+    
+    .buttonBox{
+        display: block;
+        margin: 0 auto;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        fit-content = min(max-content fill-available);
+        max-width: 35%;
+    }
+
+    .js-button{
+        width: 100%;
+        height: 100%;
+        border-radius: 40px;
+        font-size: 3vh;
+    }
 }
 
 .js-correct{
@@ -209,35 +193,25 @@
     color: red;
 }
 
-.js-questionsPage{
-}
-
 .js-scoreBox{
-    position: absolute;
-    left: 136px;
-    top: 5px;
-    font-family: Arial, Helvetica, sans-serif;
-    border: 3px solid darkgrey;
-    border-radius: 4px;
-    background-color: lightyellow;
-    height: 24px;
-    width: 240;
+    display: block;
+    margin: 0 auto;
+    background-color: rgba(255, 255, 255, 0.3);
+    height: 2em;
+    width: 300;
+    padding: 4px;
+    border-radius: 24px;
     text-align: center;
 }
 
 .js-questionCounter{
-    position: absolute;
-    left: 116px;
-    top: 30px;
-    font-family: 'Arial Black', Gadget, sans-serif;
-    font-size: 12pt;
-    font-weight: 700;
-    border: 3px solid darkgrey;
-    border-radius: 4px;
-    background-color: lightblue;
-    height: 36px;
-    width: 180;
-    padding-top: 4px;
+    display: block;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 255, 0.1);
+    height: 2em;
+    width: 300;
+    padding: 4px;
+    border-radius: 24px;
     text-align: center;
 }
 
@@ -245,9 +219,6 @@
     position: absolute;
     top: 150px;
     left: 20px;
-    font-family: 'Arial Black', Gadget, sans-serif;
-    font-size: 12pt;
-    font-weight: 700;
     border: 3px solid black;
     border-radius: 4px;
     background-color: azure;
@@ -283,32 +254,24 @@
 .js-radioButton{
     display: inline-block;
     vertical-align: middle;
-    font-family: 'Arial Black', Gadget, sans-serif;
-    font-size: 12pt;
-    font-weight: 700;
     text-align: left;
     padding: 4px;
 }
 
 .js-feedBackImageRight{
-    position: absolute;
-    top: 110px;
-    left: 80px;
+    display: block;
+    margin: 0 auto;
 }
 
 .js-feedBackImageWrong{
-    position: absolute;
-    top: 110px;
-    left: 80px;
+    display: block;
+    margin: 0 auto;
 }
 
 .js-feedbackQuestion{
     position: absolute;
     top: 350px;
     left: 20px;
-    font-family: 'Arial Black', Gadget, sans-serif;
-    font-size: 12pt;
-    font-weight: 700;
     border: 3px solid black;
     border-radius: 4px;
     background-color: azure;
@@ -322,9 +285,6 @@
     position: absolute;
     top: 450px;
     left: 20px;
-    font-family: 'Arial Black', Gadget, sans-serif;
-    font-size: 12pt;
-    font-weight: 700;
     color: green;
     border: 3px solid blue;
     border-radius: 4px;
@@ -339,9 +299,6 @@
     position: absolute;
     top: 550px;
     left: 20px;
-    font-family: 'Arial Black', Gadget, sans-serif;
-    font-size: 12pt;
-    font-weight: 700;
     color: red;
     border: 3px solid blue;
     border-radius: 4px;
@@ -353,18 +310,12 @@
 }
 
 .js-wrapScore{
-    position: absolute;
-    top: 30px;
-    left: 80px;
-    font-family: 'Arial Black', Gadget, sans-serif;
-    font-size: 12pt;
-    font-weight: 700;
-    border: 3px solid indigo;
-    border-radius: 4px;
-    background-color: cornsilk;
-    width: 60%;
-    padding-top: 4px;
-    padding-bottom: 1px;
+    display: block;
+    margin: 0 auto;
+    background-color: rgba(235, 253, 70, 0.3);
+    height: 3em;
+    width: 300;
+    padding: 4px;
     text-align: center;
 }
 
@@ -377,8 +328,6 @@
     position: absolute;
     top: 84px;
     left: 3px;
-    font-family: 'Arial Black', Gadget, sans-serif;
-    font-size: 12pt;
     border: 3px solid orange;
     border-radius: 4px;
     background-color: cornsilk;
@@ -389,13 +338,11 @@
 }
 
 .js-settingsForm{
-    font-family: 'Arial Black', Gadget, sans-serif;
     position: absolute;
     bottom: 80px;
     left: 30px;
     width: 350px;
     height: 60px;
-    font-size: 8pt;
     border: 3px solid #454545;
     border-radius: 4px;
     background-color: silver;
@@ -418,7 +365,6 @@
 }
 
 #js-questionsToDo, #js-category{
-    font-family: 'Arial Black', Gadget, sans-serif;
     position: absolute;
     left: 10px;
     top: 20px;

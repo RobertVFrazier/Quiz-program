@@ -264,7 +264,7 @@ const RenderPage = {  // Determines what HTML to display based on the current st
         listHTML+=`<li>${QUESTIONS[i].question}<br/>Yours: <span class='js-correct'>${QUESTIONS[i]['answer'+QUESTIONS[i].userChoice]}  ✔</span></li>`;
       }
     }
-    $('#js-userButton').text('PLAY AGAIN?');
+    $('#js-userButton').text('New game?');
     $('.js-scoreBox').html(`Score: ${STORE.currentScore} correct, ${STORE.currentQuestion - STORE.currentScore} incorrect.`);
     let newPercent=(STORE.currentScore/STORE.currentQuestion)*100;
     $('.js-scorePercent').html(Math.round((newPercent + 0.00001) * 100) / 100 + '%');
@@ -380,8 +380,8 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
     let quizFeedbackHTML = `
       <span class='js-scoreBox'></span>
       <span class='js-questionCounter'></span>
-      <img src="yes.png" class="js-feedBackImageRight" alt="Yes"></span>
-      <img src="no.png" class="js-feedBackImageWrong" alt="No"></span>
+      <img src="yes.png" class="js-feedBackImageRight" alt="Yes"/>
+      <img src="no.png" class="js-feedBackImageWrong" alt="No"/>
       <span class='js-feedbackQuestion'></span><br/>
       <span class='js-correctAnswer'></span><br/>
       <span class='js-userAnswer'><br/></span>
