@@ -1,0 +1,358 @@
+body{
+    font-family: 'Arial Black', Gadget, sans-serif;
+    font-size: 2em;
+    font-weight: 700;
+}
+
+/* backgrounds */
+
+.js-backGround{
+    background-repeat: no-repeat,
+        no-repeat;
+    background-position: center,
+        center;
+    background-size: 65vh,
+        cover;
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+}
+
+.js-pageViewSplashHtml{
+    background-image: url("thinker_question.png"),
+        url("beach_square.jpg");
+        background-size: 100%, cover;
+}
+
+.js-pageViewSettingsHTML{
+    background-image: url("grunge_square.jpg");
+    background-size: cover;
+}
+
+.js-pageViewQuestionHTML{
+    background-image: url("fog_square.jpg");
+    background-size: cover;
+}
+
+.js-pageViewFeedbackHTML{
+    background-image: url("mountains_square.jpg");
+    background-size: cover;
+}
+
+.js-pageViewWrapHTML{
+    background-image: url("sunset_square.jpg");
+    background-size: cover;
+}
+
+/* buttons */
+
+.buttonForm{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.js-button{
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    border-radius: 60px;
+    font-size: 3em;
+    font-weight: 700;
+}
+
+.buttonBox{
+    display: block;
+    margin: 0 auto;
+    padding-bottom: 40px;
+    width: 600px;
+}
+
+.js-userbutton{
+    border-color: yellow;
+    background-color: gold;
+    color: purple;
+}
+
+.js-userbutton.disabled{
+    background-color: lightgrey;
+    border-color: grey;
+    color: darkgrey;
+    opacity: 0.75;
+    cursor: not-allowed;
+}
+
+.js-settingsbutton{
+    border-color: #a25840;
+    background-color: #c2846b;
+    color: black;
+}
+
+/* Splash page */
+
+.title{
+    text-align: center;
+    font-family: 'Permanent Marker', cursive;
+    font-weight: 200;
+    width: 100%;
+    color: red;
+}    
+
+.smallTitle{
+    padding-top: 0.2em;
+    font-size: 3em;
+}
+
+.bigTitle {
+    font-size: 5.3em;
+    color: black;
+}
+
+/* Settings page */
+
+.js-settings-image{
+    display: block;
+    margin: 0 auto;
+    width: 90%;
+    padding-top: 25px;
+}
+
+.js-settingsForm{
+    display: block;
+    margin: 0 auto;
+    width: 90%;
+    height: 150px;
+    border-radius: 40px;
+    background-color: rgba(255, 255, 255, 0.45);
+}
+
+.js-Widget{
+    display: inline-block;
+    width: 49%;
+    font-size: 48px;
+    height: auto;
+    padding-left: 20px;
+}
+
+.js-label{
+    display: inline-block;
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+.js-dropDown{
+    display: inline-block;
+    width: 95%;
+    font-size: 48px;
+}
+
+.js-dropDownOptions{
+    font-size: 12px;
+    color: red;
+}
+
+/* Questions page */
+
+.js-topInfo{
+    display: block;
+    margin: 0 auto;
+    font-size: 1.5em;
+    width: 900;
+    padding: 4px;
+    border-radius: 24px;
+    text-align: center;
+}
+
+.js-scoreBox{
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.js-questionCounter{
+    background-color: rgba(0, 0, 255, 0.1);
+}
+
+.js-screenQuestionForm{
+    margin-top: 50px;
+    border-radius: 48px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.js-screenQuestion{
+    display: inline-block;
+    font-size: 1.4em;
+    padding: 20px 0 40px 15px;
+    text-align: left;
+}
+
+.js-radioButtonBox{
+    display: inline-block;
+    font-size: 1.6em;
+    width: 90%;
+    text-align: center;
+}
+
+.js-fourQuestionBox{
+    display: inline-block;
+    font-size: 1.6em;
+    width: 90%;
+    text-align: center;
+} 
+
+.js-twoQuestionBox{
+    display: inline-block;
+    font-size: 1.6em;
+    width: 90%;
+    text-align: center;
+}
+
+.js-radioButton{
+    display: inline-block;
+    vertical-align: middle;
+    text-align: left;
+    padding: 4px;
+}
+
+/* Feedback page */
+
+.js-correct{
+    color: green;
+}
+
+.js-incorrect{
+    color: red;
+}
+
+.js-incorrectWrap{
+    color: red;
+    text-decoration: line-through;
+}
+
+.js-feedBackImageBox{
+    display: block;
+    margin: 0 auto;
+    margin-top: 65px;
+    height: 350px;
+    width: 350px;
+}
+
+.js-feedBackImageRight{
+    height: 100%;
+    width: 100%;
+}
+
+.js-feedBackImageWrong{
+    height: 100%;
+    width: 100%;
+}
+
+.js-feedbackText{
+    display: block;
+    margin: 0 auto;
+    margin-top: 65px;
+    padding: 30px 20px 30px 20px;
+    width: 90%;
+    font-size: 2em;
+    border-radius: 40px;
+    background-color: rgba(255, 255, 255, 0.45);
+}
+
+.js-feedbackQuestion{
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.js-correctAnswer{
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.js-userAnswer{
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Wrap-up page */
+
+.js-wrapScore{
+    border-radius: 24px;
+    background-color: rgba(235, 253, 70, 0.3);
+}
+
+.js-scorePercent{
+    font-size: 1.5em;
+    color: blue;
+}
+
+.js-evalList{
+    display: block;
+    margin: 0 auto;
+    border-radius: 24px;
+    font-size: 3rem;
+    background-color: rgba(196, 211, 60, 0.7);
+    width: 98%;
+    max-height: 75%;
+    overflow: auto;
+    padding-left: 10px;
+    text-align: left;
+}
+
+
+/* Radio button fix from Heydon Pickering. Wonderful solution to a horrible problem!  */
+/* https://www.sitepoint.com/replacing-radio-buttons-without-replacing-radio-buttons/ */
+/* I modified the focus styling, but everything else is from that tutorial.             */
+
+/* HTML5 Boilerplate accessible hidden styles */
+[type="radio"] {
+  border: 0; 
+  clip: rect(0 0 0 0); 
+  height: 1px; margin: -1px; 
+  overflow: hidden; 
+  padding: 0; 
+  position: absolute; 
+  width: 1px;
+}
+
+/* One radio button per line */
+label {
+  display: block;
+  cursor: pointer;
+  line-height: 1.8;
+  font-size: 1em;
+}
+
+[type="radio"] + span {
+  display: block;
+}
+
+/* the basic, unchecked style */
+[type="radio"] + span:before {
+  content: '';
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.12em;
+  border-radius: 1em;
+  border: 0.125em solid #fff;
+  box-shadow: 0 0 0 0.15em #000;
+  margin-right: 0.75em;
+  transition: 0.5s ease all;
+}
+
+/* the checked style using the :checked pseudo class */
+[type="radio"]:checked + span:before {
+  background: green;
+  box-shadow: 0 0 0 0.25em #000;
+}
+
+/* never forget focus styling */
+[type="radio"]:focus + span{
+  outline: thin dotted;
+  background-color: rgb(250, 250, 115);
+}
