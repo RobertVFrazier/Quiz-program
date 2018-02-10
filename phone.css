@@ -64,6 +64,10 @@ body{
 
 .js-incorrect{
     color: red;
+}
+
+.js-incorrectWrap{
+    color: red;
     text-decoration: line-through;
 }
 

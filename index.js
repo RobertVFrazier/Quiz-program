@@ -259,7 +259,7 @@ const RenderPage = {  // Determines what HTML to display based on the current st
       if((QUESTIONS[i].correct+''!==QUESTIONS[i].userChoice+'') && QUESTIONS[i].choiceCount+''==='4'){
         listHTML+=`<li>${QUESTIONS[i].question}<br/>Answer: <span class='js-correct'>${QUESTIONS[i]['answer'+QUESTIONS[i].correct]}</span><br/>Yours: <span class='js-incorrect'>${QUESTIONS[i]['answer'+QUESTIONS[i].userChoice]}</span></li>`;
       } else if((QUESTIONS[i].correct+''!==QUESTIONS[i].userChoice+'') && QUESTIONS[i].choiceCount+''==='2'){
-        listHTML+=`<li>${QUESTIONS[i].question}<br/>Yours: <span class='js-incorrect'>${QUESTIONS[i]['answer'+QUESTIONS[i].userChoice]}</span></li>`;
+        listHTML+=`<li>${QUESTIONS[i].question}<br/>Yours: <span class='js-incorrectWrap'>${QUESTIONS[i]['answer'+QUESTIONS[i].userChoice]}</span></li>`;
       } else {
         listHTML+=`<li>${QUESTIONS[i].question}<br/>Yours: <span class='js-correct'>${QUESTIONS[i]['answer'+QUESTIONS[i].userChoice]} ✔</span></li>`;
       }
@@ -390,8 +390,8 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
       </div>
       <div class='js-feedbackText'>
         <span class='js-feedbackQuestion'></span><br/>
-        <span class='js-correctAnswer'></span><br/>
-        <span class='js-userAnswer'></span>
+        <span class='js-correctAnswer js-correct'></span><br/>
+        <span class='js-userAnswer js-incorrect'></span>
       </div>
       <br/>
       <br/>
