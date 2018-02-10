@@ -281,10 +281,10 @@ const RenderPage = {  // Determines what HTML to display based on the current st
     console.log('In the renderQuestions method.');
     //only if the STORE is on pages that show questions
     $('.js-screenQuestion').html(QUESTIONS[STORE.currentQuestion-1].question);
-    $('#js-choice1').html(QUESTIONS[STORE.currentQuestion-1].answer1);
-    $('#js-choice2').html(QUESTIONS[STORE.currentQuestion-1].answer2);
-    $('#js-choice3').html(QUESTIONS[STORE.currentQuestion-1].answer3);
-    $('#js-choice4').html(QUESTIONS[STORE.currentQuestion-1].answer4);
+    $('#answerText1').html(QUESTIONS[STORE.currentQuestion-1].answer1);
+    $('#answerText2').html(QUESTIONS[STORE.currentQuestion-1].answer2);
+    $('#answerText3').html(QUESTIONS[STORE.currentQuestion-1].answer3);
+    $('#answerText4').html(QUESTIONS[STORE.currentQuestion-1].answer4);
     $('div.js-pageViewQuestionHTML').show();
   }
 };
@@ -356,20 +356,24 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
       <span class='js-topInfo js-questionCounter'></span>
         <form class='js-screenQuestionForm' role='form'>
           <div class='js-screenQuestion'></div>
-          <div id='js-radioButtonBox' class='js-radioButtonBox'>
-            <div class='js-radioButton' name='js-radioButton'>
-              <input type='radio' name='choices' value=1>
-              <label for='choice1' id='js-choice1'></label><br/><br/>
-              <input type='radio' name='choices' value=2>
-              <label for='choice1' id='js-choice2'></label><br/><br/>
-                <div class='js-twoMore'>
-                  <input type='radio' name='choices' value=3>
-                  <label for='choice1' id='js-choice3'></label><br/><br/>
-                  <input type='radio' name='choices' value=4>
-                  <label for='choice1' id='js-choice4'></label><br/><br/>
-                </div>
-            </div>
-          </div>
+          <span id='js-radioButtonBox' class='none'>
+          <fieldset class='js-radioButton' name='js-radioButton'>
+            <label for='js-choice1'>
+              <input type='radio' value=1 name='choices' id='js-choice1'><span id='answerText1'></span>
+            </label><br/>
+            <label for='js-choice2'>
+              <input type='radio' value=2 name='choices' id='js-choice2'><span id='answerText2'></span>
+            </label><br/>            
+              <span class='js-twoMore'>
+                <label for='js-choice3'>
+                  <input type='radio' value=3 name='choices' id='js-choice3'><span id='answerText3'></span>
+                </label><br/>
+                <label for='js-choice4'>
+                  <input type='radio' value=4 name='choices' id='js-choice4'><span id='answerText4'></span>
+                </label><br/>
+              </span>
+            </span>
+          </fieldset>
         </form>
     `;
     // NOTE: The question and the five choices will be inserted in the correct places above, in renderQuestions().
