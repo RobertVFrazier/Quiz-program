@@ -60,16 +60,16 @@ body{
     margin: 0 auto;
     width: 100%;
     height: 100%;
-    border-radius: 60px;
-    font-size: 3em;
+    border-radius: 40px;
+    font-size: 1.8em;
     font-weight: 700;
 }
 
 .buttonBox{
     display: block;
     margin: 0 auto;
-    padding-bottom: 40px;
-    width: 600px;
+    padding-bottom: 20px;
+    width: 350px;
 }
 
 .js-userbutton{
@@ -104,11 +104,11 @@ body{
 
 .smallTitle{
     padding-top: 0.2em;
-    font-size: 3em;
+    font-size: 2em;
 }
 
 .bigTitle {
-    font-size: 5.3em;
+    font-size: 5em;
     color: black;
 }
 
@@ -117,7 +117,7 @@ body{
 .js-settings-image{
     display: block;
     margin: 0 auto;
-    width: 90%;
+    width: 80%;
     padding-top: 25px;
 }
 
@@ -141,7 +141,7 @@ body{
 .js-label{
     display: inline-block;
     text-align: center;
-    padding-bottom: 15px;
+    padding-bottom: 1px;
 }
 
 .js-dropDown{
@@ -183,28 +183,28 @@ body{
 
 .js-screenQuestion{
     display: inline-block;
-    font-size: 1.4em;
+    font-size: 1.1em;
     padding: 20px 0 40px 15px;
     text-align: left;
 }
 
 .js-radioButtonBox{
     display: inline-block;
-    font-size: 1.6em;
+    font-size: 1.3em;
     width: 90%;
     text-align: center;
 }
 
 .js-fourQuestionBox{
     display: inline-block;
-    font-size: 1.6em;
+    font-size: 1.3em;
     width: 90%;
     text-align: center;
 } 
 
 .js-twoQuestionBox{
     display: inline-block;
-    font-size: 1.6em;
+    font-size: 1.3em;
     width: 90%;
     text-align: center;
 }
@@ -235,8 +235,8 @@ body{
     display: block;
     margin: 0 auto;
     margin-top: 65px;
-    height: 350px;
-    width: 350px;
+    height: 200px;
+    width: 200px;
 }
 
 .js-feedBackImageRight{
@@ -255,7 +255,7 @@ body{
     margin-top: 65px;
     padding: 30px 20px 30px 20px;
     width: 90%;
-    font-size: 2em;
+    font-size: 1.2em;
     border-radius: 40px;
     background-color: rgba(255, 255, 255, 0.45);
 }
@@ -294,7 +294,7 @@ body{
     display: block;
     margin: 0 auto;
     border-radius: 24px;
-    font-size: 3rem;
+    font-size: 2.2rem;
     background-color: rgba(196, 211, 60, 0.7);
     width: 98%;
     max-height: 75%;
@@ -323,7 +323,7 @@ label {
   display: block;
   cursor: pointer;
   line-height: 1.8;
-  font-size: 1em;
+  font-size: 0.85em;
 }
 
 [type="radio"] + span {
@@ -334,11 +334,11 @@ label {
 [type="radio"] + span:before {
   content: '';
   display: inline-block;
-  width: 1em;
-  height: 1em;
+  width: 0.85em;
+  height: 0.85em;
   vertical-align: -0.12em;
-  border-radius: 1em;
-  border: 0.125em solid #fff;
+  border-radius: 0.85em;
+  border: 0.11em solid #fff;
   box-shadow: 0 0 0 0.15em #000;
   margin-right: 0.75em;
   transition: 0.5s ease all;
