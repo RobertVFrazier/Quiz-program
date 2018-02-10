@@ -332,6 +332,8 @@ body{
     background-color: cornsilk;
     width: 98%;
     max-height: 575px;
+    padding-left: 10px;
+    padding-right: 10px;
     overflow: auto;
     text-align: left;
 }
