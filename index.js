@@ -49,6 +49,7 @@ const GetAPIPacket = {  // Gets questions data from the Open Trivia Database (ht
 
   getJsonQuestions: function(){
     console.log('In the getJsonQuestions method');
+    document.getElementById('js-userButton').setAttribute('class','js-button js-userbutton disabled');
     let tempObj={
       category: JSON.category===0  ? '' : `&category=${JSON.category}`,
       type: JSON.type===''  ? '' : `&type=${JSON.type}`,
@@ -104,6 +105,7 @@ const GetAPIPacket = {  // Gets questions data from the Open Trivia Database (ht
       });
     }
     scrambleChoices.doScrambling();
+    document.getElementById('js-userButton').setAttribute('class','js-button js-userbutton');
   }  
 };
 
@@ -231,8 +233,8 @@ const RenderPage = {  // Determines what HTML to display based on the current st
     console.log('In the feedbackPage method.');
     $('#js-userButton').text('CONTINUE');
     $('.js-feedbackQuestion').html(QUESTIONS[STORE.currentQuestion-1].question);
-    $('.js-correctAnswer').html('THE ANSWER IS:<br/>'+QUESTIONS[STORE.currentQuestion-1]['answer'+QUESTIONS[STORE.currentQuestion-1].correct]);
-    $('.js-userAnswer').html('YOUR ANSWER:<br/>'+QUESTIONS[STORE.currentQuestion-1]['answer'+QUESTIONS[STORE.currentQuestion-1].userChoice]);
+    $('.js-correctAnswer').html('THE ANSWER IS: '+QUESTIONS[STORE.currentQuestion-1]['answer'+QUESTIONS[STORE.currentQuestion-1].correct]);
+    $('.js-userAnswer').html('YOUR ANSWER: '+QUESTIONS[STORE.currentQuestion-1]['answer'+QUESTIONS[STORE.currentQuestion-1].userChoice]);
     if(QUESTIONS[STORE.currentQuestion-1].userChoice+'' === QUESTIONS[STORE.currentQuestion-1].correct+''){
       STORE.currentScore++;
       $('.js-feedBackImageRight').show();

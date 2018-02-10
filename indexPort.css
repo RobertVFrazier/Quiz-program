@@ -172,7 +172,7 @@ body{
         margin: 0 auto;
         padding-top: 10px;
         padding-bottom: 10px;
-        fit-content = min(max-content fill-available);
+        fit-content: min(max-content fill-available);
         max-width: 35%;
     }
 

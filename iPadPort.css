@@ -52,7 +52,7 @@ body{
     position: absolute;
     bottom: 0;
     width: 100%;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .js-button{
@@ -60,16 +60,16 @@ body{
     margin: 0 auto;
     width: 100%;
     height: 100%;
-    border-radius: 60px;
-    font-size: 3em;
+    border-radius: 40px;
+    font-size: 1.5em;
     font-weight: 700;
 }
 
 .buttonBox{
     display: block;
     margin: 0 auto;
-    padding-bottom: 40px;
-    width: 600px;
+    padding-bottom: 15px;
+    width: 300px;
 }
 
 .js-userbutton{
@@ -104,11 +104,11 @@ body{
 
 .smallTitle{
     padding-top: 0.2em;
-    font-size: 3em;
+    font-size: 1.7em;
 }
 
 .bigTitle {
-    font-size: 5.3em;
+    font-size: 5em;
     color: black;
 }
 
@@ -117,7 +117,7 @@ body{
 .js-settings-image{
     display: block;
     margin: 0 auto;
-    width: 90%;
+    width: 80%;
     padding-top: 25px;
 }
 
@@ -133,7 +133,7 @@ body{
 .js-Widget{
     display: inline-block;
     width: 49%;
-    font-size: 48px;
+    font-size: 36px;
     height: auto;
     padding-left: 20px;
 }
@@ -141,7 +141,7 @@ body{
 .js-label{
     display: inline-block;
     text-align: center;
-    padding-bottom: 15px;
+    padding-bottom: 5px;
 }
 
 .js-dropDown{
@@ -235,8 +235,8 @@ body{
     display: block;
     margin: 0 auto;
     margin-top: 65px;
-    height: 350px;
-    width: 350px;
+    height: 250px;
+    width: 250px;
 }
 
 .js-feedBackImageRight{
@@ -255,7 +255,7 @@ body{
     margin-top: 65px;
     padding: 30px 20px 30px 20px;
     width: 90%;
-    font-size: 2em;
+    font-size: 1.2em;
     border-radius: 40px;
     background-color: rgba(255, 255, 255, 0.45);
 }
@@ -294,7 +294,7 @@ body{
     display: block;
     margin: 0 auto;
     border-radius: 24px;
-    font-size: 3rem;
+    font-size: 2rem;
     background-color: rgba(196, 211, 60, 0.7);
     width: 98%;
     max-height: 75%;
