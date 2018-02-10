@@ -214,10 +214,10 @@ const RenderPage = {  // Determines what HTML to display based on the current st
     this.renderQuestions();
     if(QUESTIONS[STORE.currentQuestion-1].answer3===''){  // true-false question
       $('.js-twoMore').hide();
-      document.getElementById('js-radioButtonBox').setAttribute('class','js-twoQuestionBox');
+      document.getElementById('js-radioButtonBox').setAttribute('class','js-radioButtonBox');
     } else {
       $('.js-twoMore').show();
-      document.getElementById('js-radioButtonBox').setAttribute('class','js-fourQuestionBox');
+      document.getElementById('js-radioButtonBox').setAttribute('class','js-radioButtonBox');
     }
     document.getElementById('js-userButton').setAttribute('class','js-button js-userbutton disabled');
     $('div.js-pageViewSplashHtml').hide();
@@ -257,12 +257,13 @@ const RenderPage = {  // Determines what HTML to display based on the current st
     let listHTML='';
     for(let i=0; i<QUESTIONS.length; i++) {
       if((QUESTIONS[i].correct+''!==QUESTIONS[i].userChoice+'') && QUESTIONS[i].choiceCount+''==='4'){
-        listHTML+=`<li>${QUESTIONS[i].question}<br/>Answer: <span class='js-correct'>${QUESTIONS[i]['answer'+QUESTIONS[i].correct]}</span><br/>Yours: <span class='js-incorrect'>${QUESTIONS[i]['answer'+QUESTIONS[i].userChoice]}  X</span></li>`;
+        listHTML+=`<li>${QUESTIONS[i].question}<br/>Answer: <span class='js-correct'>${QUESTIONS[i]['answer'+QUESTIONS[i].correct]}</span><br/>Yours: <span class='js-incorrect'>${QUESTIONS[i]['answer'+QUESTIONS[i].userChoice]}</span></li>`;
       } else if((QUESTIONS[i].correct+''!==QUESTIONS[i].userChoice+'') && QUESTIONS[i].choiceCount+''==='2'){
-        listHTML+=`<li>${QUESTIONS[i].question}<br/>Yours: <span class='js-incorrect'>${QUESTIONS[i]['answer'+QUESTIONS[i].userChoice]}  X</span></li>`;
+        listHTML+=`<li>${QUESTIONS[i].question}<br/>Yours: <span class='js-incorrect'>${QUESTIONS[i]['answer'+QUESTIONS[i].userChoice]}</span></li>`;
       } else {
-        listHTML+=`<li>${QUESTIONS[i].question}<br/>Yours: <span class='js-correct'>${QUESTIONS[i]['answer'+QUESTIONS[i].userChoice]}  ✔</span></li>`;
+        listHTML+=`<li>${QUESTIONS[i].question}<br/>Yours: <span class='js-correct'>${QUESTIONS[i]['answer'+QUESTIONS[i].userChoice]} ✔</span></li>`;
       }
+      listHTML+='<br/>';
     }
     $('#js-userButton').text('New game?');
     $('.js-scoreBox').html(`Score: ${STORE.currentScore} correct, ${STORE.currentQuestion - STORE.currentScore} incorrect.`);
@@ -317,28 +318,29 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
     // Set up settings page, then hide it.
 
     let quizSettingsHTML = `
+      <img src='settings.png' class='js-settings-image' alt='settings'/>
       <form action='/userSettings' method='post' class='js-settingsForm'>
-        <span class='js-1stWidget'>
-          <label for='js-questionsToDo' class='js-questionsPickerLabel'>How many questions?</label>
-          <select id='js-questionsToDo' onchange='Listeners.handleQuestionsToDo()'>
-            <option value='10'>10 questions</option>
-            <option value='1'>1 question</option>
-            <option value='5'>5 questions</option>
-            <option value='15'>15 questions</option>
-            <option value='20'>20 questions</option>
-          </select>
-        </span>
+        <div class='js-Widget'>
+          <label for='js-questionsToDo' class='js-label' role='label'>How many?</label>
+            <select name='how many questions' id='js-questionsToDo' class='js-dropDown' onchange='Listeners.handleQuestionsToDo()'>
+              <option value='10'>10</option>
+              <option value='1'>1</option>
+              <option value='5'>5</option>
+              <option value='15'>15</option>
+              <option value='20'>20</option>
+            </select>
+        </div>
 
-        <span class='js-2ndWidget'>
-          <label for='js-category' class='js-categoryPickerLabel'>Which category?</label>
-          <select id='js-category' onchange='Listeners.handleCategory()'>
-            <option value='9'>General Knowledge</option>
-            <option value='21'>Sports</option>
-            <option value='20'>Mythology</option>
-            <option value='23'>History</option>
-            <option value='12'>Music</option>
-          </select>
-        </span>
+        <div class='js-Widget'>
+          <label for='js-category' class='js-label' role='label'>Category?</label>
+            <select name='which category' id='js-category' class='js-dropDown' onchange='Listeners.handleCategory()'>
+              <option value='9'>General</option>
+              <option value='21'>Sports</option>
+              <option value='20'>Mythology</option>
+              <option value='23'>History</option>
+              <option value='12'>Music</option>
+            </select>
+        </div>
       </form>`;
 
     $('div.js-pageViewSettingsHTML').html(quizSettingsHTML);
@@ -350,23 +352,25 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
     // Set up question page, then hide it.
 
     let quizQuestionsHTML = `
-      <div class='js-settingsPage'>
-      </div>
-      <span class='js-scoreBox'></span>
-      <span class='js-questionCounter'></span>
-        <span class='js-screenQuestion'></span>
-        <span id='js-radioButtonBox' class='none'>
-          <span class='js-radioButton' name='js-radioButton'>
-            <input type='radio' name='choices' value=1>
-            <label for='choice1' id='js-choice1'></label><br/>            
-            <input type='radio' name='choices' value=2>
-            <label for='choice1' id='js-choice2'></label><br/>            
-            <span class='js-twoMore'><input type='radio' name='choices' value=3>
-            <label for='choice1' id='js-choice3'></label><br/>            
-            <input type='radio' name='choices' value=4>
-            <label for='choice1' id='js-choice4'></label><br/></span>
-          </span>
-        </span>
+      <span class='js-topInfo js-scoreBox'></span>
+      <span class='js-topInfo js-questionCounter'></span>
+        <form class='js-screenQuestionForm' role='form'>
+          <div class='js-screenQuestion'></div>
+          <div id='js-radioButtonBox' class='js-radioButtonBox'>
+            <div class='js-radioButton' name='js-radioButton'>
+              <input type='radio' name='choices' value=1>
+              <label for='choice1' id='js-choice1'></label><br/><br/>
+              <input type='radio' name='choices' value=2>
+              <label for='choice1' id='js-choice2'></label><br/><br/>
+                <div class='js-twoMore'>
+                  <input type='radio' name='choices' value=3>
+                  <label for='choice1' id='js-choice3'></label><br/><br/>
+                  <input type='radio' name='choices' value=4>
+                  <label for='choice1' id='js-choice4'></label><br/><br/>
+                </div>
+            </div>
+          </div>
+        </form>
     `;
     // NOTE: The question and the five choices will be inserted in the correct places above, in renderQuestions().
     $('div.js-pageViewQuestionHTML').html(quizQuestionsHTML);
@@ -378,13 +382,17 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
     // Set up feedback page, then hide it.
 
     let quizFeedbackHTML = `
-      <span class='js-scoreBox'></span>
-      <span class='js-questionCounter'></span>
-      <img src="yes.png" class="js-feedBackImageRight" alt="Yes"/>
-      <img src="no.png" class="js-feedBackImageWrong" alt="No"/>
-      <span class='js-feedbackQuestion'></span><br/>
-      <span class='js-correctAnswer'></span><br/>
-      <span class='js-userAnswer'><br/></span>
+      <span class='js-topInfo js-scoreBox'></span>
+      <span class='js-topInfo js-questionCounter'></span>
+      <div class='js-feedBackImageBox'>
+        <img src='yes.png' class='js-feedBackImageRight' alt='Yes'/>
+        <img src='no.png' class='js-feedBackImageWrong' alt='No'/>
+      </div>
+      <div class='js-feedbackText'>
+        <span class='js-feedbackQuestion'></span><br/>
+        <span class='js-correctAnswer'></span><br/>
+        <span class='js-userAnswer'></span>
+      </div>
       <br/>
       <br/>
       <br/>
@@ -398,10 +406,10 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
     // Set up wrap page, then hide it.
 
     let quizWrapHTML = `
-      <span class='js-scoreBox'></span>
-      <span class='js-wrapScore'>Here's how you did:<br/>
+      <div class='js-topInfo js-scoreBox'></div>
+      <div class='js-topInfo js-wrapScore'>Here's how you did:<br/>
         <span class='js-scorePercent'></span>
-      </span>
+      </div>
       <ol class='js-evalList'></ol>
       <br/>
     `;

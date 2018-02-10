@@ -58,16 +58,57 @@ body{
     cursor: not-allowed;
 }
 
-.js-feedBackImageRight{
-    display: block;
-    margin: 0 auto;
-    padding-top: 50px;
+.js-correct{
+    color: green;
 }
 
-.js-feedBackImageWrong{
+.js-incorrect{
+    color: red;
+    text-decoration: line-through;
+}
+
+.js-topInfo{
     display: block;
     margin: 0 auto;
-    padding-top: 50px;
+    font-size: 1.5em;
+    width: 900;
+    padding: 4px;
+    border-radius: 24px;
+    text-align: center;
+}
+
+.js-screenQuestionForm{
+    margin-top: 50px;
+    border-radius: 48px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.js-screenQuestion{
+    display: inline-block;
+    font-size: 1.4em;
+    padding: 20px 0 40px 15px;
+    text-align: left;
+}
+
+.js-radioButtonBox{
+    display: inline-block;
+    font-size: 1.6em;
+    width: 90%;
+    text-align: center;
+}
+
+.js-fourQuestionBox{
+    display: inline-block;
+    font-size: 1.6em;
+    width: 90%;
+    text-align: center;
+} */
+
+.js-twoQuestionBox{
+    display: inline-block;
+    font-size: 1.6em;
+    width: 90%;
+    text-align: center;
 }
 
 @media only screen and (orientation: landscape){
@@ -149,6 +190,13 @@ body{
         background-size: cover;
     }
 
+    .js-settings-image{
+        display: block;
+        margin: 0 auto;
+        width: 90%;
+        padding-top: 25px;
+    }
+
     .js-pageViewQuestionHTML{
         background-image: url("fog_square.jpg");
         background-size: cover;
@@ -165,12 +213,10 @@ body{
     }
 
     .buttonForm{
-        border: 2px solid green;
         margin-bottom: 20px;
     }
     
     .buttonBox{
-        border: 2px solid purple;
         display: block;
         margin: 0 auto;
         padding-bottom: 40px;
@@ -183,72 +229,96 @@ body{
         border-radius: 60px;
         font-size: 3em;
     }
-}
 
-.js-correct{
-    color: green;
-}
+    .js-settingsForm{
+        display: block;
+        margin: 0 auto;
+        width: 90%;
+        height: 150px;
+        border-radius: 40px;
+        background-color: rgba(255, 255, 255, 0.45);
+    }
+    
+    .js-Widget{
+        display: inline-block;
+        width: 49%;
+        font-size: 48px;
+        height: auto;
+        padding-left: 20px;
+    }
+    
+    .js-label{
+        display: inline-block;
+        text-align: center;
+        padding-bottom: 15px;
+    }
 
-.js-incorrect{
-    color: red;
-}
+    .js-dropDown{
+        display: inline-block;
+        width: 95%;
+        font-size: 48px;
+    }
 
-.js-scoreBox{
-    display: block;
-    margin: 0 auto;
-    background-color: rgba(255, 255, 255, 0.3);
-    height: 2em;
-    width: 300;
-    padding: 4px;
-    border-radius: 24px;
-    text-align: center;
-}
+    .js-dropDownOptions{
+        font-size: 12px;
+        color: red;
+    }
 
-.js-questionCounter{
-    display: block;
-    margin: 0 auto;
-    background-color: rgba(0, 0, 255, 0.1);
-    height: 2em;
-    width: 300;
-    padding: 4px;
-    border-radius: 24px;
-    text-align: center;
-}
+    .js-scoreBox{
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+    
+    .js-questionCounter{
+        background-color: rgba(0, 0, 255, 0.1);
+    }
 
-.js-screenQuestion{
-    position: absolute;
-    top: 150px;
-    left: 20px;
-    border: 3px solid black;
-    border-radius: 4px;
-    background-color: azure;
-    width: 90%;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    text-align: center;
-}
+    .js-feedBackImageBox{
+        display: block;
+        margin: 0 auto;
+        margin-top: 65px;
+        height: 350px;
+        width: 350px;
+    }
 
-.js-fourQuestionBox{
-    position: absolute;
-    top: 270px;
-    left: 20px;
-    border: 3px solid blue;
-    border-radius: 4px;
-    background-color: white;
-    width: 90%;
-    text-align: center;
-}
+    .js-feedBackImageRight{
+        height: 100%;
+        width: 100%;
+    }
+    
+    .js-feedBackImageWrong{
+        height: 100%;
+        width: 100%;
+    }
 
-.js-twoQuestionBox{
-    position: absolute;
-    top: 270px;
-    left: 20px;
-    border: 3px solid blue;
-    border-radius: 4px;
-    background-color: white;
-    height: 56px;
-    width: 90%;
-    text-align: center;
+    .js-feedbackText{
+        display: block;
+        margin: 0 auto;
+        margin-top: 65px;
+        padding: 30px 20px 30px 20px;
+        width: 90%;
+        font-size: 2em;
+        border-radius: 40px;
+        background-color: rgba(255, 255, 255, 0.45);
+    }
+
+    .js-feedbackQuestion{
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+    }
+    
+    .js-correctAnswer{
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+    }
+    
+    .js-userAnswer{
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+    }
+
 }
 
 .js-radioButton{
@@ -258,118 +328,24 @@ body{
     padding: 4px;
 }
 
-.js-feedBackImageRight{
-    display: block;
-    margin: 0 auto;
-}
-
-.js-feedBackImageWrong{
-    display: block;
-    margin: 0 auto;
-}
-
-.js-feedbackQuestion{
-    position: absolute;
-    top: 350px;
-    left: 20px;
-    border: 3px solid black;
-    border-radius: 4px;
-    background-color: azure;
-    width: 90%;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    text-align: center;    
-}
-
-.js-correctAnswer{
-    position: absolute;
-    top: 450px;
-    left: 20px;
-    color: green;
-    border: 3px solid blue;
-    border-radius: 4px;
-    background-color: cornsilk;
-    width: 90%;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    text-align: center;
-}
-
-.js-userAnswer{
-    position: absolute;
-    top: 550px;
-    left: 20px;
-    color: red;
-    border: 3px solid blue;
-    border-radius: 4px;
-    background-color: cornsilk;
-    width: 90%;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    text-align: center;
-}
-
 .js-wrapScore{
-    display: block;
-    margin: 0 auto;
     background-color: rgba(235, 253, 70, 0.3);
-    height: 3em;
-    width: 300;
-    padding: 4px;
-    text-align: center;
 }
 
 .js-scorePercent{
-    font-size: 16pt;
+    font-size: 1.5em;
     color: blue;
 }
 
 .js-evalList{
-    position: absolute;
-    top: 84px;
-    left: 3px;
-    border: 3px solid orange;
+    display: block;
+    margin: 0 auto;
     border-radius: 4px;
-    background-color: cornsilk;
+    font-size: 3rem;
+    background-color: rgba(196, 211, 60, 0.7);
     width: 98%;
-    max-height: 575px;
+    max-height: 75%;
     overflow: auto;
+    padding-left: 10px;
     text-align: left;
-}
-
-.js-settingsForm{
-    position: absolute;
-    bottom: 80px;
-    left: 30px;
-    width: 350px;
-    height: 60px;
-    border: 3px solid #454545;
-    border-radius: 4px;
-    background-color: silver;
-}
-
-.js-1stWidget{
-    position: absolute;
-    left: 10;
-    top: 2;
-    width: 140px;
-    height: 48px;
-}
-
-.js-2ndWidget{
-    position: absolute;
-    left: 160;
-    top: 2;
-    width: 180px;
-    height: 48px;
-}
-
-#js-questionsToDo, #js-category{
-    position: absolute;
-    left: 10px;
-    top: 20px;
-    color: black;
-    background-color: lightgrey;
-    border: 1px solid #454545;
-    border-radius: 5px;
 }
