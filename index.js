@@ -188,7 +188,7 @@ const RenderPage = {  // Determines what HTML to display based on the current st
   splashPage: function(){
     console.log('In the splashPage method.');
     $('#js-settingsButton').show();
-    $('#js-userButton').text('START').focus();
+    $('#js-userButton').text('START');
     $('div.js-pageViewSplashHtml').show();
     $('div.js-pageViewSettingsHTML').hide();
     $('div.js-pageViewQuestionHTML').hide();
@@ -284,6 +284,7 @@ const RenderPage = {  // Determines what HTML to display based on the current st
     //only if the STORE is on pages that show questions
     $('.js-screenQuestion').html(QUESTIONS[STORE.currentQuestion-1].question);
     $('#answerText1').html(` ${QUESTIONS[STORE.currentQuestion-1].answer1}`);
+    $('input[name="choices"]').focus();
     $('#answerText2').html(` ${QUESTIONS[STORE.currentQuestion-1].answer2}`);
     $('#answerText3').html(` ${QUESTIONS[STORE.currentQuestion-1].answer3}`);
     $('#answerText4').html(` ${QUESTIONS[STORE.currentQuestion-1].answer4}`);
@@ -366,7 +367,7 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
           <span id='js-radioButtonBox' class='none'>
           <fieldset class='js-radioButton' name='js-radioButton'>
             <label for='js-choice1'>
-              <input type='radio' value=1 name='choices' id='js-choice1'><span id='answerText1'></span>
+              <input type='radio' value=1 name='choices' id='js-choice1' tabindex="50"><span id='answerText1'></span>
             </label>
             <label for='js-choice2'>
               <input type='radio' value=2 name='choices' id='js-choice2'><span id='answerText2'></span>
