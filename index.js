@@ -14,7 +14,7 @@ let QUESTIONS = [];  // Nothing to see here until the data is fetched from the O
 const JSON = {  // All the variables connected to the json packet go here.
   endpoint: 'https://opentdb.com/',
   apiKey: '',
-  amount: 10,
+  amount: 4,
   category: 9,
   type: '',
   questionsArray: []
@@ -366,7 +366,7 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
           <span id='js-radioButtonBox' class='none'>
           <fieldset class='js-radioButton' name='js-radioButton'>
             <label for='js-choice1'>
-              <input type='radio' value=1 name='choices' id='js-choice1'><span id='answerText1' tabindex '30'></span>
+              <input type='radio' value=1 name='choices' id='js-choice1'><span id='answerText1'></span>
             </label>
             <label for='js-choice2'>
               <input type='radio' value=2 name='choices' id='js-choice2'><span id='answerText2'></span>
