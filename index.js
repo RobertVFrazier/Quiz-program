@@ -325,10 +325,10 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
         <div class='js-Widget'>
           <label for='js-questionsToDo' class='js-label' role='label'>How many?</label>
             <select name='how many questions' id='js-questionsToDo' class='js-dropDown' onchange='Listeners.handleQuestionsToDo()'>
-              <option value='10'>10</option>
-              <option value='1'>1</option>
-              <option value='5'>5</option>
-              <option value='15'>15</option>
+              <option value='4'>4</option>
+              <option value='8'>8</option>
+              <option value='12'>12</option>
+              <option value='16'>16</option>
               <option value='20'>20</option>
             </select>
         </div>
@@ -341,6 +341,11 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
               <option value='20'>Mythology</option>
               <option value='23'>History</option>
               <option value='12'>Music</option>
+              <option value='24'>Politics</option>
+              <option value='10'>Books</option>
+              <option value='17'>Science</option>
+              <option value='29'>Comics</option>
+              <option value='25'>Art</option>
             </select>
         </div>
       </form>`;
