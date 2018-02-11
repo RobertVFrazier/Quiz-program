@@ -1,16 +1,10 @@
 body{
     font-family: 'Arial Black', Gadget, sans-serif;
-    font-size: 1em;
+    font-size: 2em;
     font-weight: 700;
 }
 
-.title{
-    text-align: center;
-    font-family: 'Permanent Marker', cursive;
-    font-weight: 200;
-    width: 100%;
-    color: red;
-}
+/* backgrounds */
 
 .js-backGround{
     background-repeat: no-repeat,
@@ -26,27 +20,62 @@ body{
     height: 100%;
 }
 
+.js-pageViewSplashHtml{
+    background-image: url("thinker_question.png"),
+        url("beach_square.jpg");
+        background-size: 45%, cover;
+}
+
+.js-pageViewSettingsHTML{
+    background-image: url("grunge_square.jpg");
+    background-size: cover;
+}
+
+.js-pageViewQuestionHTML{
+    background-image: url("fog_square.jpg");
+    background-size: cover;
+}
+
+.js-pageViewFeedbackHTML{
+    background-image: url("mountains_square.jpg");
+    background-size: cover;
+}
+
+.js-pageViewWrapHTML{
+    background-image: url("sunset_square.jpg");
+    background-size: cover;
+}
+
+/* buttons */
+
 .buttonForm{
     position: absolute;
+    bottom: 0;
     width: 100%;
+    margin-bottom: 15px;
 }
 
 .js-button{
     display: block;
     margin: 0 auto;
+    width: 100%;
+    height: 100%;
+    border-radius: 60px;
+    font-size: 1.4em;
     font-weight: 700;
 }
 
-.js-userbutton {
+.buttonBox{
+    display: block;
+    margin: 0 auto;
+    padding-bottom: 15px;
+    width: 270px;
+}
+
+.js-userbutton{
     border-color: yellow;
     background-color: gold;
     color: purple;
-}
-
-.js-settingsbutton {
-    border-color: #a25840;
-    background-color: #c2846b;
-    color: black;
 }
 
 .js-userbutton.disabled{
@@ -57,132 +86,134 @@ body{
     cursor: not-allowed;
 }
 
-.js-feedBackImageRight{
+.js-settingsbutton{
+    border-color: #a25840;
+    background-color: #c2846b;
+    color: black;
+}
+
+/* Splash page */
+
+.title{
+    text-align: center;
+    font-family: 'Permanent Marker', cursive;
+    font-weight: 200;
+    width: 100%;
+    color: red;
+}    
+
+.smallTitle{
+    font-size: 1.8em;
+}
+
+.bigTitle {
+    font-size: 3.6em;
+    color: black;
+}
+
+/* Settings page */
+
+.js-settings-image{
     display: block;
     margin: 0 auto;
-    padding-top: 50px;
+    height: 75%;
+    padding-top: 5px;
 }
 
-.js-feedBackImageWrong{
+.js-settingsForm{
     display: block;
     margin: 0 auto;
-    padding-top: 50px;
+    width: 90%;
+    height: 120px;
+    border-radius: 40px;
+    background-color: rgba(255, 255, 255, 0.45);
 }
 
-@media only screen and (orientation: landscape){
-
-    .smallTitle{
-        padding-top: 0.2em;
-        font-size: 6vh;
-    }
-
-    .bigTitle {
-        font-size: 12vh;
-        color: black;
-    }
-
-    .js-pageViewSplashHtml{
-        background-image: url("thinker_question.png"),
-            url("beach_square.jpg");
-        background-size: 45%, cover;
-    }
-
-    .js-pageViewSettingsHTML{
-        background-image: url("grunge_square.jpg");
-        background-size: cover;
-    }
-
-    .js-pageViewQuestionHTML{
-        background-image: url("fog_square.jpg");
-        background-size: cover;
-    }
-
-    .js-pageViewFeedbackHTML{
-        background-image: url("mountains_square.jpg");
-        background-size: cover;
-    }
-
-    .js-pageViewWrapHTML{
-        background-image: url("sunset_square.jpg");
-        background-size: cover;
-    }
-
-    .buttonForm{
-        bottom: 6px;
-    }
-    
-    .buttonBox{
-        padding-top: 4px;
-        padding-bottom: 4px;
-        height: 5%;
-    }
-
-    .js-button{
-        width: 180px;
-        height: 100%;
-        border-radius: 24px;
-        font-size: 1.8em;
-    }
+.js-Widget{
+    display: inline-block;
+    width: 49%;
+    font-size: 1em;
+    height: auto;
+    padding-left: 20px;
 }
 
-@media only screen and (orientation: portrait){
-
-    .smallTitle{
-        padding-top: 1em;
-        font-size: 3vh;
-    }
-
-    .bigTitle {
-        font-size: 9vh;
-        color: black;
-    }
-
-    .js-pageViewSplashHtml{
-        background-image: url("thinker_question.png"),
-            url("beach_square.jpg");
-        background-size: 90%, cover;
-    }
-
-    .js-pageViewSettingsHTML{
-        background-image: url("grunge_square.jpg");
-        background-size: cover;
-    }
-
-    .js-pageViewQuestionHTML{
-        background-image: url("fog_square.jpg");
-        background-size: cover;
-    }
-    
-    .js-pageViewFeedbackHTML{
-        background-image: url("mountains_square.jpg");
-        background-size: cover;
-    }
-    
-    .js-pageViewWrapHTML{
-        background-image: url("sunset_square.jpg");
-        background-size: cover;
-    }
-
-    .buttonForm{
-        bottom: 20px;
-    }
-    
-    .buttonBox{
-        display: block;
-        margin: 0 auto;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        fit-content: min(max-content fill-available);
-        max-width: 35%;
-    }
-
-    .js-button{
-        width: 100%;
-        height: 100%;
-        border-radius: 40px;
-        font-size: 3vh;
-    }
+.js-label{
+    display: inline-block;
+    text-align: center;
 }
+
+.js-dropDown{
+    display: inline-block;
+    width: 95%;
+    font-size: 1em;
+}
+
+.js-dropDownOptions{
+    font-size: 1em;
+    color: red;
+}
+
+/* Questions page */
+
+.js-topInfo{
+    display: block;
+    margin: 0 auto;
+    font-size: 0.8em;
+    width: 550px;
+    padding: 2px;
+    border-radius: 24px;
+    text-align: center;
+}
+
+.js-scoreBox{
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.js-questionCounter{
+    background-color: rgba(0, 0, 255, 0.1);
+}
+
+.js-screenQuestionForm{
+    margin-top: 50px;
+    border-radius: 1.5em;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.js-screenQuestion{
+    display: inline-block;
+    font-size: 0.8em;
+    padding: 10px 0 10px 20px;
+    text-align: left;
+}
+
+.js-radioButtonBox{
+    display: inline-block;
+    font-size: 0.8em;
+    width: 90%;
+    text-align: center;
+}
+
+.js-fourQuestionBox{
+    display: inline-block;
+    font-size: 0.8em;
+    width: 90%;
+    text-align: center;
+}
+
+.js-twoQuestionBox{
+    display: inline-block;
+    font-size: 0.8em;
+    width: 90%;
+    text-align: center;
+}
+
+.js-radioButton{
+    display: inline-block;
+    vertical-align: middle;
+    text-align: left;
+}
+
+/* Feedback page */
 
 .js-correct{
     color: green;
@@ -192,185 +223,133 @@ body{
     color: red;
 }
 
-.js-scoreBox{
+.js-incorrectWrap{
+    color: red;
+    text-decoration: line-through;
+}
+
+.js-feedBackImageBox{
     display: block;
     margin: 0 auto;
-    background-color: rgba(255, 255, 255, 0.3);
-    height: 2em;
-    width: 300;
-    padding: 4px;
-    border-radius: 24px;
-    text-align: center;
-}
-
-.js-questionCounter{
-    display: block;
-    margin: 0 auto;
-    background-color: rgba(0, 0, 255, 0.1);
-    height: 2em;
-    width: 300;
-    padding: 4px;
-    border-radius: 24px;
-    text-align: center;
-}
-
-.js-screenQuestion{
-    position: absolute;
-    top: 150px;
-    left: 20px;
-    border: 3px solid black;
-    border-radius: 4px;
-    background-color: azure;
-    width: 90%;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    text-align: center;
-}
-
-.js-fourQuestionBox{
-    position: absolute;
-    top: 270px;
-    left: 20px;
-    border: 3px solid blue;
-    border-radius: 4px;
-    background-color: white;
-    width: 90%;
-    text-align: center;
-}
-
-.js-twoQuestionBox{
-    position: absolute;
-    top: 270px;
-    left: 20px;
-    border: 3px solid blue;
-    border-radius: 4px;
-    background-color: white;
-    height: 56px;
-    width: 90%;
-    text-align: center;
-}
-
-.js-radioButton{
-    display: inline-block;
-    vertical-align: middle;
-    text-align: left;
-    padding: 4px;
+    margin-top: 18px;
+    margin-bottom: 18px;
+    height: 160px;
+    width: 160px;
 }
 
 .js-feedBackImageRight{
-    display: block;
-    margin: 0 auto;
+    height: 100%;
+    width: 100%;
 }
 
 .js-feedBackImageWrong{
+    height: 100%;
+    width: 100%;
+}
+
+.js-feedbackText{
     display: block;
     margin: 0 auto;
+    margin-top: 7px;
+    padding: 8px;
+    width: 95%;
+    font-size: 0.9em;
+    border-radius: 30px;
+    background-color: rgba(255, 255, 255, 0.45);
 }
 
 .js-feedbackQuestion{
-    position: absolute;
-    top: 350px;
-    left: 20px;
-    border: 3px solid black;
-    border-radius: 4px;
-    background-color: azure;
-    width: 90%;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    text-align: center;    
+    display: block;
+    margin: 0 auto;
+    text-align: center;
 }
 
 .js-correctAnswer{
-    position: absolute;
-    top: 450px;
-    left: 20px;
-    color: green;
-    border: 3px solid blue;
-    border-radius: 4px;
-    background-color: cornsilk;
-    width: 90%;
-    padding-top: 4px;
-    padding-bottom: 4px;
+    display: block;
+    margin: 0 auto;
     text-align: center;
 }
 
 .js-userAnswer{
-    position: absolute;
-    top: 550px;
-    left: 20px;
-    color: red;
-    border: 3px solid blue;
-    border-radius: 4px;
-    background-color: cornsilk;
-    width: 90%;
-    padding-top: 4px;
-    padding-bottom: 4px;
+    display: block;
+    margin: 0 auto;
     text-align: center;
 }
 
+/* Wrap-up page */
+
 .js-wrapScore{
-    display: block;
-    margin: 0 auto;
+    border-radius: 24px;
     background-color: rgba(235, 253, 70, 0.3);
-    height: 3em;
-    width: 300;
-    padding: 4px;
-    text-align: center;
 }
 
 .js-scorePercent{
-    font-size: 16pt;
+    font-size: 1.5em;
     color: blue;
 }
 
 .js-evalList{
-    position: absolute;
-    top: 84px;
-    left: 3px;
-    border: 3px solid orange;
-    border-radius: 4px;
-    background-color: cornsilk;
-    width: 98%;
-    max-height: 575px;
+    display: block;
+    margin: 0 auto;
+    border-radius: 24px;
+    font-size: 0.7em;
+    background-color: rgba(196, 211, 60, 0.7);
+    width: 75%;
+    max-height: 70%;
     overflow: auto;
     padding-left: 10px;
-    padding-right: 10px;
     text-align: left;
 }
 
-.js-settingsForm{
-    position: absolute;
-    bottom: 80px;
-    left: 30px;
-    width: 350px;
-    height: 60px;
-    border: 3px solid #454545;
-    border-radius: 4px;
-    background-color: silver;
-}
+/* Radio button fix from Heydon Pickering. Wonderful solution to a horrible problem!  */
+/* https://www.sitepoint.com/replacing-radio-buttons-without-replacing-radio-buttons/ */
+/* I modified the focus styling, but everything else is from that tutorial.             */
 
-.js-1stWidget{
-    position: absolute;
-    left: 10;
-    top: 2;
-    width: 140px;
-    height: 48px;
-}
+/* HTML5 Boilerplate accessible hidden styles */
+[type="radio"] {
+    border: 0; 
+    clip: rect(0 0 0 0); 
+    height: 1px; margin: -1px; 
+    overflow: hidden; 
+    padding: 0; 
+    position: absolute; 
+    width: 1px;
+  }
+  
+  /* One radio button per line */
+  label {
+    display: block;
+    cursor: pointer;
+    line-height: 1.5;
+    font-size: 0.9em;
+  }
+  
+  [type="radio"] + span {
+    display: block;
+  }
 
-.js-2ndWidget{
-    position: absolute;
-    left: 160;
-    top: 2;
-    width: 180px;
-    height: 48px;
-}
-
-#js-questionsToDo, #js-category{
-    position: absolute;
-    left: 10px;
-    top: 20px;
-    color: black;
-    background-color: lightgrey;
-    border: 1px solid #454545;
-    border-radius: 5px;
-}
+  /* the basic, unchecked style */
+  [type="radio"] + span:before {
+    content: '';
+    display: inline-block;
+    width: 1.05em;
+    height: 1.05em;
+    vertical-align: -0.12em;
+    border-radius: 0.8em;
+    border: 0.11em solid #fff;
+    box-shadow: 0 0 0 0.11em #000;
+    margin-right: 0.75em;
+    transition: 0.5s ease all;
+  }
+  
+  /* the checked style using the :checked pseudo class */
+  [type="radio"]:checked + span:before {
+    background: green;
+    box-shadow: 0 0 0 0.25em #000;
+  }
+  
+  /* never forget focus styling */
+  [type="radio"]:focus + span{
+    outline: thin dotted;
+    background-color: rgb(250, 250, 115);
+  }
