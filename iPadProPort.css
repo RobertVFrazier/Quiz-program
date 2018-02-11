@@ -183,28 +183,28 @@ body{
 
 .js-screenQuestion{
     display: inline-block;
-    font-size: 1.1em;
+    font-size: 1.2em;
     padding: 20px 0 40px 15px;
     text-align: left;
 }
 
 .js-radioButtonBox{
     display: inline-block;
-    font-size: 1.3em;
+    font-size: 1.5em;
     width: 90%;
     text-align: center;
 }
 
 .js-fourQuestionBox{
     display: inline-block;
-    font-size: 1.3em;
+    font-size: 1.5em;
     width: 90%;
     text-align: center;
 } 
 
 .js-twoQuestionBox{
     display: inline-block;
-    font-size: 1.3em;
+    font-size: 1.5em;
     width: 90%;
     text-align: center;
 }
