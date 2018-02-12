@@ -310,7 +310,8 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
       <div class='js-splashPage'>
         <p class='title smallTitle' role='title'>Let's get Thinkful, because it's</p>
         <p class='title bigTitle' role='title'>Quiz Time!</p>
-      </div>`;
+      </div>
+      <div class='js-credit'>Photo by <a href='https://unsplash.com/@montylov' target='_blank'>MontyLov</a> / <a href='https://unsplash.com' target='_blank'>Unsplash</a></div>`;
 
     $('div.js-pageViewSplashHtml').html(quizSplashHTML);
     $('div.js-pageViewSplashHtml').hide();
@@ -383,6 +384,7 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
             </span><br/>
           </fieldset>
         </form>
+        <div class='js-credit'>Photo by <a href='https://unsplash.com/@lin_alessio' target='_blank'>Alessio Lin</a> / <a href='https://unsplash.com' target='_blank'>Unsplash</a></div>
     `;
     // NOTE: The question and the five choices will be inserted in the correct places above, in renderQuestions().
     $('div.js-pageViewQuestionHTML').html(quizQuestionsHTML);
@@ -408,6 +410,7 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
       <br/>
       <br/>
       <br/>
+      <div class='js-credit'>Photo by <a href='https://unsplash.com/@asoggetti' target='_blank'>asoggetti</a> / <a href='https://unsplash.com' target='_blank'>Unsplash</a></div>
     `;
     $('div.js-pageViewFeedBackHTML').html(quizFeedbackHTML);
     $('div.js-pageViewFeedBackHTML').hide();
@@ -424,6 +427,7 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
       </div>
       <ol class='js-evalList'></ol>
       <br/>
+      <div class='js-credit'>Photo by <a href='https://unsplash.com/@adelgordon' target='_blank'>Adel Gordon</a> / <a href='https://unsplash.com' target='_blank'>Unsplash</a></div>
     `;
     $('div.js-pageViewWrapHTML').html(quizWrapHTML);
     $('div.js-pageViewWrapHTML').hide();
