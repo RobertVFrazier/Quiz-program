@@ -11,7 +11,7 @@ let questions = [];  // Nothing to see here until the data is fetched from the O
  json data packet variables 
 ********************************************************/
 
-const JSON = {  // All the variables connected to the json packet go here.
+const json = {  // All the variables connected to the json packet go here.
   endpoint: 'https://opentdb.com/',
   apiKey: '',
   amount: 4,
@@ -38,10 +38,10 @@ Step 1: Render the DOM.
 const GetAPIPacket = {  // Gets questions data from the Open Trivia Database (https://opentdb.com/).
   getJsonKey: function(){
     console.log('In the getKey method');
-    $.getJSON(`${JSON.endpoint}api_token.php?command=request`, function(json){
-      //console.log(json.token);
-      if(json.token!==''){
-        JSON.apiKey=json.token;
+    $.getJSON(`${json.endpoint}api_token.php?command=request`, function(jsonTemp){
+      //console.log(jsonTemp.token);
+      if(jsonTemp.token!==''){
+        json.apiKey=jsonTemp.token;
       }
     });
     this.getJsonQuestions();
@@ -51,20 +51,20 @@ const GetAPIPacket = {  // Gets questions data from the Open Trivia Database (ht
     console.log('In the getJsonQuestions method');
     document.getElementById('js-userButton').setAttribute('class','js-button js-userbutton disabled');
     let tempObj={
-      category: JSON.category===0  ? '' : `&category=${JSON.category}`,
-      type: JSON.type===''  ? '' : `&type=${JSON.type}`,
-      token: JSON.apiKey==='' ? '' : `&token=${JSON.apiKey}`
+      category: json.category===0  ? '' : `&category=${json.category}`,
+      type: json.type===''  ? '' : `&type=${json.type}`,
+      token: json.apiKey==='' ? '' : `&token=${json.apiKey}`
     };
-    if(JSON.amount===0){
-      JSON.amount=5;
+    if(json.amount===0){
+      json.amount=5;
     }
-    $.getJSON(`${JSON.endpoint}api.php?amount=${JSON.amount}${tempObj.category}${tempObj.type}${tempObj.token}`, function(json){
+    $.getJSON(`${json.endpoint}api.php?amount=${json.amount}${tempObj.category}${tempObj.type}${tempObj.token}`, function(jsonTemp){
       console.log('In the json callback function');
-      console.log(`${JSON.endpoint}api.php?amount=${JSON.amount}${tempObj.category}${tempObj.type}${tempObj.token}`);
-      JSON.questionsArray=[];
+      console.log(`${json.endpoint}api.php?amount=${json.amount}${tempObj.category}${tempObj.type}${tempObj.token}`);
+      json.questionsArray=[];
       questions=[];
-      console.log(JSON.questionsArray);    
-      JSON.questionsArray=json.results;
+      console.log(json.questionsArray);    
+      json.questionsArray=jsonTemp.results;
       GetAPIPacket.pushToQuestions();
     }).fail(function() {
       console.log( 'error' );
@@ -78,15 +78,15 @@ const GetAPIPacket = {  // Gets questions data from the Open Trivia Database (ht
     let newChoice3='';
     let newChoice4='';
     let newChoiceCount=0;
-    for(let i=0; i<JSON.amount; i++){
-      newQuestion=JSON.questionsArray[i].question;
-      newChoice1=JSON.questionsArray[i].correct_answer;
-      newChoice2=JSON.questionsArray[i].incorrect_answers[0];
-      if(JSON.questionsArray[i].type==='multiple'){
+    for(let i=0; i<json.amount; i++){
+      newQuestion=json.questionsArray[i].question;
+      newChoice1=json.questionsArray[i].correct_answer;
+      newChoice2=json.questionsArray[i].incorrect_answers[0];
+      if(json.questionsArray[i].type==='multiple'){
         console.log('Adding a multiple question');
         newChoiceCount=4;
-        newChoice3=JSON.questionsArray[i].incorrect_answers[1];
-        newChoice4=JSON.questionsArray[i].incorrect_answers[2];        
+        newChoice3=json.questionsArray[i].incorrect_answers[1];
+        newChoice4=json.questionsArray[i].incorrect_answers[2];        
       } else {
         console.log('Adding a boolean question');
         newChoiceCount=2;
@@ -479,13 +479,13 @@ const Listeners = {  // All listener methods. More to come here.
   handleQuestionsToDo: function(){
     console.log('In the handleQuestionsToDo method');
     let myDropdown = document.getElementById('js-questionsToDo');
-    JSON.amount=myDropdown.value;
+    json.amount=myDropdown.value;
   },
 
   handleCategory: function(){    
     console.log('In the handleCategory method');
     let myDropdown = document.getElementById('js-category');
-    JSON.category=myDropdown.value;
+    json.category=myDropdown.value;
   }
 };
 
