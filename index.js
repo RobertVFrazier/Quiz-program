@@ -367,17 +367,17 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
           <span id='js-radioButtonBox' class='none'>
           <fieldset class='js-radioButton' name='js-radioButton'>
             <label for='js-choice1'>
-              <input type='radio' value=1 name='choices' id='js-choice1'><span id='answerText1'></span>
+              <input type='radio' value=1 name='choices' id='js-choice1' role='radio'><span id='answerText1'></span>
             </label>
             <label for='js-choice2'>
-              <input type='radio' value=2 name='choices' id='js-choice2'><span id='answerText2'></span>
+              <input type='radio' value=2 name='choices' id='js-choice2' role='radio'><span id='answerText2'></span>
             </label>
               <span class='js-twoMore'>
                 <label for='js-choice3'>
-                  <input type='radio' value=3 name='choices' id='js-choice3'><span id='answerText3'></span>
+                  <input type='radio' value=3 name='choices' id='js-choice3' role='radio'><span id='answerText3'></span>
                 </label>
                 <label for='js-choice4'>
-                  <input type='radio' value=4 name='choices' id='js-choice4'><span id='answerText4'></span>
+                  <input type='radio' value=4 name='choices' id='js-choice4' role='radio'><span id='answerText4'></span>
                 </label>
               </span>
             </span><br/>
