@@ -5,7 +5,7 @@
  Main arrays
 ********************************************************/
 
-let QUESTIONS = [];  // Nothing to see here until the data is fetched from the Open Trivia Database (https://opentdb.com/)
+let questions = [];  // Nothing to see here until the data is fetched from the Open Trivia Database (https://opentdb.com/)
 
 /******************************************************** 
  json data packet variables 
@@ -62,16 +62,16 @@ const GetAPIPacket = {  // Gets questions data from the Open Trivia Database (ht
       console.log('In the json callback function');
       console.log(`${JSON.endpoint}api.php?amount=${JSON.amount}${tempObj.category}${tempObj.type}${tempObj.token}`);
       JSON.questionsArray=[];
-      QUESTIONS=[];
+      questions=[];
       console.log(JSON.questionsArray);    
       JSON.questionsArray=json.results;
-      GetAPIPacket.pushToQUESTIONS();
+      GetAPIPacket.pushToQuestions();
     }).fail(function() {
       console.log( 'error' );
     });
   },
 
-  pushToQUESTIONS: function(){
+  pushToQuestions: function(){
     let newQuestion='';
     let newChoice1='';
     let newChoice2='';
@@ -93,7 +93,7 @@ const GetAPIPacket = {  // Gets questions data from the Open Trivia Database (ht
         newChoice3='';
         newChoice4='';
       }
-      QUESTIONS.push({
+      questions.push({
         question: newQuestion,
         answer1: newChoice1,
         answer2: newChoice2,
@@ -112,24 +112,24 @@ const GetAPIPacket = {  // Gets questions data from the Open Trivia Database (ht
 const scrambleChoices = {  // First answer is always right. Scramble the choices so that's not so.
   doScrambling: function(){
     console.log('In the doScrambling method');
-    for(let i=0; i<QUESTIONS.length; i++){
-      let rightChoice=QUESTIONS[i].answer1;
+    for(let i=0; i<questions.length; i++){
+      let rightChoice=questions[i].answer1;
       let wrongChoices=[];
       wrongChoices.push('');
-      wrongChoices.push(QUESTIONS[i].answer2);
-      if(QUESTIONS[i].choiceCount===4){
-        wrongChoices.push(QUESTIONS[i].answer3);
-        wrongChoices.push(QUESTIONS[i].answer4);      
+      wrongChoices.push(questions[i].answer2);
+      if(questions[i].choiceCount===4){
+        wrongChoices.push(questions[i].answer3);
+        wrongChoices.push(questions[i].answer4);      
       }
       let seqArr=[];
-      if(QUESTIONS[i].choiceCount===4){
+      if(questions[i].choiceCount===4){
         seqArr=[1,2,3,4];     
       } else {
         seqArr=[1,2];
       }
       let rndPos=0;
       let rndArr=[];
-      for(let j=QUESTIONS[i].choiceCount; j>1; j--){
+      for(let j=questions[i].choiceCount; j>1; j--){
         rndPos=this.pickNum(1,j);
         rndArr.push(seqArr.splice(rndPos-1,1));
       }
@@ -137,15 +137,15 @@ const scrambleChoices = {  // First answer is always right. Scramble the choices
       // rndArr.push(seqArr[0]);
       let newAnswers=[];
       let pos=0;
-      for(let j=0; j<QUESTIONS[i].choiceCount; j++){
+      for(let j=0; j<questions[i].choiceCount; j++){
         pos = rndArr[j];
         newAnswers.push(wrongChoices[pos-1]);   
       }
-      for(let j=1; j<=QUESTIONS[i].choiceCount; j++){
-        QUESTIONS[i]['answer'+j]=newAnswers[j-1];
-        if(QUESTIONS[i]['answer'+j]===''){
-          QUESTIONS[i]['answer'+j]=rightChoice;
-          QUESTIONS[i].correct=j;
+      for(let j=1; j<=questions[i].choiceCount; j++){
+        questions[i]['answer'+j]=newAnswers[j-1];
+        if(questions[i]['answer'+j]===''){
+          questions[i]['answer'+j]=rightChoice;
+          questions[i].correct=j;
         }
       }
     }
@@ -174,13 +174,13 @@ const RenderPage = {  // Determines what HTML to display based on the current st
     if (STORE.currentQuestion===0 && STORE.currentView==='settings'){
       this.settingsPage();
     }
-    if (STORE.currentQuestion>=1 && STORE.currentQuestion<=QUESTIONS.length && STORE.currentView==='question'){
+    if (STORE.currentQuestion>=1 && STORE.currentQuestion<=questions.length && STORE.currentView==='question'){
       this.questionsPage();
     }
-    if (STORE.currentQuestion>=1 && STORE.currentQuestion<=QUESTIONS.length && STORE.currentView==='feedback'){
+    if (STORE.currentQuestion>=1 && STORE.currentQuestion<=questions.length && STORE.currentView==='feedback'){
       this.feedBackPage();
     }
-    if(STORE.currentQuestion === QUESTIONS.length && STORE.currentView === 'wrap'){
+    if(STORE.currentQuestion === questions.length && STORE.currentView === 'wrap'){
       this.wrapPage();
     }
   },
@@ -212,9 +212,9 @@ const RenderPage = {  // Determines what HTML to display based on the current st
     $('#js-settingsButton').hide();
     $('#js-userButton').text('ENTER');
     $('.js-scoreBox').html(`Score: ${STORE.currentScore} correct, ${(STORE.currentQuestion - STORE.currentScore)-1} incorrect.`);
-    $('.js-questionCounter').html(`Question: ${STORE.currentQuestion} of ${QUESTIONS.length}`);
+    $('.js-questionCounter').html(`Question: ${STORE.currentQuestion} of ${questions.length}`);
     this.renderQuestions();
-    if(QUESTIONS[STORE.currentQuestion-1].answer3===''){  // true-false question
+    if(questions[STORE.currentQuestion-1].answer3===''){  // true-false question
       $('.js-twoMore').hide();
       document.getElementById('js-radioButtonBox').setAttribute('class','js-radioButtonBox');
     } else {
@@ -232,10 +232,10 @@ const RenderPage = {  // Determines what HTML to display based on the current st
   feedBackPage: function(){
     console.log('In the feedbackPage method.');
     $('#js-userButton').text('CONTINUE');
-    $('.js-feedbackQuestion').html(QUESTIONS[STORE.currentQuestion-1].question);
-    $('.js-correctAnswer').html('THE ANSWER IS: '+QUESTIONS[STORE.currentQuestion-1]['answer'+QUESTIONS[STORE.currentQuestion-1].correct]);
-    $('.js-userAnswer').html('YOUR ANSWER: '+QUESTIONS[STORE.currentQuestion-1]['answer'+QUESTIONS[STORE.currentQuestion-1].userChoice]);
-    if(QUESTIONS[STORE.currentQuestion-1].userChoice+'' === QUESTIONS[STORE.currentQuestion-1].correct+''){
+    $('.js-feedbackQuestion').html(questions[STORE.currentQuestion-1].question);
+    $('.js-correctAnswer').html('THE ANSWER IS: '+questions[STORE.currentQuestion-1]['answer'+questions[STORE.currentQuestion-1].correct]);
+    $('.js-userAnswer').html('YOUR ANSWER: '+questions[STORE.currentQuestion-1]['answer'+questions[STORE.currentQuestion-1].userChoice]);
+    if(questions[STORE.currentQuestion-1].userChoice+'' === questions[STORE.currentQuestion-1].correct+''){
       STORE.currentScore++;
       $('.js-feedBackImageRight').show();
       $('.js-feedBackImageWrong').hide();
@@ -246,7 +246,7 @@ const RenderPage = {  // Determines what HTML to display based on the current st
       $('.js-userAnswer').show();     
     }
     $('.js-scoreBox').html(`Score: ${STORE.currentScore} correct, ${STORE.currentQuestion - STORE.currentScore} incorrect.`);
-    $('.js-questionCounter').html(`Question: ${STORE.currentQuestion} of ${QUESTIONS.length}`);
+    $('.js-questionCounter').html(`Question: ${STORE.currentQuestion} of ${questions.length}`);
     $('div.js-pageViewSplashHtml').hide();
     $('div.js-pageViewSettingsHTML').hide();
     $('div.js-pageViewQuestionHTML').hide();
@@ -257,13 +257,13 @@ const RenderPage = {  // Determines what HTML to display based on the current st
   wrapPage: function(){
     console.log('In the wrapPage method.');
     let listHTML='';
-    for(let i=0; i<QUESTIONS.length; i++) {
-      if((QUESTIONS[i].correct+''!==QUESTIONS[i].userChoice+'') && QUESTIONS[i].choiceCount+''==='4'){
-        listHTML+=`<li>${QUESTIONS[i].question}<br/>Answer: <span class='js-correct'>${QUESTIONS[i]['answer'+QUESTIONS[i].correct]}</span><br/>Yours: <span class='js-incorrectWrap'>${QUESTIONS[i]['answer'+QUESTIONS[i].userChoice]}</span></li>`;
-      } else if((QUESTIONS[i].correct+''!==QUESTIONS[i].userChoice+'') && QUESTIONS[i].choiceCount+''==='2'){
-        listHTML+=`<li>${QUESTIONS[i].question}<br/>Yours: <span class='js-incorrectWrap'>${QUESTIONS[i]['answer'+QUESTIONS[i].userChoice]}</span></li>`;
+    for(let i=0; i<questions.length; i++) {
+      if((questions[i].correct+''!==questions[i].userChoice+'') && questions[i].choiceCount+''==='4'){
+        listHTML+=`<li>${questions[i].question}<br/>Answer: <span class='js-correct'>${questions[i]['answer'+questions[i].correct]}</span><br/>Yours: <span class='js-incorrectWrap'>${questions[i]['answer'+questions[i].userChoice]}</span></li>`;
+      } else if((questions[i].correct+''!==questions[i].userChoice+'') && questions[i].choiceCount+''==='2'){
+        listHTML+=`<li>${questions[i].question}<br/>Yours: <span class='js-incorrectWrap'>${questions[i]['answer'+questions[i].userChoice]}</span></li>`;
       } else {
-        listHTML+=`<li>${QUESTIONS[i].question}<br/>Yours: <span class='js-correct'>${QUESTIONS[i]['answer'+QUESTIONS[i].userChoice]} ✔</span></li>`;
+        listHTML+=`<li>${questions[i].question}<br/>Yours: <span class='js-correct'>${questions[i]['answer'+questions[i].userChoice]} ✔</span></li>`;
       }
       listHTML+='<br/>';
     }
@@ -282,12 +282,12 @@ const RenderPage = {  // Determines what HTML to display based on the current st
   renderQuestions: function(){
     console.log('In the renderQuestions method.');
     //only if the STORE is on pages that show questions
-    $('.js-screenQuestion').html(QUESTIONS[STORE.currentQuestion-1].question);
-    $('#answerText1').html(` ${QUESTIONS[STORE.currentQuestion-1].answer1}`);
+    $('.js-screenQuestion').html(questions[STORE.currentQuestion-1].question);
+    $('#answerText1').html(` ${questions[STORE.currentQuestion-1].answer1}`);
     $('input[name="choices"]').focus();
-    $('#answerText2').html(` ${QUESTIONS[STORE.currentQuestion-1].answer2}`);
-    $('#answerText3').html(` ${QUESTIONS[STORE.currentQuestion-1].answer3}`);
-    $('#answerText4').html(` ${QUESTIONS[STORE.currentQuestion-1].answer4}`);
+    $('#answerText2').html(` ${questions[STORE.currentQuestion-1].answer2}`);
+    $('#answerText3').html(` ${questions[STORE.currentQuestion-1].answer3}`);
+    $('#answerText4').html(` ${questions[STORE.currentQuestion-1].answer4}`);
     $('div.js-pageViewQuestionHTML').show();
   }
 };
@@ -464,7 +464,7 @@ const Listeners = {  // All listener methods. More to come here.
         STORE.radioButtonClicked=true;
         document.getElementById('js-userButton').setAttribute('class','js-button js-userbutton');
       }
-      QUESTIONS[STORE.currentQuestion-1].userChoice = selectedOption;
+      questions[STORE.currentQuestion-1].userChoice = selectedOption;
     });
   },
 
@@ -502,20 +502,20 @@ const FlipPages = {  // Update the DOM by changing the STORE variables on clicki
     } else if(STORE.currentView==='settings'){
       STORE.currentView='question';
       STORE.currentQuestion=1;
-    } else if(STORE.currentView==='question' && STORE.currentQuestion<=QUESTIONS.length){
+    } else if(STORE.currentView==='question' && STORE.currentQuestion<=questions.length){
       STORE.currentView='feedback';
-    } else if(STORE.currentView==='feedback' && STORE.currentQuestion<QUESTIONS.length){
+    } else if(STORE.currentView==='feedback' && STORE.currentQuestion<questions.length){
       STORE.currentView='question';
       STORE.radioButtonClicked = false;
       STORE.currentQuestion++;
-    } else if(STORE.currentView==='feedback' && STORE.currentQuestion===QUESTIONS.length){
+    } else if(STORE.currentView==='feedback' && STORE.currentQuestion===questions.length){
       STORE.currentView='wrap';
-    } else if(STORE.currentView==='wrap' && STORE.currentQuestion===QUESTIONS.length){
+    } else if(STORE.currentView==='wrap' && STORE.currentQuestion===questions.length){
       STORE.currentQuestion = 0;
       STORE.currentView = 'splash';
       STORE.currentScore = 0;
       STORE.radioButtonClicked = false;
-      QUESTIONS = [];
+      questions = [];
       GetAPIPacket.getJsonQuestions();
     }
   }
