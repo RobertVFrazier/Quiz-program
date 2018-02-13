@@ -308,8 +308,8 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
 
     let quizSplashHTML = `
       <div class='js-splashPage'>
-        <p class='title smallTitle' role='title'>Let's get Thinkful, because it's</p>
-        <p class='title bigTitle' role='title'>Quiz Time!</p>
+        <p class='title smallTitle'>Let's get Thinkful, because it's</p>
+        <p class='title bigTitle'>Quiz Time!</p>
       </div>
       <div class='js-credit'>Photo by <a href='https://unsplash.com/@montylov' target='_blank'>MontyLov</a> / <a href='https://unsplash.com' target='_blank'>Unsplash</a></div>`;
 
