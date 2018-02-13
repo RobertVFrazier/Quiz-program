@@ -261,11 +261,10 @@ const RenderPage = {  // Determines what HTML to display based on the current st
       if((questions[i].correct+''!==questions[i].userChoice+'') && questions[i].choiceCount+''==='4'){
         listHTML+=`<li>${questions[i].question}<br/>Answer: <span class='js-correct'>${questions[i]['answer'+questions[i].correct]}</span><br/>Yours: <span class='js-incorrectWrap'>${questions[i]['answer'+questions[i].userChoice]}</span></li>`;
       } else if((questions[i].correct+''!==questions[i].userChoice+'') && questions[i].choiceCount+''==='2'){
-        listHTML+=`<li>${questions[i].question}<br/>Yours: <span class='js-incorrectWrap'>${questions[i]['answer'+questions[i].userChoice]}</span></li>`;
+        listHTML+=`<li>${questions[i].question}<br/>Yours: <span class='js-incorrectWrap'>${questions[i]['answer'+questions[i].userChoice]}</span><br/></li>`;
       } else {
-        listHTML+=`<li>${questions[i].question}<br/>Yours: <span class='js-correct'>${questions[i]['answer'+questions[i].userChoice]} ✔</span></li>`;
+        listHTML+=`<li>${questions[i].question}<br/>Yours: <span class='js-correct'>${questions[i]['answer'+questions[i].userChoice]} ✔</span><br/></li>`;
       }
-      listHTML+='<br/>';
     }
     $('#js-userButton').text('New game?');
     $('.js-scoreBox').html(`Score: ${STORE.currentScore} correct, ${STORE.currentQuestion - STORE.currentScore} incorrect.`);
@@ -325,8 +324,8 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
       <img src='settings.png' class='js-settings-image' alt='settings'/>
       <form action='/userSettings' method='post' class='js-settingsForm'>
         <div class='js-Widget'>
-          <label for='js-questionsToDo' class='js-label' role='label'>How many?</label>
-            <select name='how many questions' id='js-questionsToDo' class='js-dropDown' onchange='Listeners.handleQuestionsToDo()'>
+          <label for='js-questionsToDo' class='js-label'>How many?</label>
+            <select name='how many questions' aria-label='how many questions' id='js-questionsToDo' class='js-dropDown' onchange='Listeners.handleQuestionsToDo()'>
               <option value='4'>4</option>
               <option value='8'>8</option>
               <option value='12'>12</option>
@@ -336,8 +335,8 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
         </div>
 
         <div class='js-Widget'>
-          <label for='js-category' class='js-label' role='label'>Category?</label>
-            <select name='which category' id='js-category' class='js-dropDown' onchange='Listeners.handleCategory()'>
+          <label for='js-category' class='js-label'>Category?</label>
+            <select name='which category' aria-label='which category' id='js-category' class='js-dropDown' onchange='Listeners.handleCategory()'>
               <option value='9'>General</option>
               <option value='21'>Sports</option>
               <option value='20'>Mythology</option>
@@ -366,19 +365,19 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
         <form class='js-screenQuestionForm' role='form'>
           <div class='js-screenQuestion'></div>
           <span id='js-radioButtonBox' class='none'>
-          <fieldset class='js-radioButton' name='js-radioButton'>
+          <fieldset class='js-radioButton' name='js-radioButton' id='choices' aria-label='choices' role='radiogroup'>
             <label for='js-choice1'>
-              <input type='radio' value=1 name='choices' id='js-choice1' role='radio'><span id='answerText1'></span>
+              <input type='radio' value=1 name='choices' aria-labelledby='choices' id='js-choice1' role='radio' aria-checked="false"><span id='answerText1'></span>
             </label>
             <label for='js-choice2'>
-              <input type='radio' value=2 name='choices' id='js-choice2' role='radio'><span id='answerText2'></span>
+              <input type='radio' value=2 name='choices' aria-labelledby='choices' id='js-choice2' role='radio' aria-checked="false"><span id='answerText2'></span>
             </label>
               <span class='js-twoMore'>
                 <label for='js-choice3'>
-                  <input type='radio' value=3 name='choices' id='js-choice3' role='radio'><span id='answerText3'></span>
+                  <input type='radio' value=3 name='choices' aria-labelledby='choices' id='js-choice3' role='radio' aria-checked="false"><span id='answerText3'></span>
                 </label>
                 <label for='js-choice4'>
-                  <input type='radio' value=4 name='choices' id='js-choice4' role='radio'><span id='answerText4'></span>
+                  <input type='radio' value=4 name='choices' aria-labelledby='choices' id='js-choice4' role='radio' aria-checked="false"><span id='answerText4'></span>
                 </label>
               </span>
             </span><br/>
