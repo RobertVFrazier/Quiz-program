@@ -220,6 +220,7 @@ const RenderPage = {  // Determines what HTML to display based on the current st
     }
     this.showCurrentPage('div.js-pageViewQuestionHtml', 'ENTER');
     document.getElementById('js-userButton').setAttribute('class','js-button js-userbutton disabled');
+    document.getElementById('js-userButton').setAttribute('tabindex','-1');
   },
 
   feedBackPage: function(){
@@ -292,7 +293,7 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
         <p class='title smallTitle'>Let's get Thinkful, because it's</p>
         <p class='title bigTitle'>Quiz Time!</p>
       </div>
-      <div class='js-credit'>Photo by <a href='https://unsplash.com/@montylov' target='_blank'>MontyLov</a> / <a href='https://unsplash.com' target='_blank'>Unsplash</a></div>`;
+      <div class='js-credit'>Photo by <a href='https://unsplash.com/@montylov' target='_blank' tabindex="-1">MontyLov</a> / <a href='https://unsplash.com' target='_blank' tabindex="-1">Unsplash</a></div>`;
 
     $('div.js-pageViewSplashHtml').html(quizSplashHTML);
     $('div.js-pageViewSplashHtml').hide();
@@ -303,11 +304,11 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
     // Set up settings page, then hide it.
 
     let quizSettingsHTML = `
-      <img src='settings.png' class='js-settings-image' alt='settings'/>
+      <img src='settings.png' class='js-settings-image' alt='settings' tabindex='-1' />
       <form action='/userSettings' method='post' class='js-settingsForm'>
         <div class='js-Widget'>
           <label for='js-questionsToDo' class='js-label'>How many?</label>
-            <select name='how many questions' aria-label='how many questions' id='js-questionsToDo' class='js-dropDown' onchange='Listeners.handleQuestionsToDo()'>
+            <select name='how many questions' aria-label='how many questions' id='js-questionsToDo' class='js-dropDown' onchange='Listeners.handleQuestionsToDo()' tabindex='0'>
               <option value='4'>4</option>
               <option value='8'>8</option>
               <option value='12'>12</option>
@@ -318,7 +319,7 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
 
         <div class='js-Widget'>
           <label for='js-category' class='js-label'>Category?</label>
-            <select name='which category' aria-label='which category' id='js-category' class='js-dropDown' onchange='Listeners.handleCategory()'>
+            <select name='which category' aria-label='which category' id='js-category' class='js-dropDown' onchange='Listeners.handleCategory()' tabindex='0'>
               <option value='9'>General</option>
               <option value='21'>Sports</option>
               <option value='20'>Mythology</option>
@@ -345,11 +346,11 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
       <span class='js-topInfo js-scoreBox'></span>
       <span class='js-topInfo js-questionCounter'></span>
         <form class='js-screenQuestionForm'>
-          <legend class='js-screenQuestion'></legend>
           <span id='js-radioButtonBox' class='none'>
           <fieldset class='js-radioButton' name='js-radioButton' id='choices' aria-label='choices'>
+            <legend class='js-screenQuestion'></legend>
             <label for='js-choice1'>
-              <input type='radio' value=1 name='choices' aria-labelledby='choices' id='js-choice1' aria-checked="false"><span id='answerText1'></span>
+              <input type='radio' value=1 name='choices' aria-labelledby='choices' id='js-choice1' aria-checked="false" tabindex="0"><span id='answerText1'></span>
             </label>
             <label for='js-choice2'>
               <input type='radio' value=2 name='choices' aria-labelledby='choices' id='js-choice2' aria-checked="false"><span id='answerText2'></span>
@@ -365,7 +366,7 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
             </span><br/>
           </fieldset>
         </form>
-        <div class='js-credit'>Photo by <a href='https://unsplash.com/@lin_alessio' target='_blank'>Alessio Lin</a> / <a href='https://unsplash.com' target='_blank'>Unsplash</a></div>
+        <div class='js-credit'>Photo by <a href='https://unsplash.com/@lin_alessio' target='_blank' tabindex="-1">Alessio Lin</a> / <a href='https://unsplash.com' target='_blank' tabindex="-1">Unsplash</a></div>
     `;
     // NOTE: The question and the five choices will be inserted in the correct places above, in renderQuestions().
     $('div.js-pageViewQuestionHtml').html(quizQuestionsHTML);
@@ -391,7 +392,7 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
       <br/>
       <br/>
       <br/>
-      <div class='js-credit'>Photo by <a href='https://unsplash.com/@asoggetti' target='_blank'>asoggetti</a> / <a href='https://unsplash.com' target='_blank'>Unsplash</a></div>
+      <div class='js-credit'>Photo by <a href='https://unsplash.com/@asoggetti' target='_blank' tabindex="-1">asoggetti</a> / <a href='https://unsplash.com' target='_blank' tabindex="-1">Unsplash</a></div>
     `;
     $('div.js-pageViewFeedBackHtml').html(quizFeedbackHTML);
     $('div.js-pageViewFeedBackHtml').hide();
@@ -406,9 +407,9 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
       <div class='js-topInfo js-wrapScore'>Here's how you did:<br/>
         <span class='js-scorePercent'></span>
       </div>
-      <ol class='js-evalList'></ol>
+      <ol class='js-evalList' tabindex='0'></ol>
       <br/>
-      <div class='js-credit'>Photo by <a href='https://unsplash.com/@adelgordon' target='_blank'>Adel Gordon</a> / <a href='https://unsplash.com' target='_blank'>Unsplash</a></div>
+      <div class='js-credit'>Photo by <a href='https://unsplash.com/@adelgordon' target='_blank' tabindex="-1">Adel Gordon</a> / <a href='https://unsplash.com' target='_blank' tabindex="-1">Unsplash</a></div>
     `;
     $('div.js-pageViewWrapHtml').html(quizWrapHTML);
     $('div.js-pageViewWrapHtml').hide();
@@ -448,6 +449,7 @@ const Listeners = {  // All listener methods. More to come here.
       if(selectedOption>0) {
         STORE.radioButtonClicked=true;
         document.getElementById('js-userButton').setAttribute('class','js-button js-userbutton');
+        document.getElementById('js-userButton').setAttribute('tabindex','0');
       }
       questions[STORE.currentQuestion-1].userChoice = selectedOption;
     });
