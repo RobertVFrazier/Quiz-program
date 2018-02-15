@@ -49,7 +49,6 @@ const GetAPIPacket = {  // Gets questions data from the Open Trivia Database (ht
 
   getJsonQuestions: function(){
     console.log('In the getJsonQuestions method');
-    document.getElementById('js-userButton').setAttribute('class','js-button js-userbutton disabled');
     let tempObj={
       category: json.category===0  ? '' : `&category=${json.category}`,
       type: json.type===''  ? '' : `&type=${json.type}`,
@@ -105,7 +104,6 @@ const GetAPIPacket = {  // Gets questions data from the Open Trivia Database (ht
       });
     }
     scrambleChoices.doScrambling();
-    document.getElementById('js-userButton').setAttribute('class','js-button js-userbutton');
   }  
 };
 
@@ -185,32 +183,31 @@ const RenderPage = {  // Determines what HTML to display based on the current st
     }
   },
 
+  showCurrentPage: function(pageToShow, userButtonText){
+    $('#js-userButton').text(userButtonText);
+    $('div.js-pageViewSplashHtml').hide();
+    $('div.js-pageViewSettingsHtml').hide();
+    $('div.js-pageViewQuestionHtml').hide();
+    $('div.js-pageViewFeedBackHtml').hide();
+    $('div.js-pageViewWrapHtml').hide();
+    $(pageToShow).show();
+  },
+
   splashPage: function(){
     console.log('In the splashPage method.');
     $('#js-settingsButton').show();
-    $('#js-userButton').text('START');
-    $('div.js-pageViewSplashHtml').show();
-    $('div.js-pageViewSettingsHTML').hide();
-    $('div.js-pageViewQuestionHTML').hide();
-    $('div.js-pageViewFeedBackHTML').hide();
-    $('div.js-pageViewWrapHTML').hide();
+    this.showCurrentPage('div.js-pageViewSplashHtml', 'START');
   },
 
   settingsPage: function(){
     console.log('In the settingsPage method.');
     $('#js-settingsButton').hide();
-    $('#js-userButton').text('ONWARD!');
-    $('div.js-pageViewSplashHtml').hide();
-    $('div.js-pageViewSettingsHTML').show();
-    $('div.js-pageViewQuestionHTML').hide();
-    $('div.js-pageViewFeedBackHTML').hide();
-    $('div.js-pageViewWrapHTML').hide();
+    this.showCurrentPage('div.js-pageViewSettingsHtml', 'ONWARD!');
   },
 
   questionsPage: function(){
     console.log('In the questionsPage method.');
     $('#js-settingsButton').hide();
-    $('#js-userButton').text('ENTER');
     $('.js-scoreBox').html(`Score: ${STORE.currentScore} correct, ${(STORE.currentQuestion - STORE.currentScore)-1} incorrect.`);
     $('.js-questionCounter').html(`Question: ${STORE.currentQuestion} of ${questions.length}`);
     this.renderQuestions();
@@ -221,17 +218,12 @@ const RenderPage = {  // Determines what HTML to display based on the current st
       $('.js-twoMore').show();
       document.getElementById('js-radioButtonBox').setAttribute('class','js-radioButtonBox');
     }
+    this.showCurrentPage('div.js-pageViewQuestionHtml', 'ENTER');
     document.getElementById('js-userButton').setAttribute('class','js-button js-userbutton disabled');
-    $('div.js-pageViewSplashHtml').hide();
-    $('div.js-pageViewSettingsHTML').hide();
-    $('div.js-pageViewQuestionHTML').show();
-    $('div.js-pageViewFeedBackHTML').hide();
-    $('div.js-pageViewWrapHTML').hide();
   },
 
   feedBackPage: function(){
     console.log('In the feedbackPage method.');
-    $('#js-userButton').text('CONTINUE');
     $('.js-feedbackQuestion').html(questions[STORE.currentQuestion-1].question);
     $('.js-correctAnswer').html('THE ANSWER IS: '+questions[STORE.currentQuestion-1]['answer'+questions[STORE.currentQuestion-1].correct]);
     $('.js-userAnswer').html('YOUR ANSWER: '+questions[STORE.currentQuestion-1]['answer'+questions[STORE.currentQuestion-1].userChoice]);
@@ -247,11 +239,7 @@ const RenderPage = {  // Determines what HTML to display based on the current st
     }
     $('.js-scoreBox').html(`Score: ${STORE.currentScore} correct, ${STORE.currentQuestion - STORE.currentScore} incorrect.`);
     $('.js-questionCounter').html(`Question: ${STORE.currentQuestion} of ${questions.length}`);
-    $('div.js-pageViewSplashHtml').hide();
-    $('div.js-pageViewSettingsHTML').hide();
-    $('div.js-pageViewQuestionHTML').hide();
-    $('div.js-pageViewFeedBackHTML').show();
-    $('div.js-pageViewWrapHTML').hide();
+    this.showCurrentPage('div.js-pageViewFeedBackHtml', 'CONTINUE');
   },
 
   wrapPage: function(){
@@ -266,16 +254,11 @@ const RenderPage = {  // Determines what HTML to display based on the current st
         listHTML+=`<li>${questions[i].question}<br/>Yours: <span class='js-correct'>${questions[i]['answer'+questions[i].userChoice]} ✔<br/><br/></span></li>`;
       }
     }
-    $('#js-userButton').text('New game?');
     $('.js-scoreBox').html(`Score: ${STORE.currentScore} correct, ${STORE.currentQuestion - STORE.currentScore} incorrect.`);
     let newPercent=(STORE.currentScore/STORE.currentQuestion)*100;
     $('.js-scorePercent').html(Math.round((newPercent + 0.00001) * 100) / 100 + '%');
     $('.js-evalList').html(listHTML);
-    $('div.js-pageViewSplashHtml').hide();
-    $('div.js-pageViewSettingsHTML').hide();
-    $('div.js-pageViewQuestionHTML').hide();
-    $('div.js-pageViewFeedBackHTML').hide();
-    $('div.js-pageViewWrapHTML').show();
+    this.showCurrentPage('div.js-pageViewWrapHtml', 'New game?');
   },
 
   renderQuestions: function(){
@@ -287,7 +270,6 @@ const RenderPage = {  // Determines what HTML to display based on the current st
     $('#answerText2').html(` ${questions[STORE.currentQuestion-1].answer2}`);
     $('#answerText3').html(` ${questions[STORE.currentQuestion-1].answer3}`);
     $('#answerText4').html(` ${questions[STORE.currentQuestion-1].answer4}`);
-    $('div.js-pageViewQuestionHTML').show();
   }
 };
 
@@ -351,8 +333,8 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
         </div>
       </form>`;
 
-    $('div.js-pageViewSettingsHTML').html(quizSettingsHTML);
-    $('div.js-pageViewSettingsHTML').hide();
+    $('div.js-pageViewSettingsHtml').html(quizSettingsHTML);
+    $('div.js-pageViewSettingsHtml').hide();
   },
 
   questionHtml: function(){
@@ -386,8 +368,8 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
         <div class='js-credit'>Photo by <a href='https://unsplash.com/@lin_alessio' target='_blank'>Alessio Lin</a> / <a href='https://unsplash.com' target='_blank'>Unsplash</a></div>
     `;
     // NOTE: The question and the five choices will be inserted in the correct places above, in renderQuestions().
-    $('div.js-pageViewQuestionHTML').html(quizQuestionsHTML);
-    $('div.js-pageViewQuestionHTML').hide();
+    $('div.js-pageViewQuestionHtml').html(quizQuestionsHTML);
+    $('div.js-pageViewQuestionHtml').hide();
   },
 
   feedBackHtml: function(){
@@ -411,8 +393,8 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
       <br/>
       <div class='js-credit'>Photo by <a href='https://unsplash.com/@asoggetti' target='_blank'>asoggetti</a> / <a href='https://unsplash.com' target='_blank'>Unsplash</a></div>
     `;
-    $('div.js-pageViewFeedBackHTML').html(quizFeedbackHTML);
-    $('div.js-pageViewFeedBackHTML').hide();
+    $('div.js-pageViewFeedBackHtml').html(quizFeedbackHTML);
+    $('div.js-pageViewFeedBackHtml').hide();
   },
 
   wrapHtml: function(){
@@ -428,8 +410,8 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
       <br/>
       <div class='js-credit'>Photo by <a href='https://unsplash.com/@adelgordon' target='_blank'>Adel Gordon</a> / <a href='https://unsplash.com' target='_blank'>Unsplash</a></div>
     `;
-    $('div.js-pageViewWrapHTML').html(quizWrapHTML);
-    $('div.js-pageViewWrapHTML').hide();
+    $('div.js-pageViewWrapHtml').html(quizWrapHTML);
+    $('div.js-pageViewWrapHtml').hide();
   }
 };
 
@@ -498,7 +480,7 @@ const Listeners = {  // All listener methods. More to come here.
 
 const FlipPages = {  // Update the DOM by changing the STORE variables on clicking the user button.
   nextView: function(){
-    console.log('In the nextView method.');
+    console.log('In the FlipPages method.');
     if(STORE.currentView==='splash' && STORE.currentQuestion===0){
       STORE.currentView='question';
       STORE.currentQuestion=1;
