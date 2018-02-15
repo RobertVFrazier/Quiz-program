@@ -259,11 +259,11 @@ const RenderPage = {  // Determines what HTML to display based on the current st
     let listHTML='';
     for(let i=0; i<questions.length; i++) {
       if((questions[i].correct+''!==questions[i].userChoice+'') && questions[i].choiceCount+''==='4'){
-        listHTML+=`<li>${questions[i].question}<br/>Answer: <span class='js-correct'>${questions[i]['answer'+questions[i].correct]}</span><br/>Yours: <span class='js-incorrectWrap'>${questions[i]['answer'+questions[i].userChoice]}</span></li>`;
+        listHTML+=`<li>${questions[i].question}<br/>Answer: <span class='js-correct'>${questions[i]['answer'+questions[i].correct]}</span><br/>Yours: <span class='js-incorrectWrap'>${questions[i]['answer'+questions[i].userChoice]}<br/><br/></span></li>`;
       } else if((questions[i].correct+''!==questions[i].userChoice+'') && questions[i].choiceCount+''==='2'){
-        listHTML+=`<li>${questions[i].question}<br/>Yours: <span class='js-incorrectWrap'>${questions[i]['answer'+questions[i].userChoice]}</span><br/></li>`;
+        listHTML+=`<li>${questions[i].question}<br/>Yours: <span class='js-incorrectWrap'>${questions[i]['answer'+questions[i].userChoice]}<br/><br/></span></li>`;
       } else {
-        listHTML+=`<li>${questions[i].question}<br/>Yours: <span class='js-correct'>${questions[i]['answer'+questions[i].userChoice]} ✔</span><br/></li>`;
+        listHTML+=`<li>${questions[i].question}<br/>Yours: <span class='js-correct'>${questions[i]['answer'+questions[i].userChoice]} ✔<br/><br/></span></li>`;
       }
     }
     $('#js-userButton').text('New game?');
