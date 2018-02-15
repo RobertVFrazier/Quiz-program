@@ -208,7 +208,7 @@ const RenderPage = {  // Determines what HTML to display based on the current st
   questionsPage: function(){
     console.log('In the questionsPage method.');
     $('#js-settingsButton').hide();
-    $('.js-scoreBox').html(`Score: ${STORE.currentScore} correct, ${(STORE.currentQuestion - STORE.currentScore)-1} incorrect.`);
+    $('.js-scoreBox').html(`Score: ${STORE.currentScore} correct, ${(STORE.currentQuestion - STORE.currentScore)-1} incorrect`);
     $('.js-questionCounter').html(`Question: ${STORE.currentQuestion} of ${questions.length}`);
     this.renderQuestions();
     if(questions[STORE.currentQuestion-1].answer3===''){  // true-false question
@@ -237,7 +237,7 @@ const RenderPage = {  // Determines what HTML to display based on the current st
       $('.js-feedBackImageWrong').show();
       $('.js-userAnswer').show();     
     }
-    $('.js-scoreBox').html(`Score: ${STORE.currentScore} correct, ${STORE.currentQuestion - STORE.currentScore} incorrect.`);
+    $('.js-scoreBox').html(`Score: ${STORE.currentScore} correct, ${STORE.currentQuestion - STORE.currentScore} incorrect`);
     $('.js-questionCounter').html(`Question: ${STORE.currentQuestion} of ${questions.length}`);
     this.showCurrentPage('div.js-pageViewFeedBackHtml', 'CONTINUE');
   },
@@ -254,7 +254,7 @@ const RenderPage = {  // Determines what HTML to display based on the current st
         listHTML+=`<li>${questions[i].question}<br/>Yours: <span class='js-correct'>${questions[i]['answer'+questions[i].userChoice]} ✔<br/><br/></span></li>`;
       }
     }
-    $('.js-scoreBox').html(`Score: ${STORE.currentScore} correct, ${STORE.currentQuestion - STORE.currentScore} incorrect.`);
+    $('.js-scoreBox').html(`Score: ${STORE.currentScore} correct, ${STORE.currentQuestion - STORE.currentScore} incorrect`);
     let newPercent=(STORE.currentScore/STORE.currentQuestion)*100;
     $('.js-scorePercent').html(Math.round((newPercent + 0.00001) * 100) / 100 + '%');
     $('.js-evalList').html(listHTML);
@@ -344,22 +344,22 @@ const GenerateHTML = {  // Here's where the extra HTML comes from.
     let quizQuestionsHTML = `
       <span class='js-topInfo js-scoreBox'></span>
       <span class='js-topInfo js-questionCounter'></span>
-        <form class='js-screenQuestionForm' role='form'>
-          <div class='js-screenQuestion'></div>
+        <form class='js-screenQuestionForm'>
+          <legend class='js-screenQuestion'></legend>
           <span id='js-radioButtonBox' class='none'>
-          <fieldset class='js-radioButton' name='js-radioButton' id='choices' aria-label='choices' role='radiogroup'>
+          <fieldset class='js-radioButton' name='js-radioButton' id='choices' aria-label='choices'>
             <label for='js-choice1'>
-              <input type='radio' value=1 name='choices' aria-labelledby='choices' id='js-choice1' role='radio' aria-checked="false"><span id='answerText1'></span>
+              <input type='radio' value=1 name='choices' aria-labelledby='choices' id='js-choice1' aria-checked="false"><span id='answerText1'></span>
             </label>
             <label for='js-choice2'>
-              <input type='radio' value=2 name='choices' aria-labelledby='choices' id='js-choice2' role='radio' aria-checked="false"><span id='answerText2'></span>
+              <input type='radio' value=2 name='choices' aria-labelledby='choices' id='js-choice2' aria-checked="false"><span id='answerText2'></span>
             </label>
               <span class='js-twoMore'>
                 <label for='js-choice3'>
-                  <input type='radio' value=3 name='choices' aria-labelledby='choices' id='js-choice3' role='radio' aria-checked="false"><span id='answerText3'></span>
+                  <input type='radio' value=3 name='choices' aria-labelledby='choices' id='js-choice3' aria-checked="false"><span id='answerText3'></span>
                 </label>
                 <label for='js-choice4'>
-                  <input type='radio' value=4 name='choices' aria-labelledby='choices' id='js-choice4' role='radio' aria-checked="false"><span id='answerText4'></span>
+                  <input type='radio' value=4 name='choices' aria-labelledby='choices' id='js-choice4' aria-checked="false"><span id='answerText4'></span>
                 </label>
               </span>
             </span><br/>
